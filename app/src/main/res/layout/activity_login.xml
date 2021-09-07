@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    tools:context=".feature.LoginActivity">
+
+
+    <FrameLayout
+        android:id="@+id/top_views"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        >
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:src="@drawable/streets_24"/>
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="80dp"
+                android:src="@drawable/niko_logo_24"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/NikoHamrah"
+                android:textColor="@color/orange"
+                android:textSize="20sp"
+                android:fontFamily="@font/yekanbakh_fat"
+                android:textAlignment="center"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                android:text="@string/transportationServices"/>
+
+
+        </LinearLayout>
+
+
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/insertYourNumberTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+        android:text="@string/insertYourPhoneNumber"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/top_views"/>
+
+    <EditText
+        android:id="@+id/mobileEt"
+        style="@style/Theme.Niko.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/insertYourNumberTv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="16dp"
+        android:hint="@string/hint"
+        android:textColorHint="@color/gray"
+        android:inputType="phone"
+        android:textAlignment="center" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginBtn"
+        android:layout_width="150dp"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="70dp"
+        android:gravity="center"
+        android:minHeight="48dp"
+        android:text="@string/login"
+        app:cornerRadius="20dp" />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/checkered" />
+
+
+
+
+
+
+
+</RelativeLayout>

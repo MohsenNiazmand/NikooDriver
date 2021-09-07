@@ -32,4 +32,16 @@
 
         <!-- Customize your theme here. -->
     </style>
+
+
+    <style name="Theme.Niko.EditText" parent="Theme.NikoDriver">
+        <item name="android:background">@drawable/background_et_mobile</item>
+        <item name="android:textColorHint">#48ffffff</item>
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+
 </resources>

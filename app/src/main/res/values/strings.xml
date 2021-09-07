@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">NikoDriver</string>
+    <string name="NikoHamrah">نیکو همراه</string>
+    <string name="transportationServices">خدمات هوشمند مسافربری</string>
+    <string name="insertYourPhoneNumber">شماره موبایل خود را وارد کنید</string>
+    <string name="login">ورود</string>
+    <string name="hint">09 - - - - - - - - -</string>
 </resources>
