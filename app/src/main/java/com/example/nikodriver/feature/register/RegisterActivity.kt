@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.nikodriver.R
+import com.example.nikodriver.feature.home.HomeActivity
 import com.example.nikodriver.feature.verification.VerificationActivity
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -19,7 +20,7 @@ class RegisterActivity : AppCompatActivity() {
         val alphabet = resources.getStringArray(R.array.Alphabet)
 
         registerBtn.setOnClickListener {
-            startActivity(Intent(this@RegisterActivity, VerificationActivity::class.java))
+            startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
 
         }
 
