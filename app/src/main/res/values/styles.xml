@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <style name="Theme.Niko.auth.EditText" parent="Theme.NikoDriver">
+        <item name="android:background">@drawable/background_et_mobile</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+
+
+    <style name="Theme.Niko.register.EditText" parent="Theme.NikoDriver">
+        <item name="android:background">@drawable/background_et_register</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">3dp</item>
+        <item name="android:paddingEnd">3dp</item>
+    </style>
+
+
+
+    </resources>

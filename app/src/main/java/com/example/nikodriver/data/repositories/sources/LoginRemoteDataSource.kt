@@ -5,7 +5,7 @@ import com.google.gson.JsonObject
 import io.reactivex.Completable
 
 class LoginRemoteDataSource(private val apiService: ApiService ):LoginDataSource {
-    override fun checkMobile(mobile:String): Completable = apiService.login(JsonObject().apply {
-        addProperty("mobile",mobile)
+    override fun login(mobile:String): Completable = apiService.login(JsonObject().apply {
+        addProperty("phoneNumber",mobile)
     }).ignoreElement()
 }

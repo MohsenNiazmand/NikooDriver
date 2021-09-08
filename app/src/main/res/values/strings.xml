@@ -1,8 +1,78 @@
 <resources>
     <string name="app_name">NikoDriver</string>
+    <string name="pleaseWait">لطفا منتظر بمانید</string>
     <string name="NikoHamrah">نیکو همراه</string>
     <string name="transportationServices">خدمات هوشمند مسافربری</string>
     <string name="insertYourPhoneNumber">شماره موبایل خود را وارد کنید</string>
     <string name="login">ورود</string>
-    <string name="hint">09 - - - - - - - - -</string>
+    <string name="mobileHint1">09 - - - - - - - - -</string>
+    <string name="insertCode">کد تایید خود را وارد کنید</string>
+    <string name="verificationHint">- - - - -</string>
+    <string name="termsText1">با ورود و ثبت نام شما با کلیه</string>
+    <string name="termsText2">شرایط و قوانین</string>
+    <string name="termsText3">نیکو همراه موافقت کردید</string>
+    <string name="next">مرحله بعد</string>
+    <string name="activeTimeExample">12:00</string>
+    <string name="register">ثبت نام</string>
+    <string name="name">نام:</string>
+    <string name="family">نام خانوادگی:</string>
+    <string name="nationalCode">کد ملی:</string>
+    <string name="mobile">موبایل: </string>
+    <string name="certificateCode">کد گواهینامه: </string>
+    <string name="plaque">پلاک :</string>
+    <string name="vehicleType">نوع خودرو: </string>
+    <string name="all">همه: </string>
+    <string name="car">سواری </string>
+    <string name="bus">اتوبوس </string>
+    <string name="vehicleColor">رنگ خودرو: </string>
+    <string name="white">  سفید</string>
+    <string name="insuranceDate">انقضا بیمه: </string>
+    <string name="choose">انتخاب</string>
+    <string name="insertYourName">نام خود را وارد نمایید</string>
+    <string name="insertYourFamily">نام خانوادگی خود را وارد نمایید</string>
+    <string name="insertYourNationalCode">کد ملی خود را وارد نمایید</string>
+    <string name="mobileHint">09*********</string>
+    <string name="insertYourCertificateCode">کد گواهینامه خود را وارد نمایید</string>
+    <string name="iran">ایران</string>
+    <string name="twoLines">- -</string>
+    <string name="threeLines">- - -</string>
+    <string name="plaqueNumber">شماره پلاک</string>
+
+
+    <string-array name="Alphabet">
+        <item>"الف"</item>
+        <item>"ب"</item>
+        <item>"پ"</item>
+        <item>"ت"</item>
+        <item>"ث"</item>
+        <item>"ج"</item>
+        <item>"چ"</item>
+        <item>"ح"</item>
+        <item>"خ"</item>
+        <item>"د"</item>
+        <item>"ذ"</item>
+        <item>"ر"</item>
+        <item>"ز"</item>
+        <item>"ژ"</item>
+        <item>"س"</item>
+        <item>"ش"</item>
+        <item>"ص"</item>
+        <item>"ض"</item>
+        <item>"ط"</item>
+        <item>"ظ"</item>
+        <item>"ع"</item>
+        <item>"غ"</item>
+        <item>"ف"</item>
+        <item>"ق"</item>
+        <item>"ک"</item>
+        <item>"گ"</item>
+        <item>"ل"</item>
+        <item>"م"</item>
+        <item>"ن"</item>
+        <item>"و"</item>
+        <item>"ه"</item>
+        <item>"ی"</item>
+    </string-array>
+
+
 </resources>

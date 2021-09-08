@@ -3,9 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_car_type.xml" value="0.17592592592592593" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_et_mobile.xml" value="0.2203125" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_et_register.xml" value="0.17592592592592593" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_white.xml" value="0.2203125" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_white_card.xml" value="0.2203125" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/ic__car.xml" value="0.2203125" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/material_button_selector.xml" value="0.2203125" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_check_mobile.xml" value="0.22" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_register.xml" value="0.33" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_verification.xml" value="0.2" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/plaque_spinner_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/spinner_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/view_loading.xml" value="0.1935185185185185" />
+        <entry key="..\:/sdk/sdk/platforms/android-31/data/res/layout/simple_spinner_dropdown_item.xml" value="0.20416666666666666" />
+        <entry key="..\:/sdk/sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

@@ -8,7 +8,7 @@ class LoginRepositoryImpl(
     private val remoteDataSource:LoginDataSource,
     val localDataSource: LoginLocalDataSource
     ):LoginRepository {
-    override fun checkMobile(mobile:String): Completable {
-        return remoteDataSource.checkMobile(mobile)
+    override fun login(mobile:String): Completable {
+        return remoteDataSource.login(mobile)
     }
 }

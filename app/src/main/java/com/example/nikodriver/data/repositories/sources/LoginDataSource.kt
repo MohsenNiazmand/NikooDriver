@@ -4,7 +4,7 @@ import io.reactivex.Completable
 
 interface LoginDataSource {
 
-    fun checkMobile(mobile:String) : Completable
+    fun login(mobile:String) : Completable
 
 
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        >
+        android:translationZ="10dp">
 
 
         <LinearLayout
@@ -86,11 +86,11 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
-                    android:text="@string/insertYourPhoneNumber"
+                    android:text="@string/insertCode"
                     android:textAppearance="@style/TextAppearance.MyTheme.Headline1" />
 
                 <EditText
-                    android:id="@+id/mobileEt"
+                    android:id="@+id/verificationCodeEt"
                     style="@style/Theme.Niko.auth.EditText"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
@@ -98,22 +98,23 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="16dp"
-                    android:hint="@string/mobileHint1"
+                    android:hint="@string/verificationHint"
                     android:inputType="phone"
                     android:textAlignment="center"
                     android:textColorHint="@color/gray" />
 
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/loginBtn"
+                    android:id="@+id/nextBtn"
                     android:layout_width="150dp"
                     android:layout_height="56dp"
-                    android:layout_below="@id/mobileEt"
+                    android:layout_below="@id/verificationCodeEt"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp"
+                    android:drawableEnd="@drawable/ic_arrow_forward"
                     android:gravity="center"
                     android:minHeight="48dp"
-                    android:text="@string/login"
+                    android:text="@string/next"
                     app:cornerRadius="20dp" />
 
 
@@ -127,4 +128,4 @@
 
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

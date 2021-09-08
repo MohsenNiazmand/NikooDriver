@@ -10,7 +10,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
-    @POST("/auth/driver")
+    @POST("auth/driver")
     fun login(@Body jsonObject: JsonObject):Single<LoginResponse>
 
 }
@@ -18,7 +18,7 @@ interface ApiService {
 
 fun createApiServiceInstance():ApiService{
     val retrofit=Retrofit.Builder()
-        .baseUrl("https://api.nikohamrah.ir/")
+        .baseUrl("https://api.nikohamrah.ir/api/v1/")
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
