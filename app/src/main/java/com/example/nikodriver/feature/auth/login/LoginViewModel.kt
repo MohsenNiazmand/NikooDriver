@@ -1,4 +1,4 @@
-package com.example.nikodriver.feature.login
+package com.example.nikodriver.feature.auth.login
 
 import com.example.nikodriver.common.NikoViewModel
 import com.example.nikodriver.data.repositories.LoginRepository

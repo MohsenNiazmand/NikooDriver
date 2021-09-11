@@ -1,14 +1,14 @@
 package com.example.nikodriver.data.repositories
 
-import com.example.nikodriver.data.repositories.sources.LoginDataSource
-import com.example.nikodriver.data.repositories.sources.LoginLocalDataSource
+import com.example.nikodriver.data.repositories.sources.login.LoginDataSource
+import com.example.nikodriver.data.repositories.sources.login.LoginLocalDataSource
 import io.reactivex.Completable
 
 class LoginRepositoryImpl(
-    private val remoteDataSource:LoginDataSource,
+    private val remoteDataSource: LoginDataSource,
     val localDataSource: LoginLocalDataSource
     ):LoginRepository {
-    override fun login(mobile:String): Completable {
-        return remoteDataSource.login(mobile)
+    override fun login(phoneNumber:String): Completable {
+        return remoteDataSource.login(phoneNumber)
     }
 }

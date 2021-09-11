@@ -1,14 +1,18 @@
 package com.example.nikodriver
 
 import android.app.Application
+import android.content.SharedPreferences
 import com.example.nikodriver.data.repositories.LoginRepository
 import com.example.nikodriver.data.repositories.LoginRepositoryImpl
-import com.example.nikodriver.data.repositories.sources.LoginLocalDataSource
-import com.example.nikodriver.data.repositories.sources.LoginRemoteDataSource
-import com.example.nikodriver.feature.login.LoginViewModel
-import com.example.nikodriver.services.ApiService
+import com.example.nikodriver.data.repositories.VerificationRepository
+import com.example.nikodriver.data.repositories.VerificationRepositoryImpl
+import com.example.nikodriver.data.repositories.sources.login.LoginLocalDataSource
+import com.example.nikodriver.data.repositories.sources.login.LoginRemoteDataSource
+import com.example.nikodriver.data.repositories.sources.verification.VerificationLocalDataSource
+import com.example.nikodriver.data.repositories.sources.verification.VerificationRemoteDataSource
+import com.example.nikodriver.feature.auth.login.LoginViewModel
+import com.example.nikodriver.feature.auth.verification.VerificationViewModel
 import com.example.nikodriver.services.createApiServiceInstance
-import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -23,6 +27,13 @@ class App : Application() {
         val myModules= module {
             single { createApiServiceInstance() }
 
+            single<SharedPreferences> {
+                this@App.getSharedPreferences(
+                    "app_settings",
+                    MODE_PRIVATE
+                )
+            }
+
             single { LoginLocalDataSource() }
             single<LoginRepository> {
                 LoginRepositoryImpl(
@@ -31,8 +42,17 @@ class App : Application() {
                 )
             }
 
+            single<VerificationRepository> {
+                VerificationRepositoryImpl(
+                    VerificationLocalDataSource(get()),
+                    VerificationRemoteDataSource(get())
+                )
+
+            }
+
 
             viewModel { LoginViewModel(get()) }
+            viewModel { VerificationViewModel(get()) }
 
         }
 

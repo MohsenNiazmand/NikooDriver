@@ -4,6 +4,6 @@ import io.reactivex.Completable
 
 interface LoginRepository {
 
-    fun login(mobile:String) : Completable
+    fun login(phoneNumber:String) : Completable
 
 }

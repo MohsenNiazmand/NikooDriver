@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.children
@@ -28,6 +29,9 @@ abstract class NikoActivity:AppCompatActivity(),NikoView{
         }
     override val viewContext: Context?
         get() = this
+
+
+
 
 }
 
