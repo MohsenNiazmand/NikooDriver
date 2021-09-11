@@ -13,6 +13,13 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
+import android.widget.TextView
+
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.view.View
+
+
 class LoginActivity : NikoActivity() {
     val viewModel: LoginViewModel by viewModel()
     val compositeDisposable = CompositeDisposable()
@@ -20,6 +27,16 @@ class LoginActivity : NikoActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+
+        var pInfo: PackageInfo? = null
+        try {
+            pInfo = packageManager.getPackageInfo(packageName, 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        val version = pInfo!!.versionName
+        versionTv.text = version
 
 
 

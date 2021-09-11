@@ -7,6 +7,38 @@
     android:background="@drawable/app_background"
     tools:context=".feature.auth.login.LoginActivity">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:orientation="horizontal"
+        android:layoutDirection="rtl">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            android:text="@string/version"
+            />
+
+
+        <TextView
+            android:id="@+id/versionTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            android:text="asdasdasdasd"
+            android:layout_marginStart="5dp"
+            />
+
+
+    </LinearLayout>
+
+
+
+
 
     <ScrollView
         android:layout_width="match_parent"
