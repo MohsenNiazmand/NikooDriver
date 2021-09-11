@@ -13,7 +13,7 @@
     <string name="termsText3">نیکو همراه موافقت کردید</string>
     <string name="next">مرحله بعد</string>
     <string name="activeTimeExample">12:00</string>
-    <string name="register">ثبت نام</string>
+    <string name="registration">ثبت نام</string>
     <string name="name">نام:</string>
     <string name="family">نام خانوادگی:</string>
     <string name="nationalCode">کد ملی:</string>
@@ -48,6 +48,48 @@
     <string name="active">فعال</string>
     <string name="deactive">غیرفعال</string>
     <string name="number1000">1000</string>
+    <string name="day">روز</string>
+    <string name="month">ماه</string>
+    <string name="year">سال</string>
+    <string name="beActiveForGetTravels">برای دریافت سفر فعال شوید</string>
+    <string name="yourIncome">درآمد شما</string>
+    <string name="toman">تومان</string>
+    <string name="travelsCount">تعداد سفرها: </string>
+    <string name="travelsDistance">مسافت سفرها: </string>
+    <string name="kilometers">کیلومتر</string>
+    <string name="hoursOfDriving">ساعت رانندگی: </string>
+    <string name="hour">ساعت</string>
+    <string name="hoursOfPresence">ساعت حضور</string>
+    <string name="yourRate">رتبه شما: </string>
+    <string name="ten">10 </string>
+    <string name="twenty">20</string>
+    <string name="fiveHundred">500</string>
+    <string name="origin">مبدا</string>
+    <string name="destination">مقصد</string>
+    <string name="count">تعداد</string>
+    <string name="date">تاریخ</string>
+    <string name="time">زمان</string>
+    <string name="exampleTime">مثلا 12:30</string>
+    <string name="register">ثبت</string>
+    <string name="tehran">تهران</string>
+    <string name="fakeDate">دوشنبه 25 مهر 1400 ساعت 18:30</string>
+    <string name="fakeDestination">ساری</string>
+    <string name="to">به</string>
+    <string name="fare">کرایه</string>
+    <string name="acceptRequest">قبول درخواست</string>
+    <string name="declineRequest">رد درخواست</string>
+    <string name="navigation">مسیریابی</string>
+    <string name="callToPassenger">تماس با مسافر</string>
+    <string name="travelCode">کد سفر: </string>
+    <string name="paid">پرداخت شده</string>
+    <string name="unPaid">پرداخت نشده: </string>
+    <string name="person">نفر</string>
+    <string name="iRode">سوار کردم</string>
+    <string name="line">-</string>
+    <string name="MohsenNiazmand">محسن نیازمند</string>
+
+
+
 
 
     <string-array name="Alphabet">

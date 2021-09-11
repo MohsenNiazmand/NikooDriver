@@ -17,18 +17,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingVertical="50dp">
+            android:paddingVertical="50dp"
+            >
 
 
             <FrameLayout
                 android:id="@+id/top_views"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="80dp">
+                android:layout_marginBottom="80dp"
+                >
 
                 <ImageView
                     android:layout_width="300dp"
@@ -72,19 +74,18 @@
 
             </FrameLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/top_views"
-                android:layout_alignParentBottom="true">
+                android:orientation="vertical"
+                android:gravity="center"
+                >
 
                 <TextView
                     android:id="@+id/insertYourNumberTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     android:text="@string/insertCode"
                     android:textAppearance="@style/TextAppearance.MyTheme.Headline1" />
@@ -94,8 +95,6 @@
                     style="@style/Theme.Niko.auth.EditText"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/insertYourNumberTv"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="16dp"
                     android:hint="@string/verificationHint"
@@ -103,14 +102,54 @@
                     android:textAlignment="center"
                     android:textColorHint="@color/gray" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layoutDirection="rtl"
+                    android:layout_marginVertical="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                            android:text="@string/termsText1"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/termsText2"
+                            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                            android:layout_marginHorizontal="4dp"
+                            style="?android:listSeparatorTextViewStyle"
+                            android:textColor="#03A9F4"/>
+                    </LinearLayout>
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                        android:text="@string/termsText3"/>
+
+
+
+                </LinearLayout>
+
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/nextBtn"
                     android:layout_width="150dp"
                     android:layout_height="56dp"
-                    android:layout_below="@id/verificationCodeEt"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="50dp"
                     android:drawableEnd="@drawable/ic_arrow_forward"
                     android:gravity="center"
                     android:minHeight="48dp"
@@ -118,7 +157,7 @@
                     app:cornerRadius="20dp" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
 
         </LinearLayout>

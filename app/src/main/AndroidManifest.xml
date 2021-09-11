@@ -14,11 +14,21 @@
         android:theme="@style/Theme.NikoDriver"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".feature.declined_passengers.DeclinedPassengersActivity"
+            android:exported="true" />
+        <activity
+            android:name=".feature.current_travel.CurrentTravelActivity"
+            android:exported="true" />
+        <activity
+            android:name=".feature.travel_registeration.TravelRegistrationActivity"
+            android:exported="true" />
+        <activity
             android:name=".feature.home.HomeActivity"
             android:exported="true" />
         <activity
             android:name=".feature.register.RegisterActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".feature.verification.VerificationActivity"
             android:exported="true"

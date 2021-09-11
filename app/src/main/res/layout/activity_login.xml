@@ -110,7 +110,7 @@
                     android:layout_height="56dp"
                     android:layout_below="@id/mobileEt"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="80dp"
                     android:gravity="center"
                     android:minHeight="48dp"
                     android:text="@string/login"

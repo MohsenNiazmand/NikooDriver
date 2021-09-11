@@ -25,6 +25,12 @@
         <item name="android:paddingEnd">3dp</item>
     </style>
 
+    <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetBackground</item>
+    </style>
 
+    <style name="bottomSheetBackground" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/background_dialog</item>
+    </style>
 
     </resources>

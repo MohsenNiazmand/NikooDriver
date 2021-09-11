@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.MaterialComponents.Light"
+    android:background="@drawable/dialog_inset"
+    android:padding="25dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/closeDialogBtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_close"
+            android:background="?selectableItemBackground"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            android:gravity="center"
+            android:text="@string/yourIncome"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:text="@string/fiveHundred"
+                android:layout_marginEnd="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:textStyle="normal"
+                android:text="@string/toman"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl"
+            android:gravity="center_vertical"
+            android:layout_marginVertical="10dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/travels_png"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                android:text="@string/travelsCount"
+                android:layout_marginEnd="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:text="@string/twenty"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl"
+            android:gravity="center_vertical"
+            android:layout_marginVertical="10dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/route_copy"
+                android:layout_marginEnd="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                android:text="@string/travelsDistance"
+                android:layout_marginEnd="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:text="@string/fiveHundred"
+                android:layout_marginEnd="5dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                android:text="@string/kilometers"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl"
+            android:layout_gravity="center_vertical"
+            android:layout_marginVertical="10dp">
+        <ImageView
+             android:layout_width="32dp"
+             android:layout_height="32dp"
+            android:src="@drawable/clock"
+            android:layout_marginEnd="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                android:text="@string/hoursOfDriving"
+                android:layout_marginEnd="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:text="@string/ten"
+                android:layout_marginEnd="3dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                android:text="@string/hour"
+                android:layout_marginEnd="3dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:layout_marginEnd="3dp"
+                android:text="@string/twenty"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hoursOfPresence"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline2"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl"
+            android:layout_gravity="center_vertical"
+            android:layout_marginVertical="10dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/cup"
+                android:layout_marginEnd="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                android:text="@string/yourRate"
+                android:layout_marginEnd="5dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:text="@string/fiveHundred"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
