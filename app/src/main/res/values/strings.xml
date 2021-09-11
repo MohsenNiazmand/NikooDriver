@@ -87,6 +87,16 @@
     <string name="iRode">سوار کردم</string>
     <string name="line">-</string>
     <string name="MohsenNiazmand">محسن نیازمند</string>
+    <string name="uploadDocs">ارسال مدارک</string>
+    <string name="addDriverPicture">افزودن عکس راننده</string>
+    <string name="addNationalCardPicture">افزودن عکس کارت ملی</string>
+    <string name="addCarCardPicture">افزودن عکس کارت خودرو</string>
+    <string name="addCertificateCardPicture">افزودن عکس گواهینامه</string>
+    <string name="addTechnicalDiagnosisPicture">افزودن عکس معاینه فنی</string>
+    <string name="addCertificateOfBadRecordPicture">افزودن عکس گواهی سوء پیشینه</string>
+    <string name="addWorkbookPicture">افزودن عکس دفترچه کار</string>
+    <string name="proceed">تایید</string>
+
 
 
     <string-array name="Alphabet">
