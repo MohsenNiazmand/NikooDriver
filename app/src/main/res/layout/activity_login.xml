@@ -99,6 +99,7 @@
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="16dp"
                     android:hint="@string/mobileHint1"
+                    android:maxLength="11"
                     android:inputType="phone"
                     android:textAlignment="center"
                     android:textColorHint="@color/gray" />

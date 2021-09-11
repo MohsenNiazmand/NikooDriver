@@ -31,7 +31,7 @@ class VerificationActivity : AppCompatActivity() {
         nextBtn.setOnClickListener {
 
 
-            if (mobileNum != null) {
+            if (mobileNum != null && verificationCodeEt.text.toString().isNotEmpty()) {
 
                 viewModel.verification(mobileNum, verificationCodeEt.text.toString())
                     .subscribeOn(Schedulers.io())
@@ -39,66 +39,72 @@ class VerificationActivity : AppCompatActivity() {
                     .subscribe(object : NikoSingleObserver<VerificationResponse>(compositeDisposable) {
                         override fun onSuccess(t: VerificationResponse) {
                             val status = t.data.driver.status
-                            when (status) {
-                                "active" ->
-                                    startActivity(
-                                    Intent(
-                                        this@VerificationActivity,
-                                        HomeActivity::class.java
-                                    )
-                                )
-                                "fillInfo" ->
-                                    startActivity(
-                                    Intent(
-                                        this@VerificationActivity,
-                                        RegisterActivity::class.java
-                                    )
-                                )
-                                "insufficient_docs" ->
-                                    startActivity(
-                                    Intent(
-                                        this@VerificationActivity,
-                                        UploadDocsActivity::class.java
-                                    )
-                                )
 
-                                "blocked" ->
-                                    runOnUiThread {
-                                    kotlin.run {
-                                        Toast.makeText(
-                                            applicationContext,
-                                            "اکانت شما مسدود شده است",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
 
-                                    }
+                                 when (status) {
+                                     "active" ->
+                                         startActivity(
+                                             Intent(
+                                                 this@VerificationActivity,
+                                                 HomeActivity::class.java
+                                             )
+                                         )
+                                     "fillInfo" ->
+                                         startActivity(
+                                             Intent(
+                                                 this@VerificationActivity,
+                                                 RegisterActivity::class.java
+                                             )
+                                         )
+                                     "insufficient_docs" ->
+                                         startActivity(
+                                             Intent(
+                                                 this@VerificationActivity,
+                                                 UploadDocsActivity::class.java
+                                             )
+                                         )
 
-                                }
-                                "company_deactivated" ->
-                                    runOnUiThread {
-                                    kotlin.run {
-                                        Toast.makeText(
-                                            applicationContext,
-                                            "از سمت شرکت مسدود شدید",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                     "blocked" ->
+                                         runOnUiThread {
+                                             kotlin.run {
+                                                 Toast.makeText(
+                                                     applicationContext,
+                                                     "اکانت شما مسدود شده است",
+                                                     Toast.LENGTH_SHORT
+                                                 ).show()
 
-                                    }
+                                             }
 
-                                }
-                                else ->
-                                    runOnUiThread {
-                                        kotlin.run {
-                                            Toast.makeText(
-                                                applicationContext,
-                                                "با پشتیبانی تماس بگیرید",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                         }
+                                     "company_deactivated" ->
+                                         runOnUiThread {
+                                             kotlin.run {
+                                                 Toast.makeText(
+                                                     applicationContext,
+                                                     "از سمت شرکت مسدود شدید",
+                                                     Toast.LENGTH_SHORT
+                                                 ).show()
 
-                                        }
+                                             }
 
-                                    }
-                            }
+                                         }
+                                     else ->
+                                         runOnUiThread {
+                                             kotlin.run {
+                                                 Toast.makeText(
+                                                     applicationContext,
+                                                     "با پشتیبانی تماس بگیرید",
+                                                     Toast.LENGTH_SHORT
+                                                 ).show()
+
+                                             }
+
+                                         }
+                                 }
+
+
+
+
                         }
                     })
 

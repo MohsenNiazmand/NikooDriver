@@ -2,6 +2,7 @@ package com.example.nikodriver.feature.auth.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import com.example.nikodriver.R
 import com.example.nikodriver.common.NikoActivity
 import com.example.nikodriver.common.NikoCompletableObserver
@@ -20,20 +21,41 @@ class LoginActivity : NikoActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+
+
+
         loginBtn.setOnClickListener {
 
+            val mobileNumber=mobileEt.text.toString()
+            if(mobileNumber.length==11){
 
-            viewModel.login(mobileEt.text.toString())
-                .subscribeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : NikoCompletableObserver(compositeDisposable) {
-                    override fun onComplete() {
-                        val intent=Intent(this@LoginActivity, VerificationActivity::class.java).apply {
-                            putExtra("MOBILE_NUM",mobileEt.text.toString())
+                viewModel.login(mobileNumber)
+                    .subscribeOn(Schedulers.io())
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : NikoCompletableObserver(compositeDisposable) {
+                        override fun onComplete() {
+                            val intent=Intent(this@LoginActivity, VerificationActivity::class.java).apply {
+                                putExtra("MOBILE_NUM",mobileNumber)
+                            }
+                            startActivity(intent)
                         }
-                        startActivity(intent)
+                    })
+            }else{
+
+                runOnUiThread {
+                    kotlin.run {
+                        Toast.makeText(
+                            applicationContext,
+                            "لطفا شماره موبایل را به درستی وارد کنید",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
                     }
-                })
+
+                }
+            }
+
+
         }
 
         viewModel.progressBarLiveData.observe(this) {

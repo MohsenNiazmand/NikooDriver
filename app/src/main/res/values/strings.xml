@@ -96,6 +96,7 @@
     <string name="addCertificateOfBadRecordPicture">افزودن عکس گواهی سوء پیشینه</string>
     <string name="addWorkbookPicture">افزودن عکس دفترچه کار</string>
     <string name="proceed">تایید</string>
+    <string name="successfulLogin">"ورود موفق"</string>
 
 
 
@@ -133,6 +134,7 @@
         <item>"ه"</item>
         <item>"ی"</item>
     </string-array>
+
 
 
 </resources>
