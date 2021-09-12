@@ -383,7 +383,7 @@
                             android:id="@+id/insuranceExpire"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/Theme.Niko.register.EditText"
+                            style="@style/Theme.Niko.register.datePicker"
                             android:hint="@string/choose"
                             android:inputType="number"
                             />

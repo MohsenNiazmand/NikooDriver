@@ -25,6 +25,19 @@
         <item name="android:paddingEnd">3dp</item>
     </style>
 
+
+    <style name="Theme.Niko.register.datePicker" parent="Theme.NikoDriver">
+        <item name="android:windowSoftInputMode">stateHidden</item>
+        <item name="android:background">@drawable/background_et_register</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textColor">?colorOnBackground</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">3dp</item>
+        <item name="android:paddingEnd">3dp</item>
+    </style>
+
     <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/bottomSheetBackground</item>
     </style>
