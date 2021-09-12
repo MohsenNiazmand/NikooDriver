@@ -46,4 +46,9 @@
         <item name="android:background">@drawable/background_dialog</item>
     </style>
 
+
+    <style name="BottomSheetDialogStyle" parent="Theme.NikoDriver">
+        <item name="bottomSheetStyle">@drawable/background_dialog</item>
+    </style>
+
     </resources>

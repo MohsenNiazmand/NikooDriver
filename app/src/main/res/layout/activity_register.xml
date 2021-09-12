@@ -12,6 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
+
         <TextView
             android:id="@+id/tvReg"
             android:layout_width="wrap_content"
@@ -22,6 +25,7 @@
             android:textAppearance="@style/TextAppearance.MyTheme.Headline1" />
 
         <FrameLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/tvReg"
@@ -30,6 +34,8 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginBottom="20dp"
             >
+
+
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -46,30 +52,46 @@
 
 
 
-                    <LinearLayout
+                    <FrameLayout
                         android:layout_marginVertical="10dp"
                         android:layout_width="200dp"
                         android:layout_height="200dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
+
                         android:background="@drawable/background_shape_circle_profile">
 
-                        <ImageView
-                            android:id="@+id/driverPicVector"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_profile" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
-                            android:text="@string/addDriverPicture"
-                            android:textColor="@color/lightBlue"
-                            />
+
+                        <LinearLayout
+                            android:id="@+id/chooseDriverPicBtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_profile" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                                android:text="@string/addDriverPicture"
+                                android:textColor="@color/lightBlue"
+                                />
+                        </LinearLayout>
 
 
-                    </LinearLayout>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/driverImg"
+                            app:civ_border_width="2dp"
+                            app:civ_border_color="@color/white"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"/>
+
+
+                    </FrameLayout>
                     <View
                         android:layout_marginVertical="2dp"
                         android:layout_width="match_parent"

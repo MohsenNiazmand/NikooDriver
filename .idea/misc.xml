@@ -28,12 +28,15 @@
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_travel_registration.xml" value="0.25" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_upload_docs.xml" value="0.25" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_verification.xml" value="0.2" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/bottom_sheet_choose.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/bottom_sheet_choose_picture.xml" value="0.33" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/dialog_credit.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/item_current_travel.xml" value="0.22" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/item_declined_passenger.xml" value="0.25" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/plaque_spinner_item.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/spinner_item.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/view_loading.xml" value="0.1935185185185185" />
+        <entry key="..\:/Users/Mohsen/.gradle/caches/transforms-3/b3a1b10170dc3b0d106f5a2151e726da/transformed/material-1.4.0/res/layout/design_bottom_sheet_dialog.xml" value="0.1" />
         <entry key="..\:/sdk/sdk/platforms/android-31/data/res/layout/simple_spinner_dropdown_item.xml" value="0.20416666666666666" />
         <entry key="..\:/sdk/sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.20416666666666666" />
       </map>
