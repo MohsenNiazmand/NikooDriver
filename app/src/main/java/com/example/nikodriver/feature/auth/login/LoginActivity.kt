@@ -44,8 +44,9 @@ class LoginActivity : NikoActivity() {
         loginBtn.setOnClickListener {
 
             val mobileNumber=mobileEt.text.toString()
-            if(mobileNumber.length==11){
-
+            val regex=("(\\+98|0)?9\\d{9}").toRegex()
+            val match=regex.matches(mobileNumber)
+            if (match){
                 viewModel.login(mobileNumber)
                     .subscribeOn(Schedulers.io())
                     .subscribeOn(AndroidSchedulers.mainThread())
@@ -72,8 +73,40 @@ class LoginActivity : NikoActivity() {
                 }
             }
 
+            }
 
-        }
+
+
+//            if(match){
+//
+//                viewModel.login(mobileNumber)
+//                    .subscribeOn(Schedulers.io())
+//                    .subscribeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(object : NikoCompletableObserver(compositeDisposable) {
+//                        override fun onComplete() {
+//                            val intent=Intent(this@LoginActivity, VerificationActivity::class.java).apply {
+//                                putExtra("MOBILE_NUM",mobileNumber)
+//                            }
+//                            startActivity(intent)
+//                        }
+//                    })
+//            }else{
+//
+//                runOnUiThread {
+//                    kotlin.run {
+//                        Toast.makeText(
+//                            applicationContext,
+//                            "لطفا شماره موبایل را به درستی وارد کنید",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//
+//                    }
+//
+//                }
+//            }
+
+
+
 
         viewModel.progressBarLiveData.observe(this) {
             setProgressIndicator(it)
