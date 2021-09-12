@@ -11,6 +11,7 @@ import com.example.nikodriver.feature.home.HomeActivity
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_register.*
 
 
@@ -19,13 +20,28 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        val firstName=userNameEtReg.text.toString()
+        val lastFamily=userFamilyEtReg.text.toString()
+        val nationalCode=nationalCodeEtReg.text.toString()
+        val mobileNum=mobileEtReg.text.toString()
+        val certificateCode=certificateCodeEtReg.text.toString()
+        val plaque=(R.string.iran).toString()+" "+firstPlaqueEtReg.text.toString()+" "+firstPlaqueEtReg.text.toString()+" "+plaqueSpinner.selectedItem.toString()+" "+thirdPlaqueNumEtReg.text.toString()
+        var vehicleType=""
+        toggleBtnVehicleType.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (carTypeBtn.isChecked){
+                vehicleType=(R.string.car).toString()
+            }else{
+                vehicleType=(R.string.bus).toString()
+            }
+        }
+        val vehicleColor=vehicleColorEtReg.text.toString()
 
         registerBtn.setOnClickListener {
             startActivity(Intent(this@RegisterActivity, UploadDocsActivity::class.java))
 
         }
 
-        insuranceExpire.setOnFocusChangeListener { view, b ->
+        insuranceExpireEt.setOnFocusChangeListener { view, b ->
             runOnUiThread {
                 kotlin.run {
                     val picker = PersianDatePickerDialog(this)
@@ -45,7 +61,7 @@ class RegisterActivity : AppCompatActivity() {
                             override fun onDateSelected(persianPickerDate: PersianPickerDate) {
                                 val issueDateTxt =
                                     persianPickerDate.persianYear.toString() + "/" + persianPickerDate.persianMonth + "/" + persianPickerDate.persianDay
-                                insuranceExpire.setText(issueDateTxt)
+                                insuranceExpireEt.setText(issueDateTxt)
                             }
 
                             override fun onDismissed() {

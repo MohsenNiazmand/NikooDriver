@@ -60,6 +60,7 @@
                             android:text="@string/name"/>
 
                         <EditText
+                            android:id="@+id/userNameEtReg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
@@ -88,6 +89,7 @@
                             android:text="@string/family"/>
 
                         <EditText
+                            android:id="@+id/userFamilyEtReg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
@@ -114,6 +116,7 @@
                             android:text="@string/nationalCode"/>
 
                         <EditText
+                            android:id="@+id/nationalCodeEtReg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
@@ -141,6 +144,7 @@
                             android:text="@string/mobile"/>
 
                         <EditText
+                            android:id="@+id/mobileEtReg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
@@ -168,6 +172,7 @@
                             android:text="@string/certificateCode"/>
 
                         <EditText
+                            android:id="@+id/certificateCodeEtReg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
@@ -208,6 +213,7 @@
                             android:orientation="horizontal">
 
                             <EditText
+                                android:id="@+id/irPlaqueEtReg"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
@@ -218,6 +224,7 @@
                                 android:maxLength="2"
                                 />
                             <EditText
+                                android:id="@+id/thirdPlaqueNumEtReg"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
@@ -241,6 +248,7 @@
                                 />
 
                             <EditText
+                                android:id="@+id/firstPlaqueEtReg"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
@@ -288,15 +296,18 @@
                             >
 
                             <com.google.android.material.button.MaterialButtonToggleGroup
+                                android:id="@+id/toggleBtnVehicleType"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 app:singleSelection="true"
+                                app:selectionRequired="true"
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 >
 
 
                                 <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/carTypeBtn"
                                     style="?attr/materialButtonOutlinedStyle"
                                     app:iconSize="40dp"
                                     app:backgroundTint="@color/white"
@@ -307,6 +318,7 @@
                                     android:text="@string/car"/>
 
                                 <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/busTypeBtn"
                                     style="?attr/materialButtonOutlinedStyle"
                                     app:iconSize="40dp"
                                     android:layout_width="wrap_content"
@@ -348,6 +360,7 @@
                             android:text="@string/vehicleColor"/>
 
                         <EditText
+                            android:id="@+id/vehicleColorEtReg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
@@ -380,7 +393,7 @@
 
 
                         <EditText
-                            android:id="@+id/insuranceExpire"
+                            android:id="@+id/insuranceExpireEt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.datePicker"

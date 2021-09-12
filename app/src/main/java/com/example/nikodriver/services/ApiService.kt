@@ -17,6 +17,9 @@ interface ApiService {
     @POST("auth/driver/verify")
     fun verification(@Body jsonObject: JsonObject):Single<VerificationResponse>
 
+    @POST("auth/driver/fill-info")
+    fun register(@Body jsonObject: JsonObject) : Single<VerificationResponse>
+
 }
 
 
