@@ -44,6 +44,38 @@
                     android:paddingVertical="10dp"
                     android:gravity="center">
 
+
+
+                    <LinearLayout
+                        android:layout_marginVertical="10dp"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/background_shape_circle_profile">
+
+                        <ImageView
+                            android:id="@+id/driverPicVector"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_profile" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                            android:text="@string/addDriverPicture"
+                            android:textColor="@color/lightBlue"
+                            />
+
+
+                    </LinearLayout>
+                    <View
+                        android:layout_marginVertical="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/gray"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -60,7 +92,7 @@
                             android:text="@string/name"/>
 
                         <EditText
-                            android:id="@+id/userNameEtReg"
+                            android:id="@+id/firstNameEtReg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
@@ -89,7 +121,7 @@
                             android:text="@string/family"/>
 
                         <EditText
-                            android:id="@+id/userFamilyEtReg"
+                            android:id="@+id/lastNameEtReg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
@@ -178,6 +210,7 @@
                             style="@style/Theme.Niko.register.EditText"
                             android:hint="@string/insertYourCertificateCode"
                             android:maxLength="10"
+                            android:inputType="number"
                             />
 
 
@@ -222,6 +255,7 @@
                                 android:textAlignment="center"
                                 android:hint="@string/iran"
                                 android:maxLength="2"
+                                android:inputType="number"
                                 />
                             <EditText
                                 android:id="@+id/thirdPlaqueNumEtReg"
@@ -230,9 +264,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="5dp"
                                 android:textAlignment="center"
+                                android:nextFocusDown="@id/irPlaqueEtReg"
                                 style="@style/Theme.Niko.register.EditText"
                                 android:hint="@string/threeLines"
                                 android:maxLength="3"
+                                android:inputType="number"
                                 />
                             <Spinner
                                 android:id="@+id/plaqueSpinner"
@@ -252,11 +288,13 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:nextFocusDown="@id/thirdPlaqueNumEtReg"
                                 android:layout_marginHorizontal="5dp"
                                 style="@style/Theme.Niko.register.EditText"
                                 android:textAlignment="center"
                                 android:hint="@string/twoLines"
                                 android:maxLength="2"
+                                android:inputType="number"
                                 />
 
 
@@ -365,8 +403,6 @@
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
                             android:hint="@string/white"
-                            android:maxLength="10"
-                            android:inputType="number"
                             />
 
 

@@ -44,35 +44,7 @@
                     android:paddingVertical="10dp">
 
 
-                    <LinearLayout
-                        android:layout_marginVertical="10dp"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="@drawable/background_shape_circle_profile">
 
-                        <ImageView
-                            android:id="@+id/driverPicVector"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_profile" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
-                            android:text="@string/addDriverPicture"
-                            android:textColor="@color/lightBlue"
-                            />
-
-
-                    </LinearLayout>
-                    <View
-                        android:layout_marginVertical="2dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@color/gray"/>
                     <LinearLayout
                         android:layout_marginVertical="10dp"
                         android:layout_width="match_parent"

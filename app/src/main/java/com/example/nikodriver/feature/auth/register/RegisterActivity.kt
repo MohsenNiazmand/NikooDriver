@@ -4,42 +4,47 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import com.example.nikodriver.R
+import com.example.nikodriver.common.NikoActivity
+import com.example.nikodriver.common.NikoCompletableObserver
+import com.example.nikodriver.feature.auth.login.LoginViewModel
 import com.example.nikodriver.feature.auth.upload_docs.UploadDocsActivity
 import com.example.nikodriver.feature.home.HomeActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_register.*
+import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
+class RegisterActivity : NikoActivity() {
 
-class RegisterActivity : AppCompatActivity() {
+    val viewModel: RegisterViewModel by viewModel()
+    val compositeDisposable = CompositeDisposable()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        val firstName=userNameEtReg.text.toString()
-        val lastFamily=userFamilyEtReg.text.toString()
-        val nationalCode=nationalCodeEtReg.text.toString()
-        val mobileNum=mobileEtReg.text.toString()
-        val certificateCode=certificateCodeEtReg.text.toString()
-        val plaque=(R.string.iran).toString()+" "+firstPlaqueEtReg.text.toString()+" "+firstPlaqueEtReg.text.toString()+" "+plaqueSpinner.selectedItem.toString()+" "+thirdPlaqueNumEtReg.text.toString()
+
+
         var vehicleType=""
         toggleBtnVehicleType.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (carTypeBtn.isChecked){
-                vehicleType=(R.string.car).toString()
+                vehicleType="سواری"
             }else{
-                vehicleType=(R.string.bus).toString()
+                vehicleType="اتوبوس"
             }
         }
-        val vehicleColor=vehicleColorEtReg.text.toString()
 
-        registerBtn.setOnClickListener {
-            startActivity(Intent(this@RegisterActivity, UploadDocsActivity::class.java))
-
-        }
 
         insuranceExpireEt.setOnFocusChangeListener { view, b ->
             runOnUiThread {
@@ -79,7 +84,88 @@ class RegisterActivity : AppCompatActivity() {
         }
 
 
+        firstPlaqueEtReg.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(editable: Editable) {
+                if (firstPlaqueEtReg.getText().hashCode() == editable.hashCode()) {
+                    if (firstPlaqueEtReg.length() == 2) {
+                        thirdPlaqueNumEtReg.requestFocus()
+                    }
+                }
+            }
+        })
 
+
+        thirdPlaqueNumEtReg.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(editable: Editable) {
+                if (thirdPlaqueNumEtReg.getText().hashCode() == editable.hashCode()) {
+                    if (thirdPlaqueNumEtReg.length() == 3) {
+                        irPlaqueEtReg.requestFocus()
+                    }
+                }
+            }
+        })
+
+
+
+        registerBtn.setOnClickListener {
+
+            var plaque="ایران"+" "+irPlaqueEtReg.text.toString()+" "+thirdPlaqueNumEtReg.text.toString()+" "+plaqueSpinner.selectedItem.toString()+" "+firstPlaqueEtReg.text.toString()
+
+
+            if (firstNameEtReg.text.isNotEmpty() &&
+                    lastNameEtReg.text.isNotEmpty() &&
+                    nationalCodeEtReg.text.isNotEmpty() && nationalCodeEtReg.text.length==10 &&
+                    mobileEtReg.text.isNotEmpty() &&
+                    certificateCodeEtReg.text.isNotEmpty() && certificateCodeEtReg.text.length==10 &&
+                    firstPlaqueEtReg.text.isNotEmpty() && thirdPlaqueNumEtReg.text.isNotEmpty() && irPlaqueEtReg.text.isNotEmpty() &&
+                    vehicleType.isNotEmpty() &&
+                    vehicleColorEtReg.text.isNotEmpty() &&
+                    insuranceExpireEt.text.isNotEmpty()
+
+            )
+            {
+
+                viewModel.register("token",firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),mobileEtReg.text.toString(),certificateCodeEtReg.text.toString(),"photo",plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object :NikoCompletableObserver(compositeDisposable){
+                        override fun onComplete() {
+                          startActivity(Intent(this@RegisterActivity, UploadDocsActivity::class.java))
+                        }
+
+                    })
+
+            }else
+            {
+
+                runOnUiThread {
+                    kotlin.run {
+                        Toast.makeText(
+                            applicationContext,
+                            "لطفا مشخصات را به درستی وارد کنید",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+
+                }
+
+            }
+
+//            viewModel.progressBarLiveData.observe(this) {
+//                setProgressIndicator(it)
+//            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
 
     }
+
 }
