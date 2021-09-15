@@ -1,6 +1,7 @@
 package com.example.nikodriver.data.repositories
 
 import io.reactivex.Completable
+import java.io.File
 
 interface RegisterRepository {
 
@@ -16,5 +17,6 @@ interface RegisterRepository {
                  carColor:String,
                  carInsuranceExpiration:String
     ) : Completable
+
 
 }

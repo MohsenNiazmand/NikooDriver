@@ -6,14 +6,17 @@ import com.example.nikodriver.data.verificationResponse.VerificationData
 import com.example.nikodriver.data.verificationResponse.VerificationResponse
 import io.reactivex.Completable
 import io.reactivex.Single
+import retrofit2.Response
 
 class VerificationRepositoryImpl(
     val verificationLocalDataSource: VerificationDataSource,
     val verificationRemoteDataSource: VerificationDataSource
 ):VerificationRepository {
-    override fun verification(phoneNumber: String, code: String): Single<VerificationResponse> {
-        return verificationRemoteDataSource.verification(phoneNumber,code).doOnSuccess {
-            onSuccessfulVerification(code,it.data)
+    override fun verification(phoneNumber: String, code: String): Single<Response<VerificationResponse>> {
+        return verificationRemoteDataSource.verification(phoneNumber,code)
+            .doOnSuccess {
+                it.body()?.data?.let { it1->onSuccessfulVerification(it1) }
+//            it.data?.let { it1 -> onSuccessfulVerification(it1) }
         }
     }
 
@@ -29,9 +32,12 @@ class VerificationRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    fun onSuccessfulVerification(username: String, tokenResponse: VerificationData) {
+    fun onSuccessfulVerification(tokenResponse: VerificationData) {
         TokenContainer.update(tokenResponse.token, tokenResponse.refreshToken)
-        verificationLocalDataSource.saveToken(tokenResponse.token, tokenResponse.refreshToken)
-//        verificationLocalDataSource.saveUsername(username)
+        tokenResponse.token?.let { tokenResponse.refreshToken?.let { it1 ->
+            verificationLocalDataSource.saveToken(it,
+                it1
+            )
+        } }
     }
 }

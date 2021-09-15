@@ -1,5 +1,6 @@
 package com.example.nikodriver.common
 
+import android.util.Log
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

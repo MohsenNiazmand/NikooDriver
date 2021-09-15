@@ -15,6 +15,7 @@
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/circle_shape_profile.xml" value="0.2203125" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/dialog_inset.xml" value="0.2169230769230769" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/ic__car.xml" value="0.2203125" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/ic_check.xml" value="0.2203125" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/ic_profile.xml" value="0.2203125" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/ic_upload.xml" value="0.2203125" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/material_button_selector.xml" value="0.2203125" />
@@ -22,7 +23,7 @@
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_current_travel.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_declined_passengers.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_home.xml" value="0.25" />
-        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_login.xml" value="0.5" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_register.xml" value="0.22" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_travel_registration.xml" value="0.25" />
@@ -31,6 +32,7 @@
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/bottom_sheet_choose.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/bottom_sheet_choose_picture.xml" value="0.33" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/dialog_credit.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/item_choose_picture.xml" value="0.25" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/item_current_travel.xml" value="0.22" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/item_declined_passenger.xml" value="0.25" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/plaque_spinner_item.xml" value="0.20416666666666666" />

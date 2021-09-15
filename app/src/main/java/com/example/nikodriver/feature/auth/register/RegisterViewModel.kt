@@ -3,6 +3,13 @@ package com.example.nikodriver.feature.auth.register
 import com.example.nikodriver.common.NikoViewModel
 import com.example.nikodriver.data.repositories.RegisterRepository
 import io.reactivex.Completable
+import java.io.File
+import okhttp3.RequestBody
+
+import okhttp3.MultipartBody
+
+
+
 
 class RegisterViewModel(val registerRepository: RegisterRepository) : NikoViewModel() {
 
@@ -35,5 +42,8 @@ class RegisterViewModel(val registerRepository: RegisterRepository) : NikoViewMo
             progressBarLiveData.postValue(false)
         }
     }
+
+
+
 
 }

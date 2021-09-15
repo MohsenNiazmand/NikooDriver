@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import com.example.nikodriver.R
-import com.example.nikodriver.common.NikoActivity
+import com.example.nikodriver.common.BaseActivity
 import com.example.nikodriver.common.NikoCompletableObserver
 import com.example.nikodriver.feature.auth.verification.VerificationActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,14 +13,11 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-import android.widget.TextView
-
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.view.View
 
 
-class LoginActivity : NikoActivity() {
+class LoginActivity : BaseActivity() {
     val viewModel: LoginViewModel by viewModel()
     val compositeDisposable = CompositeDisposable()
 

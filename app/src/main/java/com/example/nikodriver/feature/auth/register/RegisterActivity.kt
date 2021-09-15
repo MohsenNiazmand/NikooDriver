@@ -1,24 +1,24 @@
 package com.example.nikodriver.feature.auth.register
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import com.example.nikodriver.R
-import com.example.nikodriver.common.NikoActivity
+import com.example.nikodriver.common.BaseActivity
 import com.example.nikodriver.common.NikoCompletableObserver
 import com.example.nikodriver.feature.auth.chooseDialog.ChoosePictureDialog
-import com.example.nikodriver.feature.auth.login.LoginViewModel
 import com.example.nikodriver.feature.auth.upload_docs.UploadDocsActivity
-import com.example.nikodriver.feature.home.HomeActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.dialog.MaterialDialogs
 import com.theartofdev.edmodo.cropper.CropImage
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -27,15 +27,29 @@ import ir.hamsaa.persiandatepicker.api.PersianPickerDate
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_register.*
+import okhttp3.MediaType
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.io.File
+import okhttp3.RequestBody
+
+import okhttp3.MultipartBody
 
 
-class RegisterActivity : NikoActivity() {
+
+
+
+class RegisterActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallback {
+
+
+
 
     val viewModel: RegisterViewModel by viewModel()
     val compositeDisposable = CompositeDisposable()
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +57,10 @@ class RegisterActivity : NikoActivity() {
 
 
         chooseDriverPicBtn.setOnClickListener {
+
             val chooseDialog = ChoosePictureDialog()
+            chooseDialog.chooseOpinionsCallback=this
             chooseDialog.show(supportFragmentManager, null)
-
-
 
         }
 
@@ -127,53 +141,54 @@ class RegisterActivity : NikoActivity() {
 
         registerBtn.setOnClickListener {
 
-            val plaque="ایران"+" "+irPlaqueEtReg.text.toString()+" "+thirdPlaqueNumEtReg.text.toString()+" "+plaqueSpinner.selectedItem.toString()+" "+firstPlaqueEtReg.text.toString()
+            val plaque =
+                "ایران" + " " + irPlaqueEtReg.text.toString() + " " + thirdPlaqueNumEtReg.text.toString() + " " + plaqueSpinner.selectedItem.toString() + " " + firstPlaqueEtReg.text.toString()
 
 
             if (firstNameEtReg.text.isNotEmpty() &&
-                    lastNameEtReg.text.isNotEmpty() &&
-                    nationalCodeEtReg.text.isNotEmpty() && nationalCodeEtReg.text.length==10 &&
-                    mobileEtReg.text.isNotEmpty() &&
-                    certificateCodeEtReg.text.isNotEmpty() && certificateCodeEtReg.text.length==10 &&
-                    firstPlaqueEtReg.text.isNotEmpty() && thirdPlaqueNumEtReg.text.isNotEmpty() && irPlaqueEtReg.text.isNotEmpty() &&
-                    vehicleType.isNotEmpty() &&
-                    vehicleColorEtReg.text.isNotEmpty() &&
-                    insuranceExpireEt.text.isNotEmpty()
+                lastNameEtReg.text.isNotEmpty() &&
+                nationalCodeEtReg.text.isNotEmpty() && nationalCodeEtReg.text.length == 10 &&
+                mobileEtReg.text.isNotEmpty() &&
+                certificateCodeEtReg.text.isNotEmpty() && certificateCodeEtReg.text.length == 10 &&
+                firstPlaqueEtReg.text.isNotEmpty() && thirdPlaqueNumEtReg.text.isNotEmpty() && irPlaqueEtReg.text.isNotEmpty() &&
+                vehicleType.isNotEmpty() &&
+                vehicleColorEtReg.text.isNotEmpty() &&
+                insuranceExpireEt.text.isNotEmpty()
 
-            )
-            {
+            ) {
 
-                viewModel.register("token",firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),mobileEtReg.text.toString(),certificateCodeEtReg.text.toString(),"photo",plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object :NikoCompletableObserver(compositeDisposable){
-                        override fun onComplete() {
-                          startActivity(Intent(this@RegisterActivity, UploadDocsActivity::class.java))
-                        }
-
-                    })
-
-            }else
-            {
-
-                runOnUiThread {
-                    kotlin.run {
-                        Toast.makeText(
-                            applicationContext,
-                            "لطفا مشخصات را به درستی وارد کنید",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                    }
-
-                }
-
-            }
+//                viewModel.register("token",firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),mobileEtReg.text.toString(),certificateCodeEtReg.text.toString(),"photo",plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString())
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(object :NikoCompletableObserver(compositeDisposable){
+//                        override fun onComplete() {
+                startActivity(Intent(this@RegisterActivity, UploadDocsActivity::class.java))
+//                        }
+//
+//                    })
+//
+//            }else
+//            {
+//
+//                runOnUiThread {
+//                    kotlin.run {
+//                        Toast.makeText(
+//                            applicationContext,
+//                            "لطفا مشخصات را به درستی وارد کنید",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//
+//                    }
+//
+//                }
+//
+//            }
 
 
 //            viewModel.progressBarLiveData.observe(this) {
 //                setProgressIndicator(it)
 //            }
+            }
         }
     }
 
@@ -201,6 +216,15 @@ class RegisterActivity : NikoActivity() {
                 if ( path != null) {
                     val  finalFileImageCarCard = File(path)
                     //upload
+
+//                    val filePart = MultipartBody.Part.createFormData(
+//                        "file",
+//                        finalFileImageCarCard.getName(),
+//                        RequestBody.create(MediaType.parse("image/*"), finalFileImageCarCard)
+//                    )
+//
+//                    val call: Single<MyResponse> = api.uploadAttachment(filePart)
+
                     val finalPicture = BitmapFactory.decodeFile(finalFileImageCarCard.toString())
                     driverImg.setImageBitmap(finalPicture)
                 }
@@ -208,10 +232,18 @@ class RegisterActivity : NikoActivity() {
 
             if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
-                Log.e("cropActivity", "onActivityResult: $error")
+                Timber.e(error)
             }
         }
 
+    }
+
+    override fun onCameraClicked() {
+        CaptureImageFromCamera()
+    }
+
+    override fun onGalleryClick() {
+        ChoosePictureFromGallery()
     }
 
 }

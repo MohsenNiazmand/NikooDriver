@@ -44,176 +44,728 @@
                     android:paddingVertical="10dp">
 
 
-
                     <LinearLayout
-                        android:layout_marginVertical="10dp"
                         android:layout_width="match_parent"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_height="200dp"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="@drawable/background_shape_docs">
+                        android:gravity="center">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_height="200dp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/background_shape_docs"
+                            >
+
+                            <LinearLayout
+                                android:id="@+id/uploadVectorNationalCard"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_gravity="center">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_upload" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                                    android:text="@string/addNationalCardPicture"
+                                    android:textColor="@color/lightBlue"
+                                    />
+
+                            </LinearLayout>
+
+                            <ProgressBar
+                                android:id="@+id/progressBarNationalCardUpload"
+                                android:visibility="gone"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_gravity="center"
+                                />
+
+                            <ImageView
+                                android:id="@+id/icCheckNationalCardUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
+
+
+
+
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:id="@+id/uploadedImageNationalCard"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:roundedCornerRadius="20dp"
+                                android:scaleType="centerCrop"
+                                />
+
+
+
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_upload" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
-                            android:text="@string/addNationalCardPicture"
-                            android:textColor="@color/lightBlue"
-                            />
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadNationalCardGalleryBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                app:strokeColor="@color/orange"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/choosingFromGallery"
+                                android:layout_marginHorizontal="5dp"
+                                app:cornerRadius="20dp" />
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadNationalCardCameraBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                android:layout_marginHorizontal="5dp"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/captureByCamera"
+                                app:cornerRadius="20dp" />
+
+
+
+
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
+
 
                     <View
                         android:layout_marginVertical="2dp"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="@color/gray"/>
-                    <LinearLayout
-                        android:layout_marginVertical="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_marginHorizontal="10dp"                        android:layout_height="200dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="@drawable/background_shape_docs">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <FrameLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_height="200dp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/background_shape_docs"
+                            >
+
+                            <LinearLayout
+                                android:id="@+id/uploadVectorCarCard"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_gravity="center">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_upload" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                                    android:text="@string/addCarCardPicture"
+                                    android:textColor="@color/lightBlue"
+                                    />
+
+                            </LinearLayout>
+
+                            <ProgressBar
+                                android:id="@+id/progressBarCarCardUpload"
+                                android:visibility="gone"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_gravity="center"
+                                />
+
+                            <ImageView
+                                android:id="@+id/icCheckCarCardUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
+
+
+
+
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:id="@+id/uploadedImageCarCard"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:roundedCornerRadius="20dp"
+                                android:scaleType="centerCrop"
+                                />
+
+
+
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_upload" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
-                            android:text="@string/addCarCardPicture"
-                            android:textColor="#0288D1"
-                            />
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadCarCardGalleryBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                app:strokeColor="@color/orange"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/choosingFromGallery"
+                                android:layout_marginHorizontal="5dp"
+                                app:cornerRadius="20dp" />
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadCarCardCameraBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                android:layout_marginHorizontal="5dp"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/captureByCamera"
+                                app:cornerRadius="20dp" />
+
+
+
+
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
+
 
                     <View
                         android:layout_marginVertical="2dp"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="@color/gray"/>
-                    <LinearLayout
-                        android:layout_marginVertical="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_marginHorizontal="10dp"                        android:layout_height="200dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="@drawable/background_shape_docs">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <FrameLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_height="200dp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/background_shape_docs"
+                            >
+
+                            <LinearLayout
+                                android:id="@+id/uploadVectorCertificate"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_gravity="center">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_upload" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                                    android:text="@string/addCertificateCardPicture"
+                                    android:textColor="@color/lightBlue"
+                                    />
+
+                            </LinearLayout>
+
+                            <ProgressBar
+                                android:id="@+id/progressBarCertificateUpload"
+                                android:visibility="gone"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_gravity="center"
+                                />
+
+                            <ImageView
+                                android:id="@+id/icCheckCertificateUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
+
+
+
+
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:id="@+id/uploadedImageCertificate"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:roundedCornerRadius="20dp"
+                                android:scaleType="centerCrop"
+                                />
+
+
+
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_upload" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
-                            android:text="@string/addCertificateCardPicture"
-                            android:textColor="#0288D1"
-                            />
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadCertificateGalleryBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                app:strokeColor="@color/orange"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/choosingFromGallery"
+                                android:layout_marginHorizontal="5dp"
+                                app:cornerRadius="20dp" />
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadCertificateCameraBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                android:layout_marginHorizontal="5dp"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/captureByCamera"
+                                app:cornerRadius="20dp" />
+
+
+
+
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
+
 
                     <View
                         android:layout_marginVertical="2dp"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="@color/gray"/>
-                    <LinearLayout
-                        android:layout_marginVertical="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_marginHorizontal="10dp"                        android:layout_height="200dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="@drawable/background_shape_docs">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <FrameLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_height="200dp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/background_shape_docs"
+                            >
+
+                            <LinearLayout
+                                android:id="@+id/uploadVectorTechnicalDiagnosis"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_gravity="center">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_upload" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                                    android:text="@string/addTechnicalDiagnosisPicture"
+                                    android:textColor="@color/lightBlue"
+                                    />
+
+                            </LinearLayout>
+
+                            <ProgressBar
+                                android:id="@+id/progressBarTechnicalDiagnosisUpload"
+                                android:visibility="gone"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_gravity="center"
+                                />
+
+                            <ImageView
+                                android:id="@+id/icCheckTechnicalDiagnosisUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
+
+
+
+
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:id="@+id/uploadedImageTechnicalDiagnosis"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:roundedCornerRadius="20dp"
+                                android:scaleType="centerCrop"
+                                />
+
+
+
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_upload" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
-                            android:text="@string/addTechnicalDiagnosisPicture"
-                            android:textColor="#0288D1"
-                            />
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadTechnicalDiagnosisGalleryBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                app:strokeColor="@color/orange"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/choosingFromGallery"
+                                android:layout_marginHorizontal="5dp"
+                                app:cornerRadius="20dp" />
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadTechnicalDiagnosisCameraBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                android:layout_marginHorizontal="5dp"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/captureByCamera"
+                                app:cornerRadius="20dp" />
+
+
+
+
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
+
 
                     <View
                         android:layout_marginVertical="2dp"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="@color/gray"/>
-                    <LinearLayout
-                        android:layout_marginVertical="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_marginHorizontal="10dp"                        android:layout_height="200dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="@drawable/background_shape_docs">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <FrameLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_height="200dp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/background_shape_docs"
+                            >
+
+                            <LinearLayout
+                                android:id="@+id/uploadVectorBadRecords"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_gravity="center">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_upload" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                                    android:text="@string/addCertificateOfBadRecordPicture"
+                                    android:textColor="@color/lightBlue"
+                                    />
+
+                            </LinearLayout>
+
+                            <ProgressBar
+                                android:id="@+id/progressBarBadRecordsUpload"
+                                android:visibility="gone"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_gravity="center"
+                                />
+
+                            <ImageView
+                                android:id="@+id/icCheckBadRecordsUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
+
+
+
+
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:id="@+id/uploadedImageBadRecords"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:roundedCornerRadius="20dp"
+                                android:scaleType="centerCrop"
+                                />
+
+
+
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_upload" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
-                            android:text="@string/addCertificateOfBadRecordPicture"
-                            android:textColor="#0288D1"
-                            />
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadBadRecordsGalleryBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                app:strokeColor="@color/orange"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/choosingFromGallery"
+                                android:layout_marginHorizontal="5dp"
+                                app:cornerRadius="20dp" />
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadBadRecordsCameraBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                android:layout_marginHorizontal="5dp"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/captureByCamera"
+                                app:cornerRadius="20dp" />
+
+
+
+
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
+
 
                     <View
                         android:layout_marginVertical="2dp"
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="@color/gray"/>
-                    <LinearLayout
-                        android:layout_marginVertical="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_marginHorizontal="10dp"                        android:layout_height="200dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="@drawable/background_shape_docs">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <FrameLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_height="200dp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/background_shape_docs"
+                            >
+
+                            <LinearLayout
+                                android:id="@+id/uploadVectorWorkbook"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_gravity="center">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_upload" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                                    android:text="@string/addWorkbookPicture"
+                                    android:textColor="@color/lightBlue"
+                                    />
+
+                            </LinearLayout>
+
+                            <ProgressBar
+                                android:id="@+id/progressBarWorkbookUpload"
+                                android:visibility="gone"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_gravity="center"
+                                />
+
+                            <ImageView
+                                android:id="@+id/icCheckWorkbookUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
+
+
+
+
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:id="@+id/uploadedImageWorkbook"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:roundedCornerRadius="20dp"
+                                android:scaleType="centerCrop"
+                                />
+
+
+
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_upload" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
-                            android:text="@string/addWorkbookPicture"
-                            android:textColor="#0288D1"
-                            />
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadWorkbookGalleryBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                app:strokeColor="@color/orange"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/choosingFromGallery"
+                                android:layout_marginHorizontal="5dp"
+                                app:cornerRadius="20dp" />
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/uploadWorkbookCameraBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="56dp"
+                                android:layout_marginVertical="5dp"
+                                android:layout_marginHorizontal="5dp"
+                                android:gravity="center"
+                                android:minHeight="48dp"
+                                android:text="@string/captureByCamera"
+                                app:cornerRadius="20dp" />
+
+
+
+
+
+                        </LinearLayout>
 
 
                     </LinearLayout>
+
+
+
 
 
                     <com.google.android.material.button.MaterialButton

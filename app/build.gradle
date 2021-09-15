@@ -14,7 +14,7 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -74,6 +74,9 @@ dependencies {
     implementation 'com.github.aliab:Persian-Date-Picker-Dialog:1.7.1'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.facebook.fresco:fresco:2.5.0'
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
 
 
 }

@@ -368,7 +368,8 @@
                         android:text="@string/deactive"
                         android:textColor="@color/black"
                         app:cornerRadius="20dp"
-                        app:strokeColor="@color/orange" />
+                        app:strokeColor="@color/orange"
+                        />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/activeBtn"

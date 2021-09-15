@@ -98,7 +98,7 @@
     <string name="addWorkbookPicture">افزودن عکس دفترچه کار</string>
     <string name="proceed">تایید</string>
     <string name="successfulLogin">ورود موفق</string>
-    <string name="camera">دوربین</string>
+    <string name="captureByCamera">استفاده از دوربین</string>
     <string name="choosingFromGallery">انتخاب از گالری</string>
 
 

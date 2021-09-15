@@ -29,8 +29,8 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-abstract class NikoActivity:AppCompatActivity(),NikoView{
-    override val rootView: CoordinatorLayout?
+abstract class BaseActivity:AppCompatActivity(),NikoView{
+        override val rootView: CoordinatorLayout?
         get() {
             val viewGroup = window.decorView.findViewById(android.R.id.content) as ViewGroup
             if (viewGroup !is CoordinatorLayout) {
@@ -133,6 +133,7 @@ abstract class NikoActivity:AppCompatActivity(),NikoView{
         }
         return null
     }
+
 
 
 }

@@ -13,6 +13,7 @@ import com.example.nikodriver.data.repositories.sources.verification.Verificatio
 import com.example.nikodriver.feature.auth.login.LoginViewModel
 import com.example.nikodriver.feature.auth.verification.VerificationViewModel
 import com.example.nikodriver.services.createApiServiceInstance
+import com.facebook.drawee.backends.pipeline.Fresco
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -23,6 +24,8 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
+        Fresco.initialize(this)
+
 
         val myModules= module {
             single { createApiServiceInstance() }
@@ -42,6 +45,7 @@ class App : Application() {
                 )
             }
 
+            single { VerificationLocalDataSource(get()) }
             single<VerificationRepository> {
                 VerificationRepositoryImpl(
                     VerificationLocalDataSource(get()),

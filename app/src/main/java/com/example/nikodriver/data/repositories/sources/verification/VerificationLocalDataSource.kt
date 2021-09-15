@@ -4,9 +4,10 @@ import android.content.SharedPreferences
 import com.example.nikodriver.data.TokenContainer
 import com.example.nikodriver.data.verificationResponse.VerificationResponse
 import io.reactivex.Single
+import retrofit2.Response
 
 class VerificationLocalDataSource(val sharedPreferences: SharedPreferences) : VerificationDataSource{
-    override fun verification(phoneNumber: String, code: String): Single<VerificationResponse> {
+    override fun verification(phoneNumber: String, code: String): Single<Response<VerificationResponse>> {
         TODO("Not yet implemented")
     }
 

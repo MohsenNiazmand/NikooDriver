@@ -1,6 +1,7 @@
 package com.example.nikodriver.data.repositories.sources.register
 
 import io.reactivex.Completable
+import java.io.File
 
 class RegisterLocalDataSource : RegisterDataSource {
     override fun register(
@@ -18,4 +19,8 @@ class RegisterLocalDataSource : RegisterDataSource {
     ): Completable {
         TODO("Not yet implemented")
     }
+
+//    override fun upload(image: File): Completable {
+//        TODO("Not yet implemented")
+//    }
 }
