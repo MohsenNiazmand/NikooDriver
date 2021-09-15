@@ -12,7 +12,10 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import timber.log.Timber
 
+//this class works for refreshing token
+
 class AppAuthenticator : Authenticator, KoinComponent {
+
 
     val apiService : ApiService by inject()
     val verificationLocalDataSource : VerificationDataSource by inject()

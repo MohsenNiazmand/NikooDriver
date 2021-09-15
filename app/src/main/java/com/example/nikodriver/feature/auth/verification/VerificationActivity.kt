@@ -51,7 +51,7 @@ class VerificationActivity : BaseActivity() {
 
                             val response = t.body()?.data
 
-
+                            //for checking the driver position in registering
                             if (response != null) {
                                 when (response.driver.status) {
                                     "active" ->

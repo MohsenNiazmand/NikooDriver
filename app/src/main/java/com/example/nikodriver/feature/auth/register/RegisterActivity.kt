@@ -74,6 +74,8 @@ class RegisterActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
         }
 
 
+
+        //Persian date picker
         insuranceExpireEt.setOnFocusChangeListener { view, b ->
             runOnUiThread {
                 kotlin.run {
@@ -110,8 +112,7 @@ class RegisterActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
             }
 
         }
-
-
+        //for auto focusing next edittext
         firstPlaqueEtReg.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -123,7 +124,6 @@ class RegisterActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                 }
             }
         })
-
 
         thirdPlaqueNumEtReg.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -145,6 +145,7 @@ class RegisterActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                 "ایران" + " " + irPlaqueEtReg.text.toString() + " " + thirdPlaqueNumEtReg.text.toString() + " " + plaqueSpinner.selectedItem.toString() + " " + firstPlaqueEtReg.text.toString()
 
 
+            //validation of fields
             if (firstNameEtReg.text.isNotEmpty() &&
                 lastNameEtReg.text.isNotEmpty() &&
                 nationalCodeEtReg.text.isNotEmpty() && nationalCodeEtReg.text.length == 10 &&
@@ -198,6 +199,7 @@ class RegisterActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
     }
 
+    //it calls after image cropping for get back to this activity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

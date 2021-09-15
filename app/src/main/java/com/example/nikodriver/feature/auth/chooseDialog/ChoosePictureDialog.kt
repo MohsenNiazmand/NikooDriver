@@ -8,7 +8,7 @@ import com.example.nikodriver.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_choose_picture.view.*
 
-
+//a test dialog for choosing picture
 class ChoosePictureDialog() : BottomSheetDialogFragment() {
 
     var chooseOpinionsCallback :ChooseOpinionsCallback? = null

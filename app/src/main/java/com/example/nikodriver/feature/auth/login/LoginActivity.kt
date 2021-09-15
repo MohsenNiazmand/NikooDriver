@@ -41,6 +41,7 @@ class LoginActivity : BaseActivity() {
         loginBtn.setOnClickListener {
 
             val mobileNumber=mobileEt.text.toString()
+            //this regex uses for iranian mobile number validation
             val regex=("(\\+98|0)?9\\d{9}").toRegex()
             val match=regex.matches(mobileNumber)
             if (match){

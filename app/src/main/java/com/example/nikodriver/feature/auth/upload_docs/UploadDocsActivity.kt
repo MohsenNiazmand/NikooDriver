@@ -116,6 +116,7 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
                     //upload
                     val finalPicture = BitmapFactory.decodeFile(finalFileImageCarCard.toString())
 
+                    //set every picture on their related position
                     when (picNum.value){
                         1 -> uploadedImageNationalCard.setImageURI(uri)
                         2 -> uploadedImageCarCard.setImageURI(uri)

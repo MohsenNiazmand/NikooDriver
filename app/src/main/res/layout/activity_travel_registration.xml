@@ -126,7 +126,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
-                            android:hint="@string/tehran"
                             android:layout_marginVertical="10dp"/>
 
 
@@ -157,9 +156,10 @@
 
 
                         <EditText
+                            android:id="@+id/travelDateEt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/Theme.Niko.register.EditText"
+                            style="@style/Theme.Niko.register.datePicker"
                             android:hint="@string/choose"
                             android:paddingEnd="10dp"
                             android:drawableEnd="@drawable/calendar"

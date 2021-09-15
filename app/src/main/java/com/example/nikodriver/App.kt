@@ -26,7 +26,7 @@ class App : Application() {
         Timber.plant(Timber.DebugTree())
         Fresco.initialize(this)
 
-
+        //these are project dependencies
         val myModules= module {
             single { createApiServiceInstance() }
 
@@ -60,6 +60,7 @@ class App : Application() {
 
         }
 
+            //does dependency injection
         startKoin{
             androidContext(this@App)
             modules(myModules)

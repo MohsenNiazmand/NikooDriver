@@ -1,7 +1,7 @@
 package com.example.nikodriver.data
 
 import timber.log.Timber
-
+//it saves our tokens
 object TokenContainer {
 
     var token: String? = null

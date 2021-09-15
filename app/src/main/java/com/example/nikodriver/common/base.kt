@@ -29,6 +29,9 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
+//this class is the base of our project and other classes extend this
+
+
 abstract class BaseActivity:AppCompatActivity(),NikoView{
         override val rootView: CoordinatorLayout?
         get() {
