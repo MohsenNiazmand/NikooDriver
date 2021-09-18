@@ -126,6 +126,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
+                            android:inputType="number"
+                            android:hint="@string/forExampleThreePerson"
+                            android:maxLength="1"
                             android:layout_marginVertical="10dp"/>
 
 
@@ -186,10 +189,13 @@
 
 
                         <EditText
+                            android:id="@+id/travelTimeEt"
+                            android:focusable="true"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.EditText"
                             android:hint="@string/exampleTime"
+                            android:inputType="time"
                             android:layout_marginVertical="10dp"/>
 
 

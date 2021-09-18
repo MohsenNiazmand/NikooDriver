@@ -1,12 +1,13 @@
 package com.example.nikodriver.data.repositories
 
-import com.example.nikodriver.data.repositories.sources.register.RegisterDataSource
+import com.example.nikodriver.data.repositories.sources.fillInfo.FillInfoDataSource
 import io.reactivex.Completable
+import okhttp3.MultipartBody
 
-class RegisterRepositoryImpl(
-    val remoteDataSource:RegisterDataSource,
-    val localDataSource:RegisterDataSource
-) : RegisterRepository {
+class FillInfoRepositoryImpl(
+    val remoteDataSource:FillInfoDataSource,
+    val localDataSource:FillInfoDataSource
+) : FillInfoRepository {
     override fun register(
         token: String,
         firstName: String,

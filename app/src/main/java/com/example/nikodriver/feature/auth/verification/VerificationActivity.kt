@@ -4,28 +4,24 @@ package com.example.nikodriver.feature.auth.verification
 
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.example.nikodriver.R
 import com.example.nikodriver.common.NikoSingleObserver
 import com.example.nikodriver.data.verificationResponse.VerificationResponse
-import com.example.nikodriver.feature.auth.register.RegisterActivity
+import com.example.nikodriver.feature.auth.fillInfo.FillInfoActivity
 import com.example.nikodriver.feature.auth.upload_docs.UploadDocsActivity
 import com.example.nikodriver.feature.home.HomeActivity
-import com.google.gson.JsonObject
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_verification.*
-import org.json.JSONObject
 import org.koin.android.viewmodel.ext.android.viewModel
-import android.text.TextUtils
 import com.example.nikodriver.common.BaseActivity
+import com.google.android.material.snackbar.Snackbar
 
-import com.google.gson.Gson
 import retrofit2.Response
-import java.lang.ProcessBuilder.Redirect.to
 
 
 class VerificationActivity : BaseActivity() {
@@ -37,6 +33,22 @@ class VerificationActivity : BaseActivity() {
         setContentView(R.layout.activity_verification)
         val mobileNum = intent!!.getStringExtra("MOBILE_NUM")
 
+
+        if (!CheckInternet()){
+
+            val snackbar = Snackbar
+                .make(
+                    findViewById(R.id.verificationRoot),
+                    "اینترنت متصل نیست",
+                    Snackbar.LENGTH_INDEFINITE
+                )
+                .setAction("بررسی مجدد ...") { view: View? -> finish();
+                    overridePendingTransition(0,0)
+                    startActivity(intent); }
+            snackbar.show()
+        }
+
+
         nextBtn.setOnClickListener {
 
 
@@ -44,7 +56,7 @@ class VerificationActivity : BaseActivity() {
 
                 viewModel.verification(mobileNum, verificationCodeEt.text.toString())
                     .subscribeOn(Schedulers.io())
-                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object :
                         NikoSingleObserver<Response<VerificationResponse>>(compositeDisposable) {
                         override fun onSuccess(t: Response<VerificationResponse>) {
@@ -65,7 +77,7 @@ class VerificationActivity : BaseActivity() {
                                         startActivity(
                                             Intent(
                                                 this@VerificationActivity,
-                                                RegisterActivity::class.java
+                                                FillInfoActivity::class.java
                                             )
                                         )
                                     "insufficient_docs" ->

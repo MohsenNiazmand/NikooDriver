@@ -13,7 +13,6 @@ import com.example.nikodriver.common.BaseActivity
 import com.example.nikodriver.feature.auth.chooseDialog.ChoosePictureDialog
 import com.example.nikodriver.feature.home.HomeActivity
 import com.theartofdev.edmodo.cropper.CropImage
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_upload_docs.*
 import java.io.File
 
@@ -25,6 +24,8 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload_docs)
+
+
 
 
         uploadNationalCardGalleryBtn.setOnClickListener {

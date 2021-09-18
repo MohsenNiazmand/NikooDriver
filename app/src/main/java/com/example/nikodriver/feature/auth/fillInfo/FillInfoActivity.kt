@@ -1,7 +1,5 @@
-package com.example.nikodriver.feature.auth.register
+package com.example.nikodriver.feature.auth.fillInfo
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -9,42 +7,37 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import com.example.nikodriver.R
 import com.example.nikodriver.common.BaseActivity
-import com.example.nikodriver.common.NikoCompletableObserver
+import com.example.nikodriver.common.NikoSingleObserver
+import com.example.nikodriver.data.verificationResponse.VerificationResponse
 import com.example.nikodriver.feature.auth.chooseDialog.ChoosePictureDialog
 import com.example.nikodriver.feature.auth.upload_docs.UploadDocsActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.dialog.MaterialDialogs
+import com.example.nikodriver.services.createApiServiceInstance
+import com.google.android.material.snackbar.Snackbar
 import com.theartofdev.edmodo.cropper.CropImage
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener
+import kotlinx.android.synthetic.main.activity_fill_info.*
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_register.*
-import okhttp3.MediaType
 import org.koin.android.viewmodel.ext.android.viewModel
+import retrofit2.Response
 import timber.log.Timber
 import java.io.File
-import okhttp3.RequestBody
-
-import okhttp3.MultipartBody
 
 
-
-
-
-class RegisterActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallback {
+class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallback {
 
 
 
 
-    val viewModel: RegisterViewModel by viewModel()
+    val viewModel: FillInfoViewModel by viewModel()
     val compositeDisposable = CompositeDisposable()
 
 
@@ -53,7 +46,9 @@ class RegisterActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        setContentView(R.layout.activity_fill_info)
+
+
 
 
         chooseDriverPicBtn.setOnClickListener {
@@ -100,7 +95,7 @@ class RegisterActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                             }
 
                             override fun onDismissed() {
-                                Toast.makeText(this@RegisterActivity, "Dismissed", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@FillInfoActivity, "Dismissed", Toast.LENGTH_SHORT).show()
                             }
                         })
 
@@ -157,13 +152,14 @@ class RegisterActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                 insuranceExpireEt.text.isNotEmpty()
 
             ) {
+                
 
 //                viewModel.register("token",firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),mobileEtReg.text.toString(),certificateCodeEtReg.text.toString(),"photo",plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString())
 //                    .subscribeOn(Schedulers.io())
 //                    .observeOn(AndroidSchedulers.mainThread())
 //                    .subscribe(object :NikoCompletableObserver(compositeDisposable){
 //                        override fun onComplete() {
-                startActivity(Intent(this@RegisterActivity, UploadDocsActivity::class.java))
+                startActivity(Intent(this@FillInfoActivity, UploadDocsActivity::class.java))
 //                        }
 //
 //                    })
@@ -218,14 +214,6 @@ class RegisterActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                 if ( path != null) {
                     val  finalFileImageCarCard = File(path)
                     //upload
-
-//                    val filePart = MultipartBody.Part.createFormData(
-//                        "file",
-//                        finalFileImageCarCard.getName(),
-//                        RequestBody.create(MediaType.parse("image/*"), finalFileImageCarCard)
-//                    )
-//
-//                    val call: Single<MyResponse> = api.uploadAttachment(filePart)
 
                     val finalPicture = BitmapFactory.decodeFile(finalFileImageCarCard.toString())
                     driverImg.setImageBitmap(finalPicture)

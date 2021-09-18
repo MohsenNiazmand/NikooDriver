@@ -6,6 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
@@ -21,6 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.nikodriver.R
+import com.google.android.material.snackbar.Snackbar
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import io.reactivex.disposables.CompositeDisposable
@@ -135,6 +139,38 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
             return File(picturePath)
         }
         return null
+    }
+
+
+    open fun CheckInternet(): Boolean {
+        val wifiConnected: Boolean
+        val mobileConnected: Boolean
+        var returns = false
+        val connMgr = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeInfo = connMgr.activeNetworkInfo
+        if (activeInfo != null && activeInfo.isConnected) {
+            wifiConnected = activeInfo.type == ConnectivityManager.TYPE_WIFI
+            mobileConnected = activeInfo.type == ConnectivityManager.TYPE_MOBILE
+            if (wifiConnected) {
+                //Connected with Wifi
+            } else if (mobileConnected) {
+                //Connected with Mobile data
+            }
+            returns = true
+        } else {
+
+            returns = false
+        }
+        return returns
+    }
+
+
+
+    open fun CheckGps(): Boolean {
+        val status: Boolean
+        val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+        status = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        return status
     }
 
 

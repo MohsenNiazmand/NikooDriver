@@ -15,6 +15,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.view.View
+import com.google.android.material.snackbar.Snackbar
 
 
 class LoginActivity : BaseActivity() {
@@ -24,6 +26,21 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+
+        if (!CheckInternet()){
+
+            val snackbar = Snackbar
+                .make(
+                    findViewById(R.id.loginRoot),
+                    "اینترنت متصل نیست",
+                    Snackbar.LENGTH_INDEFINITE
+                )
+                .setAction("بررسی مجدد ...") { view: View? -> finish();
+                    startActivity(intent);
+                }
+            snackbar.show()
+        }
 
 
         var pInfo: PackageInfo? = null

@@ -1,9 +1,11 @@
-package com.example.nikodriver.data.repositories.sources.register
+package com.example.nikodriver.data.repositories
 
 import io.reactivex.Completable
+import okhttp3.MultipartBody
 import java.io.File
 
-interface RegisterDataSource {
+interface FillInfoRepository {
+
     fun register(token:String,
                  firstName:String,
                  lastName:String,
@@ -16,8 +18,6 @@ interface RegisterDataSource {
                  carColor:String,
                  carInsuranceExpiration:String
     ) : Completable
-
-//    fun upload(image : File) : Completable
 
 
 }

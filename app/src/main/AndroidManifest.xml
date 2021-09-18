@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.nikodriver">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -17,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NikoDriver"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        >
 
 
         <provider
@@ -51,7 +53,7 @@
             android:name=".feature.home.HomeActivity"
             android:exported="true" />
         <activity
-            android:name=".feature.auth.register.RegisterActivity"
+            android:name=".feature.auth.fillInfo.FillInfoActivity"
             android:exported="true"
             android:windowSoftInputMode="stateHidden" />
         <activity

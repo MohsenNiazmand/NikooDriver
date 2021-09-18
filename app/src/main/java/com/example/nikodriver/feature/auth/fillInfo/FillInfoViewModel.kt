@@ -1,17 +1,12 @@
-package com.example.nikodriver.feature.auth.register
+package com.example.nikodriver.feature.auth.fillInfo
 
 import com.example.nikodriver.common.NikoViewModel
-import com.example.nikodriver.data.repositories.RegisterRepository
+import com.example.nikodriver.data.repositories.FillInfoRepository
 import io.reactivex.Completable
-import java.io.File
-import okhttp3.RequestBody
-
 import okhttp3.MultipartBody
 
 
-
-
-class RegisterViewModel(val registerRepository: RegisterRepository) : NikoViewModel() {
+class FillInfoViewModel(val fillInfoRepository: FillInfoRepository) : NikoViewModel() {
 
 
     fun register(token:String,
@@ -27,7 +22,7 @@ class RegisterViewModel(val registerRepository: RegisterRepository) : NikoViewMo
                  carInsuranceExpiration:String
     ) : Completable {
         progressBarLiveData.value = true
-        return registerRepository.register(
+        return fillInfoRepository.register(
             token,
             firstName,
             lastName,

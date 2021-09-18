@@ -1,6 +1,7 @@
 package com.example.nikodriver.services
 
 import com.example.nikodriver.data.TokenContainer
+import com.example.nikodriver.data.fillInfoResponse.FillInfoResponse
 import com.example.nikodriver.data.loginResponse.LoginResponse
 import com.example.nikodriver.data.verificationResponse.VerificationResponse
 import com.google.gson.JsonObject
@@ -22,14 +23,23 @@ interface ApiService {
     @POST("auth/driver/verify")
     fun verification(@Body jsonObject: JsonObject):Single<Response<VerificationResponse>>
 
-//    @Multipart
+    @Multipart
     @POST( "auth/driver/fill-info")
-    fun register(@Body jsonObject: JsonObject ) : Single<VerificationResponse>
-//    @Header("Authorization") token:String,
-//    ,@Part file : MultipartBody.Part
+    fun register(@Header("Authorization") token:String,
+                 @Part("fname") firstName:String,
+                 @Part("lname") lastName:String,
+                 @Part("SSN") nationalCode:String,
+                 @Part("certificationCode") certificationCode:String,
+                 @Part("photo") file : String,
+                 @Part("carPlaque") carPlaque:String,
+                 @Part("carType") carType:String,
+                 @Part("carColor") carColor:String,
+                 @Part("carInsuranceExpiration") carInsuranceExpiration:String
+
+    ) : Single<Response<FillInfoResponse>>
 
 
-    @POST("/auth/refresh")
+    @POST("auth/refresh")
     fun refreshToken(@Body jsonObject: JsonObject): Call<VerificationResponse>
 
 
