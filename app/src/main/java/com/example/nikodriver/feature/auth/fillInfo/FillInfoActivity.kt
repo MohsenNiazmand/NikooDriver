@@ -185,6 +185,19 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 //            viewModel.progressBarLiveData.observe(this) {
 //                setProgressIndicator(it)
 //            }
+            }else{
+
+                runOnUiThread {
+                    kotlin.run {
+                        Toast.makeText(
+                            applicationContext,
+                            "لطفا مشخصات را به درستی وارد کنید",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+
+                }
             }
         }
     }

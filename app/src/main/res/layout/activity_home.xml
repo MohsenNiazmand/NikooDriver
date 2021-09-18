@@ -331,19 +331,19 @@
                     android:id="@+id/activationTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardElevation="3dp"
-                    app:cardCornerRadius="20dp"
+                    android:layout_above="@id/buttons"
                     android:layout_marginHorizontal="30dp"
-                    android:layout_above="@id/buttons">
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="1dp">
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
-                        android:text="@string/beActiveForGetTravels"
                         android:layout_gravity="center"
-                        android:layout_marginVertical="10dp"/>
+                        android:layout_marginVertical="10dp"
+                        android:text="@string/beActiveForGetTravels"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />
 
                 </com.google.android.material.card.MaterialCardView>
 

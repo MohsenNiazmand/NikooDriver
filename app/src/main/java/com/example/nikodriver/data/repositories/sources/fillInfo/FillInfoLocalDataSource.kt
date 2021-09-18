@@ -22,7 +22,5 @@ class FillInfoLocalDataSource : FillInfoDataSource {
 
 
 
-//    override fun upload(image: File): Completable {
-//        TODO("Not yet implemented")
-//    }
+
 }
