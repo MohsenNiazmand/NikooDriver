@@ -1,16 +1,12 @@
-package com.example.nikodriver.feature.credit
+package com.example.nikodriver.feature.home.credit
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.fragment.app.DialogFragment
 import com.example.nikodriver.R
-import kotlinx.android.synthetic.main.dialog_credit.*
 import kotlinx.android.synthetic.main.dialog_credit.view.*
 
 class CreditDialog:DialogFragment() {
