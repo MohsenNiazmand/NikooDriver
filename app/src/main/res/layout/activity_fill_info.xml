@@ -83,12 +83,23 @@
                         </LinearLayout>
 
 
-                        <de.hdodenhof.circleimageview.CircleImageView
+
+                        <com.facebook.drawee.view.SimpleDraweeView
                             android:id="@+id/driverImg"
-                            app:civ_border_width="2dp"
-                            app:civ_border_color="@color/white"
                             android:layout_width="200dp"
-                            android:layout_height="200dp"/>
+                            android:layout_height="200dp"
+                            app:roundedCornerRadius="100dp"
+                            app:roundingBorderColor="@color/lightBlue"
+                            app:roundingBorderWidth="2dp"
+                            />
+
+                        <ImageView
+                            android:id="@+id/checkedProfile"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_chech_blue"
+                            android:layout_gravity="center"/>
 
 
                     </FrameLayout>
@@ -182,34 +193,34 @@
 
 
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp"
-                        android:layoutDirection="rtl"
-                        android:orientation="horizontal">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginVertical="10dp"-->
+<!--                        android:layoutDirection="rtl"-->
+<!--                        android:orientation="horizontal">-->
 
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
-                            android:layout_marginEnd="10dp"
-                            android:text="@string/mobile"/>
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"-->
+<!--                            android:layout_marginEnd="10dp"-->
+<!--                            android:text="@string/mobile"/>-->
 
-                        <EditText
-                            android:id="@+id/mobileEtReg"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            style="@style/Theme.Niko.register.EditText"
-                            android:hint="@string/insertYourPhoneNumber"
-                            android:maxLength="11"
-                            android:inputType="phone"
-                            />
+<!--                        <EditText-->
+<!--                            android:id="@+id/mobileEtReg"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            style="@style/Theme.Niko.register.EditText"-->
+<!--                            android:hint="@string/insertYourPhoneNumber"-->
+<!--                            android:maxLength="11"-->
+<!--                            android:inputType="phone"-->
+<!--                            />-->
 
 
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

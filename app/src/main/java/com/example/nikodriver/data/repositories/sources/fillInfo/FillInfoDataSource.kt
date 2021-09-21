@@ -1,24 +1,26 @@
 package com.example.nikodriver.data.repositories.sources.fillInfo
 
+import com.example.nikodriver.data.fillInfoResponse.DriverUploadPhotoResponse.UploadPhotoDriverResponse
+import com.example.nikodriver.data.fillInfoResponse.FillInfoResponse
 import io.reactivex.Completable
+import io.reactivex.Single
 import okhttp3.MultipartBody
+import retrofit2.Response
 import java.io.File
 
 interface FillInfoDataSource {
-    fun register(token:String,
-                 firstName:String,
+    fun register(firstName:String,
                  lastName:String,
                  nationalCode:String,
-                 phoneNumber:String,
                  certificationCode:String,
-                 photo: String,
+                 photoUrl:String,
                  carPlaque:String,
                  carType:String,
                  carColor:String,
                  carInsuranceExpiration:String
-    ) : Completable
+    ) : Single<Response<FillInfoResponse>>
 
-//    fun upload(image : File) : Completable
+    fun uploadDriverPhoto(title:String,driverPhoto:MultipartBody.Part) : Single<Response<UploadPhotoDriverResponse>>
 
 
 }

@@ -101,6 +101,8 @@
     <string name="captureByCamera">استفاده از دوربین</string>
     <string name="choosingFromGallery">انتخاب از گالری</string>
     <string name="forExampleThreePerson">مثلا 3 نفر</string>
+    <string name="successfulRegistration">ثبت نام موفق</string>
+    <string name="finishingRegistration">به ناوگان حمل و نقل نیکو خوش آمدید،لطفا جهت تایید ثبت نام منتظر پیام از سوی کارشناسان ما باشید</string>
 
 
 
@@ -138,7 +140,6 @@
         <item>"ه"</item>
         <item>"ی"</item>
     </string-array>
-
 
 
 </resources>

@@ -1,6 +1,7 @@
 package com.example.nikodriver.feature.auth.login
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import com.example.nikodriver.R
@@ -16,12 +17,26 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.view.View
+import com.example.nikodriver.feature.home.HomeActivity
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.inject
 
 
 class LoginActivity : BaseActivity() {
     val viewModel: LoginViewModel by viewModel()
     val compositeDisposable = CompositeDisposable()
+    val sharedPreferences:SharedPreferences by inject()
+
+    override fun onStart() {
+        super.onStart()
+
+        //we check tokenExistence ,if it exist user goes to home
+        val tokenExistence=sharedPreferences.getString("access_token", null)
+        if (tokenExistence?.length!! >10){
+            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

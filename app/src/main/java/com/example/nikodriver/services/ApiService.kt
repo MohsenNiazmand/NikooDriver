@@ -1,13 +1,18 @@
 package com.example.nikodriver.services
 
 import com.example.nikodriver.data.TokenContainer
+import com.example.nikodriver.data.fillInfoResponse.DriverUploadPhotoResponse.UploadPhotoDriverResponse
 import com.example.nikodriver.data.fillInfoResponse.FillInfoResponse
 import com.example.nikodriver.data.loginResponse.LoginResponse
+import com.example.nikodriver.data.refreshTokenResponse.RefreshTokenData
+import com.example.nikodriver.data.submitDocsResponse.SubmitDocsResponse
+import com.example.nikodriver.data.uploadDocResponse.UploadDocResponse
 import com.example.nikodriver.data.verificationResponse.VerificationResponse
 import com.google.gson.JsonObject
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Response
@@ -23,24 +28,25 @@ interface ApiService {
     @POST("auth/driver/verify")
     fun verification(@Body jsonObject: JsonObject):Single<Response<VerificationResponse>>
 
-    @Multipart
     @POST( "auth/driver/fill-info")
-    fun register(@Header("Authorization") token:String,
-                 @Part("fname") firstName:String,
-                 @Part("lname") lastName:String,
-                 @Part("SSN") nationalCode:String,
-                 @Part("certificationCode") certificationCode:String,
-                 @Part("photo") file : String,
-                 @Part("carPlaque") carPlaque:String,
-                 @Part("carType") carType:String,
-                 @Part("carColor") carColor:String,
-                 @Part("carInsuranceExpiration") carInsuranceExpiration:String
+    fun fillInfo(@Body jsonObject: JsonObject) : Single<Response<FillInfoResponse>>
 
-    ) : Single<Response<FillInfoResponse>>
+    @Multipart
+    @POST("auth/driver/photo")
+    fun uploadDriverPhoto(@Part("title") title: String,
+                          @Part driverPhoto:MultipartBody.Part ) : Single<Response<UploadPhotoDriverResponse>>
 
 
     @POST("auth/refresh")
-    fun refreshToken(@Body jsonObject: JsonObject): Call<VerificationResponse>
+    fun refreshToken(@Body jsonObject: JsonObject): Call<RefreshTokenData>
+
+    @Multipart
+    @POST("auth/driver/docs")
+    fun uploadDoc(@Part("title") title:String,
+                  @Part doc: MultipartBody.Part) : Single<Response<UploadDocResponse>>
+
+    @POST("auth/driver/docs/all")
+    fun submitDocs(@Body jsonObject: JsonObject) : Single<Response<SubmitDocsResponse>>
 
 
 }

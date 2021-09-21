@@ -1,35 +1,36 @@
 package com.example.nikodriver.feature.auth.fillInfo
 
 import com.example.nikodriver.common.NikoViewModel
+import com.example.nikodriver.data.fillInfoResponse.DriverUploadPhotoResponse.UploadPhotoDriverResponse
+import com.example.nikodriver.data.fillInfoResponse.FillInfoResponse
 import com.example.nikodriver.data.repositories.FillInfoRepository
 import io.reactivex.Completable
+import io.reactivex.Single
 import okhttp3.MultipartBody
+import retrofit2.Response
 
 
 class FillInfoViewModel(val fillInfoRepository: FillInfoRepository) : NikoViewModel() {
 
 
-    fun register(token:String,
+    fun register(
                  firstName:String,
                  lastName:String,
                  nationalCode:String,
-                 phoneNumber:String,
                  certificationCode:String,
-                 photo:String,
+                 photoUrl:String,
                  carPlaque:String,
                  carType:String,
                  carColor:String,
                  carInsuranceExpiration:String
-    ) : Completable {
+    ) : Single<Response<FillInfoResponse>> {
         progressBarLiveData.value = true
         return fillInfoRepository.register(
-            token,
             firstName,
             lastName,
             nationalCode,
-            phoneNumber,
             certificationCode,
-            photo,
+            photoUrl,
             carPlaque,
             carType,
             carColor,
@@ -37,6 +38,14 @@ class FillInfoViewModel(val fillInfoRepository: FillInfoRepository) : NikoViewMo
             progressBarLiveData.postValue(false)
         }
     }
+
+    fun uploadDriverPhoto(title:String,driverPhoto:MultipartBody.Part) : Single<Response<UploadPhotoDriverResponse>>{
+        progressBarLiveData.value = true
+        return fillInfoRepository.uploadDriverPhoto(title,driverPhoto).doFinally{
+            progressBarLiveData.postValue(false)
+        }
+    }
+
 
 
 

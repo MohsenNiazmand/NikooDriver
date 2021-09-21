@@ -1,39 +1,46 @@
 package com.example.nikodriver.data.repositories
 
+import com.example.nikodriver.data.fillInfoResponse.DriverUploadPhotoResponse.UploadPhotoDriverResponse
+import com.example.nikodriver.data.fillInfoResponse.FillInfoResponse
 import com.example.nikodriver.data.repositories.sources.fillInfo.FillInfoDataSource
 import io.reactivex.Completable
+import io.reactivex.Single
 import okhttp3.MultipartBody
+import retrofit2.Response
 
 class FillInfoRepositoryImpl(
-    val remoteDataSource:FillInfoDataSource,
-    val localDataSource:FillInfoDataSource
+    val fillInfoLocalDataSource:FillInfoDataSource,
+    val fillInfoRemoteDataSource:FillInfoDataSource
 ) : FillInfoRepository {
     override fun register(
-        token: String,
         firstName: String,
         lastName: String,
         nationalCode: String,
-        phoneNumber: String,
         certificationCode: String,
-        photo:String,
+        photoUrl:String,
         carPlaque: String,
         carType: String,
         carColor: String,
         carInsuranceExpiration: String
-    ): Completable {
-        return remoteDataSource.register(
-            token,
+    ): Single<Response<FillInfoResponse>> {
+        return fillInfoRemoteDataSource.register(
             firstName,
             lastName,
             nationalCode,
-            phoneNumber,
             certificationCode,
-            photo,
+            photoUrl,
             carPlaque,
             carType,
             carColor,
             carInsuranceExpiration
         )
+    }
+
+    override fun uploadDriverPhoto(
+        title: String,
+        driverPhoto: MultipartBody.Part
+    ): Single<Response<UploadPhotoDriverResponse>> {
+        return fillInfoRemoteDataSource.uploadDriverPhoto(title,driverPhoto)
     }
 
 

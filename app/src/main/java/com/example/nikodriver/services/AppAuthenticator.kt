@@ -1,6 +1,7 @@
 package com.example.nikodriver.services
 
 import com.example.nikodriver.data.TokenContainer
+import com.example.nikodriver.data.refreshTokenResponse.RefreshTokenData
 import com.example.nikodriver.data.repositories.sources.verification.VerificationDataSource
 import com.example.nikodriver.data.verificationResponse.VerificationResponse
 import com.google.gson.JsonObject
@@ -40,17 +41,17 @@ class AppAuthenticator : Authenticator, KoinComponent {
     }
 
     fun refreshToken(): String {
-        val response: retrofit2.Response<VerificationResponse> =
+        val response: retrofit2.Response<RefreshTokenData> =
             apiService.refreshToken(JsonObject().apply {
                 addProperty("token", TokenContainer.token)
                 addProperty("refresh_token", TokenContainer.refreshToken)
 
             }).execute()
-//        response.body()?.let {
-//            TokenContainer.update(it.access_token, it.refresh_token)
-//            userLocalDataSource.saveToken(it.access_token, it.refresh_token)
-//            return it.access_token
-//        }
+        response.body()?.let {
+            TokenContainer.update(it.token, it.refreshToken)
+            verificationLocalDataSource.saveToken(it.token, it.refreshToken)
+            return it.token
+        }
 
         return ""
     }

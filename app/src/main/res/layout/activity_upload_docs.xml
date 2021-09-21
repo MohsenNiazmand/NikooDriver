@@ -85,21 +85,6 @@
 
                             </LinearLayout>
 
-                            <ProgressBar
-                                android:id="@+id/progressBarNationalCardUpload"
-                                android:visibility="gone"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                />
-
-                            <ImageView
-                                android:id="@+id/icCheckNationalCardUpload"
-                                android:visibility="gone"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_chech_blue"
-                                android:layout_gravity="center"/>
 
 
 
@@ -111,6 +96,14 @@
                                 app:roundedCornerRadius="20dp"
                                 android:scaleType="centerCrop"
                                 />
+
+                            <ImageView
+                                android:id="@+id/icCheckNationalCardUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
 
 
 
@@ -207,21 +200,8 @@
 
                             </LinearLayout>
 
-                            <ProgressBar
-                                android:id="@+id/progressBarCarCardUpload"
-                                android:visibility="gone"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                />
 
-                            <ImageView
-                                android:id="@+id/icCheckCarCardUpload"
-                                android:visibility="gone"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_chech_blue"
-                                android:layout_gravity="center"/>
+
 
 
 
@@ -234,6 +214,13 @@
                                 android:scaleType="centerCrop"
                                 />
 
+                            <ImageView
+                                android:id="@+id/icCheckCarCardUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
 
 
 
@@ -328,21 +315,9 @@
 
                             </LinearLayout>
 
-                            <ProgressBar
-                                android:id="@+id/progressBarCertificateUpload"
-                                android:visibility="gone"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                />
 
-                            <ImageView
-                                android:id="@+id/icCheckCertificateUpload"
-                                android:visibility="gone"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_chech_blue"
-                                android:layout_gravity="center"/>
+
+
 
 
 
@@ -355,7 +330,13 @@
                                 android:scaleType="centerCrop"
                                 />
 
-
+                            <ImageView
+                                android:id="@+id/icCheckCertificateUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
 
 
                         </FrameLayout>
@@ -449,21 +430,8 @@
 
                             </LinearLayout>
 
-                            <ProgressBar
-                                android:id="@+id/progressBarTechnicalDiagnosisUpload"
-                                android:visibility="gone"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                />
 
-                            <ImageView
-                                android:id="@+id/icCheckTechnicalDiagnosisUpload"
-                                android:visibility="gone"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_chech_blue"
-                                android:layout_gravity="center"/>
+
 
 
 
@@ -476,6 +444,13 @@
                                 android:scaleType="centerCrop"
                                 />
 
+                            <ImageView
+                                android:id="@+id/icCheckTechnicalDiagnosisUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
 
 
 
@@ -570,21 +545,6 @@
 
                             </LinearLayout>
 
-                            <ProgressBar
-                                android:id="@+id/progressBarBadRecordsUpload"
-                                android:visibility="gone"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                />
-
-                            <ImageView
-                                android:id="@+id/icCheckBadRecordsUpload"
-                                android:visibility="gone"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_chech_blue"
-                                android:layout_gravity="center"/>
 
 
 
@@ -597,6 +557,13 @@
                                 android:scaleType="centerCrop"
                                 />
 
+                            <ImageView
+                                android:id="@+id/icCheckBadRecordsUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
 
 
 
@@ -691,21 +658,8 @@
 
                             </LinearLayout>
 
-                            <ProgressBar
-                                android:id="@+id/progressBarWorkbookUpload"
-                                android:visibility="gone"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                />
 
-                            <ImageView
-                                android:id="@+id/icCheckWorkbookUpload"
-                                android:visibility="gone"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_chech_blue"
-                                android:layout_gravity="center"/>
+
 
 
 
@@ -718,7 +672,13 @@
                                 android:scaleType="centerCrop"
                                 />
 
-
+                            <ImageView
+                                android:id="@+id/icCheckWorkbookUpload"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_chech_blue"
+                                android:layout_gravity="center"/>
 
 
                         </FrameLayout>

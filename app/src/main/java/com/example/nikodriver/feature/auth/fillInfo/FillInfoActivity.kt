@@ -1,6 +1,8 @@
 package com.example.nikodriver.feature.auth.fillInfo
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
@@ -9,9 +11,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import com.example.nikodriver.R
 import com.example.nikodriver.common.BaseActivity
 import com.example.nikodriver.common.NikoSingleObserver
+import com.example.nikodriver.data.TokenContainer
+import com.example.nikodriver.data.fillInfoResponse.DriverUploadPhotoResponse.UploadPhotoDriverResponse
+import com.example.nikodriver.data.fillInfoResponse.FillInfoResponse
 import com.example.nikodriver.data.verificationResponse.VerificationResponse
 import com.example.nikodriver.feature.auth.chooseDialog.ChoosePictureDialog
 import com.example.nikodriver.feature.auth.upload_docs.UploadDocsActivity
@@ -26,10 +32,14 @@ import ir.hamsaa.persiandatepicker.api.PersianPickerDate
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener
 import kotlinx.android.synthetic.main.activity_fill_info.*
 import kotlinx.android.synthetic.main.activity_home.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.koin.android.viewmodel.ext.android.viewModel
 import retrofit2.Response
 import timber.log.Timber
 import java.io.File
+import java.net.URLEncoder
 
 
 class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallback {
@@ -39,15 +49,14 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
     val viewModel: FillInfoViewModel by viewModel()
     val compositeDisposable = CompositeDisposable()
-
-
-
+    lateinit var vehicleType:String
+    val token="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdHlwZSI6ImRyaXZlciIsImlhdCI6MTYzMjExNTA1MywiZXhwIjoxNjMyMjg3ODUzLCJzdWIiOiIzOCJ9.vewgsL1PMVdEOREJq0w2rVrtHGBRZlax7MAnA3bjdtU"
+    val driverProfileUrl = MutableLiveData<String>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fill_info)
-
 
 
 
@@ -59,12 +68,12 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
         }
 
-        var vehicleType=""
+
         toggleBtnVehicleType.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (carTypeBtn.isChecked){
-                vehicleType="سواری"
+                vehicleType="car"
             }else{
-                vehicleType="اتوبوس"
+                vehicleType="bus"
             }
         }
 
@@ -144,62 +153,62 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
             if (firstNameEtReg.text.isNotEmpty() &&
                 lastNameEtReg.text.isNotEmpty() &&
                 nationalCodeEtReg.text.isNotEmpty() && nationalCodeEtReg.text.length == 10 &&
-                mobileEtReg.text.isNotEmpty() &&
                 certificateCodeEtReg.text.isNotEmpty() && certificateCodeEtReg.text.length == 10 &&
                 firstPlaqueEtReg.text.isNotEmpty() && thirdPlaqueNumEtReg.text.isNotEmpty() && irPlaqueEtReg.text.isNotEmpty() &&
                 vehicleType.isNotEmpty() &&
                 vehicleColorEtReg.text.isNotEmpty() &&
-                insuranceExpireEt.text.isNotEmpty()
+                insuranceExpireEt.text.isNotEmpty() &&
+                        driverProfileUrl.value!=null) {
 
-            ) {
-                
+                viewModel.register(firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),certificateCodeEtReg.text.toString(),driverProfileUrl.value.toString(),plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : NikoSingleObserver<Response<FillInfoResponse>>(compositeDisposable){
+                        override fun onSuccess(t: Response<FillInfoResponse>) {
 
-//                viewModel.register("token",firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),mobileEtReg.text.toString(),certificateCodeEtReg.text.toString(),"photo",plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString())
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(object :NikoCompletableObserver(compositeDisposable){
-//                        override fun onComplete() {
-                startActivity(Intent(this@FillInfoActivity, UploadDocsActivity::class.java))
-//                        }
-//
-//                    })
-//
-//            }else
-//            {
-//
-//                runOnUiThread {
-//                    kotlin.run {
-//                        Toast.makeText(
-//                            applicationContext,
-//                            "لطفا مشخصات را به درستی وارد کنید",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//
-//                    }
-//
-//                }
-//
-//            }
+                            if (t.code()==200){
+                                startActivity(Intent(this@FillInfoActivity, UploadDocsActivity::class.java))
 
+                            }else{
+                                runOnUiThread {
+                                    kotlin.run {
+                                        Toast.makeText(
+                                            applicationContext,
+                                           t.message(),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
 
-//            viewModel.progressBarLiveData.observe(this) {
-//                setProgressIndicator(it)
-//            }
+                                    }
+
+                                }
+                            }
+                        }
+
+                    } )
+
             }else{
 
                 runOnUiThread {
                     kotlin.run {
                         Toast.makeText(
                             applicationContext,
-                            "لطفا مشخصات را به درستی وارد کنید",
+                            "لطفا مشخصات را به درستی وارد نمایید",
                             Toast.LENGTH_SHORT
                         ).show()
 
                     }
 
                 }
+
             }
+
+
         }
+
+        viewModel.progressBarLiveData.observe(this) {
+            setProgressIndicator(it)
+        }
+
     }
 
     override fun onDestroy() {
@@ -225,11 +234,35 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
             if (uri != null) {
                 val path = uri.path
                 if ( path != null) {
-                    val  finalFileImageCarCard = File(path)
+                    val finalFileImage = File(path)
                     //upload
 
-                    val finalPicture = BitmapFactory.decodeFile(finalFileImageCarCard.toString())
-                    driverImg.setImageBitmap(finalPicture)
+
+
+                    val body = finalFileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                    val formDataFile = MultipartBody.Part.createFormData("photo", URLEncoder.encode(finalFileImage.name, "utf-8"), body)
+
+                    //uploading driver photo
+                    viewModel.uploadDriverPhoto("driverPhoto",formDataFile)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(object : NikoSingleObserver<Response<UploadPhotoDriverResponse>>(compositeDisposable){
+                            override fun onSuccess(t: Response<UploadPhotoDriverResponse>) {
+
+                                if (t.code()==200){
+                                    driverImg.setImageURI(t.body()?.data?.url)
+                                    driverProfileUrl.value=t.body()?.data?.url
+                                    checkedProfile.visibility=View.VISIBLE
+
+                                }
+
+
+
+                            }
+
+                        })
+
+
                 }
             }
 
@@ -249,4 +282,6 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
         ChoosePictureFromGallery()
     }
 
+    override fun onBackPressed() {
+    }
 }

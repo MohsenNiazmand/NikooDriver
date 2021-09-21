@@ -63,76 +63,95 @@ class VerificationActivity : BaseActivity() {
 
                             val response = t.body()?.data
 
-                            //for checking the driver position in registering
-                            if (response != null) {
-                                when (response.driver.status) {
-                                    "active" ->
-                                        startActivity(
-                                            Intent(
-                                                this@VerificationActivity,
-                                                HomeActivity::class.java
-                                            )
-                                        )
-                                    "fillInfo" ->
-                                        startActivity(
-                                            Intent(
-                                                this@VerificationActivity,
-                                                FillInfoActivity::class.java
-                                            )
-                                        )
-                                    "insufficient_docs" ->
-                                        startActivity(
-                                            Intent(
-                                                this@VerificationActivity,
-                                                UploadDocsActivity::class.java
-                                            )
-                                        )
+                            if (t.code()==200){
 
-                                    "blocked" ->
-                                        runOnUiThread {
-                                            kotlin.run {
-                                                Toast.makeText(
-                                                    applicationContext,
-                                                    "اکانت شما مسدود شده است",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
+                                //for checking the driver position in registering
+
+                                if (response != null) {
+                                    when (response.driver.status) {
+                                        "active" ->
+                                            startActivity(
+                                                Intent(
+                                                    this@VerificationActivity,
+                                                    HomeActivity::class.java
+                                                )
+                                            )
+                                        "fillInfo" ->
+                                            startActivity(
+                                                Intent(
+                                                    this@VerificationActivity,
+                                                    FillInfoActivity::class.java
+                                                )
+                                            )
+                                        "insufficient_docs" ->
+                                            startActivity(
+                                                Intent(
+                                                    this@VerificationActivity,
+                                                    UploadDocsActivity::class.java
+                                                )
+                                            )
+
+                                        "blocked" ->
+                                            runOnUiThread {
+                                                kotlin.run {
+                                                    Toast.makeText(
+                                                        applicationContext,
+                                                        "اکانت شما مسدود شده است",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+
+                                                }
 
                                             }
+                                        "company_deactivated" ->
+                                            runOnUiThread {
+                                                kotlin.run {
+                                                    Toast.makeText(
+                                                        applicationContext,
+                                                        "از سمت شرکت مسدود شدید",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
 
-                                        }
-                                    "company_deactivated" ->
-                                        runOnUiThread {
-                                            kotlin.run {
-                                                Toast.makeText(
-                                                    applicationContext,
-                                                    "از سمت شرکت مسدود شدید",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-
-                                            }
-
-                                        }
-                                    else ->
-                                        runOnUiThread {
-                                            kotlin.run {
-                                                Toast.makeText(
-                                                    applicationContext,
-                                                    "با پشتیبانی تماس بگیرید",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
+                                                }
 
                                             }
+                                        else ->
+                                            runOnUiThread {
+                                                kotlin.run {
+                                                    Toast.makeText(
+                                                        applicationContext,
+                                                        "با پشتیبانی تماس بگیرید",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+
+                                                }
+
+                                            }
+                                    }
+
+                                } else {
+
+                                    runOnUiThread {
+                                        kotlin.run {
+                                            Toast.makeText(
+                                                applicationContext,
+                                                "کد وارد شده صحیح نمی باشد",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
 
                                         }
+
+                                    }
+
+
                                 }
-
-                            } else {
+                            }else{
 
                                 runOnUiThread {
                                     kotlin.run {
                                         Toast.makeText(
                                             applicationContext,
-                                            "کد وارد شده صحیح نمی باشد",
+                                            t.message(),
                                             Toast.LENGTH_SHORT
                                         ).show()
 
@@ -142,6 +161,8 @@ class VerificationActivity : BaseActivity() {
 
 
                             }
+
+
 
                         }
                     })
@@ -159,6 +180,10 @@ class VerificationActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()
+
+    }
+
+    override fun onBackPressed() {
 
     }
 }

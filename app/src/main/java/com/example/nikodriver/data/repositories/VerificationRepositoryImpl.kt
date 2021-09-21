@@ -16,7 +16,6 @@ class VerificationRepositoryImpl(
         return verificationRemoteDataSource.verification(phoneNumber,code)
             .doOnSuccess {
                 it.body()?.data?.let { it1->onSuccessfulVerification(it1) }
-//            it.data?.let { it1 -> onSuccessfulVerification(it1) }
         }
     }
 
