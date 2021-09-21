@@ -4,6 +4,7 @@ package com.example.nikodriver.feature.auth.verification
 
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_verification.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.example.nikodriver.common.BaseActivity
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.inject
 
 import retrofit2.Response
 
@@ -27,6 +29,8 @@ import retrofit2.Response
 class VerificationActivity : BaseActivity() {
     val viewModel: VerificationViewModel by viewModel()
     val compositeDisposable = CompositeDisposable()
+    val sharedPreferences: SharedPreferences by inject()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -180,8 +184,9 @@ class VerificationActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()
-
     }
+
+
 
     override fun onBackPressed() {
 

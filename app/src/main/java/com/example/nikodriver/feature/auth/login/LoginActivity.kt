@@ -25,18 +25,7 @@ import org.koin.android.ext.android.inject
 class LoginActivity : BaseActivity() {
     val viewModel: LoginViewModel by viewModel()
     val compositeDisposable = CompositeDisposable()
-    val sharedPreferences:SharedPreferences by inject()
 
-    override fun onStart() {
-        super.onStart()
-
-        //we check tokenExistence ,if it exist user goes to home
-        val tokenExistence=sharedPreferences.getString("access_token", null)
-        if (tokenExistence?.length!! >10){
-            finish()
-            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-        }
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,6 +107,9 @@ class LoginActivity : BaseActivity() {
         super.onDestroy()
         compositeDisposable.clear()
 
+    }
+
+    override fun onBackPressed() {
     }
 
 }

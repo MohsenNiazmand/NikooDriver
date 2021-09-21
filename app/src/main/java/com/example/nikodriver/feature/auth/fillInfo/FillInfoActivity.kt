@@ -35,6 +35,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import retrofit2.Response
 import timber.log.Timber
@@ -48,6 +49,7 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
 
     val viewModel: FillInfoViewModel by viewModel()
+    val sharedPreferences: SharedPreferences by inject()
     val compositeDisposable = CompositeDisposable()
     lateinit var vehicleType:String
     val token="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdHlwZSI6ImRyaXZlciIsImlhdCI6MTYzMjExNTA1MywiZXhwIjoxNjMyMjg3ODUzLCJzdWIiOiIzOCJ9.vewgsL1PMVdEOREJq0w2rVrtHGBRZlax7MAnA3bjdtU"
@@ -214,6 +216,13 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()
+        sharedPreferences.edit().clear().apply()
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        sharedPreferences.edit().clear().apply()
 
     }
 

@@ -125,8 +125,7 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
                             if (responseCode==200){
                                 startActivity(Intent(this@UploadDocsActivity, FinishRegisterActivity::class.java))
                                 sharedPreferences.edit().clear().apply()
-                                TokenContainer.token==""
-                                TokenContainer.refreshToken==""
+
 
                             }else{
                                 runOnUiThread {
@@ -340,6 +339,19 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
     }
 
     override fun onBackPressed() {
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
+        sharedPreferences.edit().clear().apply()
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        sharedPreferences.edit().clear().apply()
+
     }
 
 }
