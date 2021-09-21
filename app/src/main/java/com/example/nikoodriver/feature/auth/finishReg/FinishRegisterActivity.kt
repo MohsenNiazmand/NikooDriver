@@ -15,7 +15,6 @@ class FinishRegisterActivity : BaseActivity() {
 
         proceedRegistration.setOnClickListener {
             startActivity(Intent(this@FinishRegisterActivity, LoginActivity::class.java))
-
         }
     }
 

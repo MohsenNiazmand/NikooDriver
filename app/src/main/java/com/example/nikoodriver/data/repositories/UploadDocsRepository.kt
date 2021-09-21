@@ -8,7 +8,8 @@ import retrofit2.Response
 
 interface UploadDocsRepository {
     fun uploadDoc(title:String,doc:MultipartBody.Part):Single<Response<UploadDocResponse>>
-    fun submitDocs(carCardUrl:String,
+    fun submitDocs(token:String,
+                   carCardUrl:String,
                    certificateOfBadRecordUrl:String,
                    certificateUrl:String,
                    nationalCardUrl:String,

@@ -11,7 +11,8 @@ import retrofit2.Response
 class FillInfoRemoteDataSource(private val apiService: ApiService) : FillInfoDataSource {
 
 
-    override fun register(
+    override fun fillInfo(
+        token:String,
         firstName: String,
         lastName: String,
         nationalCode: String,
@@ -22,7 +23,7 @@ class FillInfoRemoteDataSource(private val apiService: ApiService) : FillInfoDat
         carColor: String,
         carInsuranceExpiration: String
     ): Single<Response<FillInfoResponse>> {
-        return apiService.fillInfo(JsonObject().apply {
+        return apiService.fillInfo(token,JsonObject().apply {
             addProperty("fname",firstName)
             addProperty("lname",lastName)
             addProperty("SSN",nationalCode)

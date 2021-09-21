@@ -28,7 +28,7 @@ interface ApiService {
     fun verification(@Body jsonObject: JsonObject):Single<Response<VerificationResponse>>
 
     @POST( "auth/driver/fill-info")
-    fun fillInfo(@Body jsonObject: JsonObject) : Single<Response<FillInfoResponse>>
+    fun fillInfo(@Header("Authorization") token:String, @Body jsonObject: JsonObject) : Single<Response<FillInfoResponse>>
 
     @Multipart
     @POST("auth/driver/photo")
@@ -45,7 +45,7 @@ interface ApiService {
                   @Part doc: MultipartBody.Part) : Single<Response<UploadDocResponse>>
 
     @POST("auth/driver/docs/all")
-    fun submitDocs(@Body jsonObject: JsonObject) : Single<Response<SubmitDocsResponse>>
+    fun submitDocs(@Header("Authorization") token:String,@Body jsonObject: JsonObject) : Single<Response<SubmitDocsResponse>>
 
 
 }

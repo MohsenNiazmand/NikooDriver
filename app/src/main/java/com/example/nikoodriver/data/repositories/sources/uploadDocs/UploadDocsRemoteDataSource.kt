@@ -17,6 +17,7 @@ class UploadDocsRemoteDataSource(val apiService: ApiService) : UploadDocsDataSou
     }
 
     override fun submitDocs(
+        token:String,
         carCardUrl: String,
         certificateOfBadRecordUrl: String,
         certificateUrl: String,
@@ -24,7 +25,7 @@ class UploadDocsRemoteDataSource(val apiService: ApiService) : UploadDocsDataSou
         technicalDiagnosisUrl: String,
         workBookUrl: String
     ): Single<Response<SubmitDocsResponse>> {
-        return apiService.submitDocs(JsonObject().apply {
+        return apiService.submitDocs(token,JsonObject().apply {
             addProperty("carCard",carCardUrl)
             addProperty("certificateOfBadRecord",certificateOfBadRecordUrl)
             addProperty("certificate",certificateUrl)

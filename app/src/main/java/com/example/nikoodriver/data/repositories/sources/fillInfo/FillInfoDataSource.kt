@@ -7,7 +7,8 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 
 interface FillInfoDataSource {
-    fun register(firstName:String,
+    fun fillInfo(token:String,
+                 firstName:String,
                  lastName:String,
                  nationalCode:String,
                  certificationCode:String,

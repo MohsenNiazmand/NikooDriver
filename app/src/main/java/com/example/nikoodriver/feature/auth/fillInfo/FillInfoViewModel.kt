@@ -12,7 +12,7 @@ import retrofit2.Response
 class FillInfoViewModel(val fillInfoRepository: FillInfoRepository) : NikoViewModel() {
 
 
-    fun register(
+    fun register(token:String,
                  firstName:String,
                  lastName:String,
                  nationalCode:String,
@@ -24,7 +24,8 @@ class FillInfoViewModel(val fillInfoRepository: FillInfoRepository) : NikoViewMo
                  carInsuranceExpiration:String
     ) : Single<Response<FillInfoResponse>> {
         progressBarLiveData.value = true
-        return fillInfoRepository.register(
+        return fillInfoRepository.fillInfo(
+            token,
             firstName,
             lastName,
             nationalCode,

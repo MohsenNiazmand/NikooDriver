@@ -8,7 +8,8 @@ import retrofit2.Response
 
 
 class FillInfoLocalDataSource : FillInfoDataSource {
-    override fun register(
+    override fun fillInfo(
+        token:String,
         firstName: String,
         lastName: String,
         nationalCode: String,

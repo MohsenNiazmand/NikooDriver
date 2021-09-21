@@ -40,11 +40,11 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
     val workBookId = MutableLiveData<String>()
     val compositeDisposable= CompositeDisposable()
     val viewModel:UploadDocsViewModel by viewModel()
-    val sharedPreferences:SharedPreferences by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload_docs)
+        val token=intent!!.getStringExtra("token")
 
 
 
@@ -115,34 +115,35 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
 
 
             if (carCardId.value!=null && badRecordsId.value!=null&&certificateCardId.value!=null&&nationalCardId.value!=null&&technicalDiagnosisId.value!=null&&workBookId.value!=null){
-                viewModel.submitDocs(carCardId.value.toString(),badRecordsId.value.toString(),certificateCardId.value.toString(),nationalCardId.value.toString(),technicalDiagnosisId.value.toString(),workBookId.value.toString())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object : NikoSingleObserver<Response<SubmitDocsResponse>>(compositeDisposable){
-                        override fun onSuccess(t: Response<SubmitDocsResponse>) {
-                            val responseCode=t.code()
-                            if (responseCode==200){
-                                startActivity(Intent(this@UploadDocsActivity, FinishRegisterActivity::class.java))
-                                sharedPreferences.edit().clear().apply()
+                if (token != null) {
+                    viewModel.submitDocs(token,carCardId.value.toString(),badRecordsId.value.toString(),certificateCardId.value.toString(),nationalCardId.value.toString(),technicalDiagnosisId.value.toString(),workBookId.value.toString())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(object : NikoSingleObserver<Response<SubmitDocsResponse>>(compositeDisposable){
+                            override fun onSuccess(t: Response<SubmitDocsResponse>) {
+                                val responseCode=t.code()
+                                if (responseCode==200){
+                                    startActivity(Intent(this@UploadDocsActivity, FinishRegisterActivity::class.java))
 
 
-                            }else{
-                                runOnUiThread {
-                                    kotlin.run {
-                                        Toast.makeText(
-                                            applicationContext,
-                                            t.message().toString(),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                }else{
+                                    runOnUiThread {
+                                        kotlin.run {
+                                            Toast.makeText(
+                                                applicationContext,
+                                                t.message().toString(),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+
+                                        }
 
                                     }
-
                                 }
+
                             }
 
-                        }
-
-                    })
+                        })
+                }
 
             }else {
 
@@ -190,13 +191,8 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
                 if ( path != null) {
                     val  finalFileImage = File(path)
                     //upload
-//                    val finalPicture = BitmapFactory.decodeFile(finalFileImage.toString())
-
                     val body = finalFileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
                     val formDataFile = MultipartBody.Part.createFormData("doc", URLEncoder.encode(finalFileImage.name, "utf-8"), body)
-
-
-
                     when(picNum.value){
 
                         1-> {
@@ -338,19 +334,6 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
     }
 
     override fun onBackPressed() {
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.clear()
-        sharedPreferences.edit().clear().apply()
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        sharedPreferences.edit().clear().apply()
-
     }
 
 }

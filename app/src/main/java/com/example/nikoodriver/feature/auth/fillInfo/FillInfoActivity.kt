@@ -46,13 +46,15 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
     val sharedPreferences: SharedPreferences by inject()
     val compositeDisposable = CompositeDisposable()
     lateinit var vehicleType:String
-    val token="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfdHlwZSI6ImRyaXZlciIsImlhdCI6MTYzMjExNTA1MywiZXhwIjoxNjMyMjg3ODUzLCJzdWIiOiIzOCJ9.vewgsL1PMVdEOREJq0w2rVrtHGBRZlax7MAnA3bjdtU"
     val driverProfileUrl = MutableLiveData<String>()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fill_info)
+        val token=intent!!.getStringExtra("token")
+
 
 
 
@@ -156,31 +158,33 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                 insuranceExpireEt.text.isNotEmpty() &&
                         driverProfileUrl.value!=null) {
 
-                viewModel.register(firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),certificateCodeEtReg.text.toString(),driverProfileUrl.value.toString(),plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object : NikoSingleObserver<Response<FillInfoResponse>>(compositeDisposable){
-                        override fun onSuccess(t: Response<FillInfoResponse>) {
+                if (token != null) {
+                    viewModel.register(token,firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),certificateCodeEtReg.text.toString(),driverProfileUrl.value.toString(),plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(object : NikoSingleObserver<Response<FillInfoResponse>>(compositeDisposable){
+                            override fun onSuccess(t: Response<FillInfoResponse>) {
 
-                            if (t.code()==200){
-                                startActivity(Intent(this@FillInfoActivity, UploadDocsActivity::class.java))
+                                if (t.code()==200){
+                                    startActivity(Intent(this@FillInfoActivity, UploadDocsActivity::class.java))
 
-                            }else{
-                                runOnUiThread {
-                                    kotlin.run {
-                                        Toast.makeText(
-                                            applicationContext,
-                                           t.message(),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                }else{
+                                    runOnUiThread {
+                                        kotlin.run {
+                                            Toast.makeText(
+                                                applicationContext,
+                                                t.message(),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+
+                                        }
 
                                     }
-
                                 }
                             }
-                        }
 
-                    } )
+                        } )
+                }
 
             }else{
 
@@ -207,18 +211,6 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.clear()
-        sharedPreferences.edit().clear().apply()
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        sharedPreferences.edit().clear().apply()
-
-    }
 
     //it calls after image cropping for get back to this activity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

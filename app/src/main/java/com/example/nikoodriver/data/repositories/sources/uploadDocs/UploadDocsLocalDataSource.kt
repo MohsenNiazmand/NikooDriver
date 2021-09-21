@@ -15,6 +15,7 @@ class UploadDocsLocalDataSource : UploadDocsDataSource {
     }
 
     override fun submitDocs(
+        token:String,
         carCardUrl: String,
         certificateOfBadRecordUrl: String,
         certificateUrl: String,

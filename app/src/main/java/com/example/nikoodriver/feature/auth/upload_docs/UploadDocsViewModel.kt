@@ -16,7 +16,7 @@ class UploadDocsViewModel(val uploadDocsRepository: UploadDocsRepository) : Niko
             progressBarLiveData.postValue(false)
         }
     }
-    fun submitDocs(
+    fun submitDocs(token:String,
                    carCardUrl:String,
                    certificateOfBadRecordUrl:String,
                    certificateUrl:String,
@@ -24,7 +24,7 @@ class UploadDocsViewModel(val uploadDocsRepository: UploadDocsRepository) : Niko
                    technicalDiagnosisUrl:String,
                    workBookUrl:String): Single<Response<SubmitDocsResponse>>{
         progressBarLiveData.value = true
-        return uploadDocsRepository.submitDocs(carCardUrl,certificateOfBadRecordUrl,certificateUrl,nationalCardUrl,technicalDiagnosisUrl,workBookUrl).doFinally {
+        return uploadDocsRepository.submitDocs(token,carCardUrl,certificateOfBadRecordUrl,certificateUrl,nationalCardUrl,technicalDiagnosisUrl,workBookUrl).doFinally {
             progressBarLiveData.postValue(false)
 
         }

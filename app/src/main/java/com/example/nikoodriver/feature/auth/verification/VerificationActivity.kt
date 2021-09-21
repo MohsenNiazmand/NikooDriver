@@ -4,7 +4,6 @@ package com.example.nikoodriver.feature.auth.verification
 
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -21,15 +20,12 @@ import kotlinx.android.synthetic.main.activity_verification.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.example.nikoodriver.common.BaseActivity
 import com.google.android.material.snackbar.Snackbar
-import org.koin.android.ext.android.inject
-
 import retrofit2.Response
 
 
 class VerificationActivity : BaseActivity() {
     val viewModel: VerificationViewModel by viewModel()
     val compositeDisposable = CompositeDisposable()
-    val sharedPreferences: SharedPreferences by inject()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +62,7 @@ class VerificationActivity : BaseActivity() {
                         override fun onSuccess(t: Response<VerificationResponse>) {
 
                             val response = t.body()?.data
+                            val token="Bearer "+t.body()?.data?.token
 
                             if (t.code()==200){
 
@@ -81,22 +78,32 @@ class VerificationActivity : BaseActivity() {
                                                     HomeActivity::class.java
                                                 )
                                             )
+
                                         }
 
-                                        "fillInfo" ->
+                                        "fillInfo" ->{
+
                                             startActivity(
                                                 Intent(
                                                     this@VerificationActivity,
                                                     FillInfoActivity::class.java
-                                                )
+                                                ).apply {
+                                                    putExtra("token",token)
+                                                }
                                             )
-                                        "insufficient_docs" ->
+                                        }
+
+                                        "insufficient_docs" ->{
                                             startActivity(
                                                 Intent(
                                                     this@VerificationActivity,
                                                     UploadDocsActivity::class.java
-                                                )
+                                                ).apply {
+                                                    putExtra("token",token)
+                                                }
                                             )
+                                        }
+
 
                                         "blocked" ->
                                             runOnUiThread {
@@ -158,7 +165,7 @@ class VerificationActivity : BaseActivity() {
                                     kotlin.run {
                                         Toast.makeText(
                                             applicationContext,
-                                            t.message(),
+                                            "منتظر تایید مدارک باشید",
                                             Toast.LENGTH_SHORT
                                         ).show()
 

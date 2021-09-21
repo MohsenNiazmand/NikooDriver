@@ -14,7 +14,9 @@ class VerificationRepositoryImpl(
     override fun verification(phoneNumber: String, code: String): Single<Response<VerificationResponse>> {
         return verificationRemoteDataSource.verification(phoneNumber,code)
             .doOnSuccess {
-                it.body()?.data?.let { it1->onSuccessfulVerification(it1) }
+                if (it.body()?.data?.driver?.status=="active"){
+                    it.body()?.data?.let { it1->onSuccessfulVerification(it1) }
+                }
         }
     }
 

@@ -11,7 +11,8 @@ class FillInfoRepositoryImpl(
     val fillInfoLocalDataSource:FillInfoDataSource,
     val fillInfoRemoteDataSource:FillInfoDataSource
 ) : FillInfoRepository {
-    override fun register(
+    override fun fillInfo(
+        token:String,
         firstName: String,
         lastName: String,
         nationalCode: String,
@@ -22,7 +23,8 @@ class FillInfoRepositoryImpl(
         carColor: String,
         carInsuranceExpiration: String
     ): Single<Response<FillInfoResponse>> {
-        return fillInfoRemoteDataSource.register(
+        return fillInfoRemoteDataSource.fillInfo(
+            token,
             firstName,
             lastName,
             nationalCode,

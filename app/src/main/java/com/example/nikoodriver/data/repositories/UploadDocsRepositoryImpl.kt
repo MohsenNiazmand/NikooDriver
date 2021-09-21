@@ -21,6 +21,7 @@ class UploadDocsRepositoryImpl(
     }
 
     override fun submitDocs(
+        token:String,
         carCardUrl: String,
         certificateOfBadRecordUrl: String,
         certificateUrl: String,
@@ -28,6 +29,6 @@ class UploadDocsRepositoryImpl(
         technicalDiagnosisUrl: String,
         workBookUrl: String
     ): Single<Response<SubmitDocsResponse>> {
-        return uploadDocsRemoteDataSource.submitDocs(carCardUrl,certificateOfBadRecordUrl,certificateUrl,nationalCardUrl,technicalDiagnosisUrl,workBookUrl)
+        return uploadDocsRemoteDataSource.submitDocs(token,carCardUrl,certificateOfBadRecordUrl,certificateUrl,nationalCardUrl,technicalDiagnosisUrl,workBookUrl)
     }
 }
