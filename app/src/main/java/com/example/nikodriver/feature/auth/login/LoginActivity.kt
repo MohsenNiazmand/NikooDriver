@@ -33,6 +33,7 @@ class LoginActivity : BaseActivity() {
         //we check tokenExistence ,if it exist user goes to home
         val tokenExistence=sharedPreferences.getString("access_token", null)
         if (tokenExistence?.length!! >10){
+            finish()
             startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
         }
     }
