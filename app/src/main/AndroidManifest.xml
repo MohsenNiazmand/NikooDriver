@@ -26,15 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NikoDriver"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m">
+        >
 
-        <service
-            android:name=".services.firebase.NikooFirebase"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
+
 
         <activity
             android:name="com.example.nikoodriver.feature.auth.finishReg.FinishRegisterActivity"

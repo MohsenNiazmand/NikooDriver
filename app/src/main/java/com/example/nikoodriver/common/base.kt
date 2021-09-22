@@ -87,7 +87,7 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
             if (photoFile != null) {
                 photoURI = FileProvider.getUriForFile(
                     this,
-                    "com.example.nikodriver.common.fileprovider",
+                    "com.example.nikoodriver.common.fileprovider",
                     photoFile
                 )
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -97,6 +97,7 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
     }
 
 
+    @SuppressLint("SimpleDateFormat")
     @Throws(IOException::class)
     open fun createImageFile(): File? {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())

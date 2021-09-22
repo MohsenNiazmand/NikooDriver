@@ -78,42 +78,17 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
 
         //Persian date picker
-        insuranceExpireEt.setOnFocusChangeListener { view, b ->
-            runOnUiThread {
-                kotlin.run {
-                    val picker = PersianDatePickerDialog(this)
-                        .setPositiveButtonString("باشه")
-                        .setNegativeButton("بیخیال")
-                        .setTodayButton("امروز")
-                        .setTodayButtonVisible(true)
-                        .setMinYear(1300)
-                        .setAllButtonsTextSize(16)
-                        .setPickerBackgroundColor(Color.WHITE)
-                        .setMaxYear(PersianDatePickerDialog.THIS_YEAR)
-                        .setInitDate(1374, 2, 1)
-                        .setActionTextColor(Color.BLACK)
-                        .setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR)
-                        .setShowInBottomSheet(true)
-                        .setListener(object : PersianPickerListener {
-                            override fun onDateSelected(persianPickerDate: PersianPickerDate) {
-                                val issueDateTxt =
-                                    persianPickerDate.persianYear.toString() + "/" + persianPickerDate.persianMonth + "/" + persianPickerDate.persianDay
-                                insuranceExpireEt.setText(issueDateTxt)
-                            }
-
-                            override fun onDismissed() {
-                                Toast.makeText(this@FillInfoActivity, "Dismissed", Toast.LENGTH_SHORT).show()
-                            }
-                        })
-
-                    picker.show()
-
-
-                }
-
-            }
-
-        }
+//        insuranceExpireEt.setOnFocusChangeListener { view, b ->
+//            runOnUiThread {
+//                kotlin.run {
+//
+//
+//
+//                }
+//
+//            }
+//
+//        }
         //for auto focusing next edittext
         firstPlaqueEtReg.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -278,5 +253,34 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
     }
 
     override fun onBackPressed() {
+    }
+
+    fun datePicker(v: View){
+        val picker = PersianDatePickerDialog(this)
+            .setPositiveButtonString("باشه")
+            .setNegativeButton("بیخیال")
+            .setTodayButton("امروز")
+            .setTodayButtonVisible(true)
+            .setMinYear(1300)
+            .setAllButtonsTextSize(16)
+            .setPickerBackgroundColor(Color.WHITE)
+            .setMaxYear(PersianDatePickerDialog.THIS_YEAR)
+            .setInitDate(1374, 2, 1)
+            .setActionTextColor(Color.BLACK)
+            .setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR)
+            .setShowInBottomSheet(true)
+            .setListener(object : PersianPickerListener {
+                override fun onDateSelected(persianPickerDate: PersianPickerDate) {
+                    val issueDateTxt =
+                        persianPickerDate.persianYear.toString() + "/" + persianPickerDate.persianMonth + "/" + persianPickerDate.persianDay
+                    insuranceExpireEt.setText(issueDateTxt)
+                }
+
+                override fun onDismissed() {
+                    Toast.makeText(this@FillInfoActivity, "Dismissed", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+        picker.show()
     }
 }

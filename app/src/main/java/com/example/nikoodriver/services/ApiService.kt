@@ -19,6 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+import java.util.concurrent.TimeUnit
 
 interface ApiService {
     @POST("auth/driver")
@@ -54,6 +55,9 @@ interface ApiService {
 fun createApiServiceInstance():ApiService{
 
     val okHttpClient = OkHttpClient.Builder()
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
         .addInterceptor {
             val oldRequest = it.request()
             val newRequestBuilder = oldRequest.newBuilder()
