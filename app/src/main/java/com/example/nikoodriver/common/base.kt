@@ -58,7 +58,6 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
     var photoURI: Uri? = null
     open fun openCropActivity(uri: Uri?) {
         val cropper = CropImage.activity(uri)
-//            .setAspectRatio(1, 1)
             .setOutputCompressQuality(70)
             .setFixAspectRatio(false)
             .setAllowRotation(true)
@@ -73,8 +72,6 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
     @SuppressLint("QueryPermissionsNeeded")
     open fun CaptureImageFromCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
             // Create the File where the photo should go
             var photoFile: File? = null
             try {
@@ -92,7 +89,6 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
                 )
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-            }
         }
     }
 
@@ -129,7 +125,7 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
     open fun uriToFile(uri: Uri?): File? {
         val items = arrayOf(MediaStore.Images.Media.DATA)
         val cursor: Cursor? =
-            uri?.let { applicationContext.getContentResolver().query(it, items, null, null, null) }
+            uri?.let { applicationContext.contentResolver.query(it, items, null, null, null) }
         if (cursor != null) {
             cursor.moveToFirst()
             val picturePath = cursor.getString(cursor.getColumnIndexOrThrow(items[0]))

@@ -168,7 +168,8 @@
                             android:hint="@string/choose"
                             android:paddingEnd="10dp"
                             android:layout_marginVertical="10dp"
-                            app:drawableEndCompat="@drawable/calendar" />
+                            app:drawableEndCompat="@drawable/calendar"
+                            tools:ignore="UsingOnClickInXml" />
 
 
                     </LinearLayout>

@@ -141,7 +141,9 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                             override fun onSuccess(t: Response<FillInfoResponse>) {
 
                                 if (t.code()==200){
-                                    startActivity(Intent(this@FillInfoActivity, UploadDocsActivity::class.java))
+                                    startActivity(Intent(this@FillInfoActivity, UploadDocsActivity::class.java).apply {
+                                        putExtra("token",token)
+                                    })
 
                                 }else{
                                     runOnUiThread {
