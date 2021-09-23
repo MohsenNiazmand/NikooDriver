@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/loginRoot"
     android:background="@drawable/app_background"
+    android:layoutDirection="ltr"
     tools:context=".feature.auth.login.LoginActivity">
 
     <LinearLayout

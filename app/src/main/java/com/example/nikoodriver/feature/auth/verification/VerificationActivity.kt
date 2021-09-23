@@ -21,6 +21,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import com.example.nikoodriver.common.BaseActivity
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Response
+import timber.log.Timber
 
 
 class VerificationActivity : BaseActivity() {
@@ -63,122 +64,36 @@ class VerificationActivity : BaseActivity() {
 
                             val response = t.body()?.data
                             val token="Bearer "+t.body()?.data?.token
+                            val message=t.body()?.message
+                            insertYourNumberTv.setOnClickListener {
+                                Toast.makeText(applicationContext, message.toString(), Toast.LENGTH_SHORT).show()
+                            }
 
-                            if (t.code()==200){
+                            if (t.code()==200 && response != null){
 
                                 //for checking the driver position in registering
 
-                                if (response != null) {
+
                                     when (response.driver.status) {
-                                        "active" ->{
-                                            finishAffinity()
-                                            startActivity(
-                                                Intent(
-                                                    this@VerificationActivity,
-                                                    HomeActivity::class.java
-                                                )
-                                            )
-
-                                        }
-
-                                        "fillInfo" ->{
-
-                                            startActivity(
-                                                Intent(
-                                                    this@VerificationActivity,
-                                                    FillInfoActivity::class.java
-                                                ).apply {
-                                                    putExtra("token",token)
-                                                }
-                                            )
-                                        }
-
-                                        "insufficient_docs" ->{
-                                            startActivity(
-                                                Intent(
-                                                    this@VerificationActivity,
-                                                    UploadDocsActivity::class.java
-                                                ).apply {
-                                                    putExtra("token",token)
-                                                }
-                                            )
-                                        }
-
-
+                                        "active" ->{ finishAffinity()
+                                            startActivity(Intent(this@VerificationActivity, HomeActivity::class.java)) }
+                                        "fillInfo" ->{ startActivity(Intent(this@VerificationActivity, FillInfoActivity::class.java).apply { putExtra("token",token) }) }
+                                        "insufficient_docs" ->{ startActivity(Intent(this@VerificationActivity, UploadDocsActivity::class.java).apply { putExtra("token",token) }) }
                                         "blocked" ->
-                                            runOnUiThread {
-                                                kotlin.run {
-                                                    Toast.makeText(
-                                                        applicationContext,
-                                                        "اکانت شما مسدود شده است",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-
-                                                }
-
-                                            }
+                                            runOnUiThread { kotlin.run { Toast.makeText(applicationContext, "اکانت شما مسدود شده است", Toast.LENGTH_SHORT).show() } }
                                         "company_deactivated" ->
-                                            runOnUiThread {
-                                                kotlin.run {
-                                                    Toast.makeText(
-                                                        applicationContext,
-                                                        "از سمت شرکت مسدود شدید",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-
-                                                }
-
-                                            }
+                                            runOnUiThread { kotlin.run { Toast.makeText(applicationContext, "از سمت شرکت مسدود شدید", Toast.LENGTH_SHORT).show() } }
                                         else ->
-                                            runOnUiThread {
-                                                kotlin.run {
-                                                    Toast.makeText(
-                                                        applicationContext,
-                                                        "با پشتیبانی تماس بگیرید",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-
-                                                }
-
-                                            }
+                                            runOnUiThread { kotlin.run { Toast.makeText(applicationContext, "با پشتیبانی تماس بگیرید", Toast.LENGTH_SHORT).show() } }
                                     }
 
-                                } else {
-
-                                    runOnUiThread {
-                                        kotlin.run {
-                                            Toast.makeText(
-                                                applicationContext,
-                                                "کد وارد شده صحیح نمی باشد",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-
-                                        }
-
-                                    }
-
-
-                                }
-                            }else{
-
-                                runOnUiThread {
-                                    kotlin.run {
-                                        Toast.makeText(
-                                            applicationContext,
-                                            "منتظر تایید مدارک باشید",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-
-                                    }
-
-                                }
-
+                            }else if (t.code()==403 && t.body()?.data==null){ runOnUiThread {kotlin.run { Toast.makeText(applicationContext, "ورود ناموفق", Toast.LENGTH_SHORT).show()} } }
 
                             }
 
 
 
-                        }
+
                     })
 
 

@@ -310,10 +310,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/imgSad"
                                 android:layout_centerHorizontal="true"
+                                android:textAlignment="center"
                                 android:layout_marginTop="10dp"
                                 android:text="@string/declinedPassengers"
-                                android:textColor="@color/blue"
-                                android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />
+                                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                                android:textColor="@color/blue" />
 
 
                         </RelativeLayout>

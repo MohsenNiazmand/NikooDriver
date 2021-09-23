@@ -56,6 +56,7 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
     var currentPhotoPath: String? = null
     var image: File? = null
     var photoURI: Uri? = null
+
     open fun openCropActivity(uri: Uri?) {
         val cropper = CropImage.activity(uri)
             .setOutputCompressQuality(70)

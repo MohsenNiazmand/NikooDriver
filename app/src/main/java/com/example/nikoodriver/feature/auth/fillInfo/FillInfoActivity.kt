@@ -58,7 +58,7 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
 
 
-        chooseDriverPicBtn.setOnClickListener {
+        chooseDriverPicPart.setOnClickListener {
 
             val chooseDialog = ChoosePictureDialog()
             chooseDialog.chooseOpinionsCallback=this
@@ -196,8 +196,8 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             openCropActivity(photoURI)
         }
-        if (requestCode == REQ_CODE_CHOOSE_IMAGE_FROM_GALLERY && data != null) {
-            val galleryPicUri = Uri.fromFile(data.data?.let { uriToFile(it) })
+        if (requestCode == REQ_CODE_CHOOSE_IMAGE_FROM_GALLERY ) {
+            val galleryPicUri = Uri.fromFile(data?.data?.let { uriToFile(it) })
             openCropActivity(galleryPicUri)
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && data != null) {
@@ -224,8 +224,8 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                                 if (t.code()==200){
                                     driverImg.setImageURI(t.body()?.data?.url)
                                     driverProfileUrl.value=t.body()?.data?.url
+                                    chooseDriverPicPart.visibility=View.GONE
                                     checkedProfile.visibility=View.VISIBLE
-
                                 }
 
 

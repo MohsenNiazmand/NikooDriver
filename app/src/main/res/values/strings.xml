@@ -103,6 +103,9 @@
     <string name="forExampleThreePerson">مثلا 3 نفر</string>
     <string name="successfulRegistration">ثبت نام موفق</string>
     <string name="finishingRegistration">به ناوگان حمل و نقل نیکو خوش آمدید،لطفا جهت تایید ثبت نام منتظر پیام از سوی کارشناسان ما باشید</string>
+    <string name="adminMessage">ییام ادمین</string>
+    <string name="channelId">آیدی کانال</string>
+    <string name="msg_token_fmt" translatable="false">FCM registration Token: %s</string>
 
 
 

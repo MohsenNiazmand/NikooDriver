@@ -3,10 +3,14 @@
 package com.example.nikoodriver.feature.home
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.example.nikoodriver.R
 import com.example.nikoodriver.common.BaseActivity
 import com.example.nikoodriver.feature.auth.login.LoginActivity
@@ -14,9 +18,14 @@ import com.example.nikoodriver.feature.home.credit.CreditDialog
 import com.example.nikoodriver.feature.current_travel.CurrentTravelActivity
 import com.example.nikoodriver.feature.declined_passengers.DeclinedPassengersActivity
 import com.example.nikoodriver.feature.travel_registeration.TravelRegistrationActivity
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.ktx.messaging
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 class HomeActivity : BaseActivity() {
     val sharedPreferences: SharedPreferences by inject()
@@ -32,7 +41,7 @@ class HomeActivity : BaseActivity() {
         }
     }
 
-    @SuppressLint("CutPasteId")
+    @SuppressLint("CutPasteId", "BinaryOperationInTimber")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -98,7 +107,46 @@ class HomeActivity : BaseActivity() {
         }
 
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            val channelId = "fcm_id"
+            val channelName = "fcm_channel"
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager?.createNotificationChannel(
+                NotificationChannel(channelId,
+                channelName, NotificationManager.IMPORTANCE_LOW)
+            )
+        }
+
+
+
+        Firebase.messaging.getToken().addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Timber.i("Fetching FCM registration token failed"+ task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = getString(R.string.msg_token_fmt, token)
+            Timber.i("MessageF"+ msg)
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
+        // [END log_reg_token]
+        Toast.makeText(applicationContext, "See README for setup instructions", Toast.LENGTH_SHORT).show()
+
+
+
+
+
+
+
     }
+
+
+
 
 
 }
