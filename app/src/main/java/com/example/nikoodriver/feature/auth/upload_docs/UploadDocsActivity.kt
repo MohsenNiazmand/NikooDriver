@@ -191,14 +191,17 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
                     when(picNum.value){
 
                         1-> {
+                            pbNationalCard.visibility=View.VISIBLE
+                            uploadVectorNationalCard.visibility=View.GONE
                             viewModel.uploadDoc("nationalCard",formDataFile)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(object : NikoSingleObserver<Response<UploadDocResponse>>(compositeDisposable){
                                     override fun onSuccess(t: Response<UploadDocResponse>) {
                                         if (t.code()==200){
-                                            uploadedImageNationalCard.setImageURI(t.body()?.data?.url)
+                                            uploadedImageNationalCard.setImageURI(uri)
                                             nationalCardId.value=t.body()?.data?.id
+                                            pbNationalCard.visibility=View.GONE
                                             icCheckNationalCardUpload.visibility=View.VISIBLE
                                         }
 
@@ -209,14 +212,17 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
                         }
 
                         2-> {
+                            uploadVectorCarCard.visibility=View.GONE
+                            pbCarCard.visibility=View.VISIBLE
                             viewModel.uploadDoc("carCard",formDataFile)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(object : NikoSingleObserver<Response<UploadDocResponse>>(compositeDisposable){
                                     override fun onSuccess(t: Response<UploadDocResponse>) {
                                         if (t.code()==200){
-                                            uploadedImageCarCard.setImageURI(t.body()?.data?.url)
+                                            uploadedImageCarCard.setImageURI(uri)
                                             carCardId.value=t.body()?.data?.id
+                                            pbCarCard.visibility=View.GONE
                                             icCheckCarCardUpload.visibility=View.VISIBLE
                                         }
 
@@ -228,15 +234,17 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
                         }
 
                         3->{
-
+                            pbCertificate.visibility=View.VISIBLE
+                            uploadVectorCertificate.visibility=View.GONE
                             viewModel.uploadDoc("certificate",formDataFile)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(object : NikoSingleObserver<Response<UploadDocResponse>>(compositeDisposable){
                                     override fun onSuccess(t: Response<UploadDocResponse>) {
                                         if (t.code()==200){
-                                            uploadedImageCertificate.setImageURI(t.body()?.data?.url)
+                                            uploadedImageCertificate.setImageURI(uri)
                                             certificateCardId.value=t.body()?.data?.id
+                                            pbCertificate.visibility=View.GONE
                                             icCheckCertificateUpload.visibility=View.VISIBLE
                                         }
 
@@ -248,15 +256,17 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
                         }
 
                         4->{
-
+                            pbTechnicalDiagnosis.visibility=View.VISIBLE
+                            uploadVectorTechnicalDiagnosis.visibility=View.GONE
                             viewModel.uploadDoc("technicalDiagnosis",formDataFile)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(object : NikoSingleObserver<Response<UploadDocResponse>>(compositeDisposable){
                                     override fun onSuccess(t: Response<UploadDocResponse>) {
                                         if(t.code()==200){
-                                            uploadedImageTechnicalDiagnosis.setImageURI(t.body()?.data?.url)
+                                            uploadedImageTechnicalDiagnosis.setImageURI(uri)
                                             technicalDiagnosisId.value=t.body()?.data?.id
+                                            pbTechnicalDiagnosis.visibility=View.GONE
                                             icCheckTechnicalDiagnosisUpload.visibility=View.VISIBLE
 
                                         }
@@ -268,14 +278,17 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
                         }
 
                         5->{
+                            pbBadRecords.visibility=View.VISIBLE
+                            uploadVectorBadRecords.visibility=View.GONE
                             viewModel.uploadDoc("certificateOfBadRecord",formDataFile)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(object : NikoSingleObserver<Response<UploadDocResponse>>(compositeDisposable){
                                     override fun onSuccess(t: Response<UploadDocResponse>) {
                                         if(t.code()==200){
-                                            uploadedImageBadRecords.setImageURI(t.body()?.data?.url)
+                                            uploadedImageBadRecords.setImageURI(uri)
                                             badRecordsId.value=t.body()?.data?.id
+                                            pbBadRecords.visibility=View.GONE
                                             icCheckBadRecordsUpload.visibility=View.VISIBLE
                                         }
 
@@ -286,14 +299,17 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
 
                         }
                         6->{
+                            pbWorkBook.visibility=View.VISIBLE
+                            uploadVectorWorkbook.visibility=View.GONE
                             viewModel.uploadDoc("workBook",formDataFile)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(object : NikoSingleObserver<Response<UploadDocResponse>>(compositeDisposable){
                                     override fun onSuccess(t: Response<UploadDocResponse>) {
                                         if (t.code()==200){
-                                            uploadedImageWorkbook.setImageURI(t.body()?.data?.url)
+                                            uploadedImageWorkbook.setImageURI(uri)
                                             workBookId.value=t.body()?.data?.id
+                                            pbWorkBook.visibility=View.GONE
                                             icCheckWorkbookUpload.visibility=View.VISIBLE
                                         }
 

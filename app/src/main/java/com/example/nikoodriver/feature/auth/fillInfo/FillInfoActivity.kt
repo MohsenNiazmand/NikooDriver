@@ -215,6 +215,8 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                     val formDataFile = MultipartBody.Part.createFormData("photo", URLEncoder.encode(finalFileImage.name, "utf-8"), body)
 
                     //uploading driver photo
+                    chooseDriverPicPart.visibility=View.INVISIBLE
+                    pbProfile.visibility=View.VISIBLE
                     viewModel.uploadDriverPhoto("driverPhoto",formDataFile)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -222,10 +224,27 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                             override fun onSuccess(t: Response<UploadPhotoDriverResponse>) {
 
                                 if (t.code()==200){
-                                    driverImg.setImageURI(t.body()?.data?.url)
+                                    driverImg.setImageURI(uri)
                                     driverProfileUrl.value=t.body()?.data?.url
-                                    chooseDriverPicPart.visibility=View.GONE
-                                    checkedProfile.visibility=View.VISIBLE
+                                    if (t.body()?.data?.url!=null){
+                                        pbProfile.visibility=View.GONE
+
+                                        checkedProfile.visibility=View.VISIBLE
+                                    }
+
+                                }else{
+
+                                    runOnUiThread {
+                                        kotlin.run {
+                                            Toast.makeText(
+                                                applicationContext,
+                                                "بارگزاری عکس ناموفق بود ، دوباره تلاش کنید",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+
+                                        }
+
+                                    }
                                 }
 
 

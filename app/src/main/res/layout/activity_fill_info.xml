@@ -83,6 +83,16 @@
                         </LinearLayout>
 
 
+                        <ProgressBar
+                            android:id="@+id/pbProfile"
+                            android:visibility="gone"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:indeterminateTint="@color/lightBlue"/>
+
+
+
 
                         <com.facebook.drawee.view.SimpleDraweeView
                             android:id="@+id/driverImg"

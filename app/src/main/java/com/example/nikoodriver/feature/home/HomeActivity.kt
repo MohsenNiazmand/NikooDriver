@@ -120,22 +120,21 @@ class HomeActivity : BaseActivity() {
 
 
 
-        Firebase.messaging.getToken().addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Timber.i("Fetching FCM registration token failed"+ task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-
-            // Log and toast
-            val msg = getString(R.string.msg_token_fmt, token)
-            Timber.i("MessageF"+ msg)
-            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-        })
-        // [END log_reg_token]
-        Toast.makeText(applicationContext, "See README for setup instructions", Toast.LENGTH_SHORT).show()
+//        Firebase.messaging.getToken().addOnCompleteListener(OnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                Timber.i("Fetching FCM registration token failed"+ task.exception)
+//                return@OnCompleteListener
+//            }
+//
+//            // Get new FCM registration token
+//            val token = task.result
+//
+//            // Log and toast
+//            val msg = token
+//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//        })
+//        // [END log_reg_token]
+//        Toast.makeText(applicationContext, "See README for setup instructions", Toast.LENGTH_SHORT).show()
 
 
 
