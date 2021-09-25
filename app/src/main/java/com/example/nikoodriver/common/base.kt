@@ -58,7 +58,7 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
     var photoURI: Uri? = null
 
     open fun openCropActivity(uri: Uri?) {
-        val cropper = CropImage.activity(uri)
+       CropImage.activity(uri)
             .setOutputCompressQuality(70)
             .setFixAspectRatio(false)
             .setAllowRotation(true)
@@ -67,6 +67,8 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
             .setMaxZoom(2)
             .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
             .start(this)
+
+
     }
 
 

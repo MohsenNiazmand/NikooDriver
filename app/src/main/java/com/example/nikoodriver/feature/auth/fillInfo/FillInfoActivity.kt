@@ -197,7 +197,8 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
             openCropActivity(photoURI)
         }
         if (requestCode == REQ_CODE_CHOOSE_IMAGE_FROM_GALLERY ) {
-            val galleryPicUri = Uri.fromFile(data?.data?.let { uriToFile(it) })
+
+            val galleryPicUri = Uri.fromFile(uriToFile(data!!.data))
             openCropActivity(galleryPicUri)
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && data != null) {
@@ -228,7 +229,6 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                                     driverProfileUrl.value=t.body()?.data?.url
                                     if (t.body()?.data?.url!=null){
                                         pbProfile.visibility=View.GONE
-
                                         checkedProfile.visibility=View.VISIBLE
                                     }
 
