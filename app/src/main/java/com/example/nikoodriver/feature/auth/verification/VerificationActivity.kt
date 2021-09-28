@@ -89,9 +89,9 @@ class VerificationActivity : BaseActivity() {
                             }else if (t.code()==403 && t.body()?.data==null){
                                 try {
                                     val jObjError = JSONObject(t.errorBody()!!.string())
-                                    Toast.makeText(applicationContext, jObjError.getString("message"), Toast.LENGTH_LONG).show()
+                                    runOnUiThread { kotlin.run {Toast.makeText(applicationContext, jObjError.getString("message"), Toast.LENGTH_LONG).show()}}
                                 } catch (e: Exception) {
-                                    Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
+                                        runOnUiThread { kotlin.run {Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()}}
                                 }
                             }
 

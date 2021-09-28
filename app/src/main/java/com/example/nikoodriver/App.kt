@@ -7,6 +7,8 @@ import androidx.multidex.MultiDexApplication
 import com.example.nikoodriver.data.repositories.*
 import com.example.nikoodriver.data.repositories.sources.fillInfo.FillInfoLocalDataSource
 import com.example.nikoodriver.data.repositories.sources.fillInfo.FillInfoRemoteDataSource
+import com.example.nikoodriver.data.repositories.sources.home.HomeLocalDataSource
+import com.example.nikoodriver.data.repositories.sources.home.HomeRemoteDataSource
 import com.example.nikoodriver.data.repositories.sources.login.LoginLocalDataSource
 import com.example.nikoodriver.data.repositories.sources.login.LoginRemoteDataSource
 import com.example.nikoodriver.data.repositories.sources.uploadDocs.UploadDocsLocalDataSource
@@ -74,6 +76,13 @@ class App : MultiDexApplication() {
                 FillInfoRepositoryImpl(
                     FillInfoLocalDataSource(),
                     FillInfoRemoteDataSource(get())
+                )
+            }
+
+            single<HomeRepository> {
+                HomeRepositoryImpl(
+                    HomeLocalDataSource(),
+                    HomeRemoteDataSource(get())
                 )
             }
 

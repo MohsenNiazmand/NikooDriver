@@ -1,13 +1,18 @@
 package com.example.nikoodriver.feature.home
 
 import androidx.lifecycle.MutableLiveData
+import com.example.nikoodriver.common.NikoSingleObserver
 import com.example.nikoodriver.common.NikoViewModel
+import com.example.nikoodriver.data.fcmResponse.FcmResponse
+import com.example.nikoodriver.data.repositories.HomeRepository
 import com.example.nikoodriver.services.ApiService
 import com.example.nikoodriver.services.mqtt.HiveMqttManager
+import com.google.gson.JsonObject
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Response
 
-class HomeViewModel(var mqttManager: HiveMqttManager,var apiService: ApiService):NikoViewModel() {
+class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRepository):NikoViewModel() {
     val mqttState = MutableLiveData<Boolean>()
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
@@ -65,6 +70,21 @@ class HomeViewModel(var mqttManager: HiveMqttManager,var apiService: ApiService)
         )
     }
 
+    fun sendFcmToken(fcmToken:String?){
+        progressBarLiveData.value=true
+        if (fcmToken != null) {
+            homeRepository.sendFcmToken(fcmToken)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object :NikoSingleObserver<Response<FcmResponse>>(compositeDisposable){
+                    override fun onSuccess(t: Response<FcmResponse>) {
+                        progressBarLiveData.postValue(false)
+                    }
+
+                })
+        }
+
+    }
 
 
 }

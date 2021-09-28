@@ -42,6 +42,7 @@ class HomeActivity : BaseActivity() {
     val compositeDisposable=CompositeDisposable()
     val sharedPreferences: SharedPreferences by inject()
     val hiveMqttManager:HiveMqttManager by inject()
+    val homeViewModel:HomeViewModel by inject()
     override fun onStart() {
         super.onStart()
         //we check tokenExistence ,if it exist user goes to home
@@ -57,7 +58,7 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        sendFireBaseToken()
         if (!CheckInternet()){
             val snackBar = Snackbar
                 .make(
@@ -133,32 +134,16 @@ class HomeActivity : BaseActivity() {
         }
 
 
-
-            Firebase.messaging.getToken().addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Timber.i("Fetching FCM registration token failed"+ task.exception)
-                    return@OnCompleteListener
-                }
-
-                // Get new FCM registration token
-                val token = task.result
-
-
-
-            })
-
-
-
-
-
-
-
-
-
-
     }
 
 
+    private fun sendFireBaseToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) return@OnCompleteListener
+            val token = task.result
+            homeViewModel.sendFcmToken(token)
+        })
+    }
 
 
 
