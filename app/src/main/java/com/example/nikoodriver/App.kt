@@ -2,6 +2,8 @@ package com.example.nikoodriver
 
 import android.app.Application
 import android.content.SharedPreferences
+import androidx.multidex.MultiDex
+import androidx.multidex.MultiDexApplication
 import com.example.nikoodriver.data.repositories.*
 import com.example.nikoodriver.data.repositories.sources.fillInfo.FillInfoLocalDataSource
 import com.example.nikoodriver.data.repositories.sources.fillInfo.FillInfoRemoteDataSource
@@ -15,7 +17,9 @@ import com.example.nikoodriver.feature.auth.fillInfo.FillInfoViewModel
 import com.example.nikoodriver.feature.auth.login.LoginViewModel
 import com.example.nikoodriver.feature.auth.upload_docs.UploadDocsViewModel
 import com.example.nikoodriver.feature.auth.verification.VerificationViewModel
+import com.example.nikoodriver.feature.home.HomeViewModel
 import com.example.nikoodriver.services.createApiServiceInstance
+import com.example.nikoodriver.services.mqtt.HiveMqttManager
 import com.facebook.drawee.backends.pipeline.Fresco
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
@@ -23,16 +27,19 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import timber.log.Timber
 
-class App : Application() {
+class App : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
+        MultiDex.install(baseContext)
         Timber.plant(Timber.DebugTree())
         Fresco.initialize(this)
+
 
         //these are project dependencies
         val myModules= module {
             single { createApiServiceInstance() }
 
+            single { HiveMqttManager(get()) }
             single<SharedPreferences> {
                 this@App.getSharedPreferences(
                     "app_settings",
@@ -75,6 +82,7 @@ class App : Application() {
             viewModel { VerificationViewModel(get()) }
             viewModel { UploadDocsViewModel(get()) }
             viewModel { FillInfoViewModel(get()) }
+            viewModel { HomeViewModel(get(),get()) }
 
         }
 

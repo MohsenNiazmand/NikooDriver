@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.location.Location
 import android.util.Log
+import com.example.nikoodriver.data.TokenContainer
 import com.google.gson.Gson
 import com.hivemq.client.mqtt.MqttGlobalPublishFilter
 import com.hivemq.client.mqtt.datatypes.MqttQos
@@ -58,13 +59,14 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
     fun initMqtt() {
         try {
-            this.token = sharedPreferences.getString("token",null).toString()
+            this.token =sharedPreferences.getString("token",null).toString()
+
 //            this.userId = prefRepository.getUser()?.id ?: 0
             Log.d("TAG", "confirmCode: " + token)
             if (token.isNotEmpty()) {
                 mqttClient = Mqtt3Client.builder()
                     .identifier(UUID.randomUUID().toString())
-                    .serverHost("mqtt.tarabari724.net")
+                    .serverHost("mqtt.nikohamrah.ir")
                     .serverPort(1883)
                     .simpleAuth()
                     .username("arvin")
@@ -79,10 +81,10 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                     }
                     .addDisconnectedListener {
                         try {
-//                            if (it.cause.message.equals("java.io.IOException: Software caused connection abort")) {
-//                                disconnectSubject.onNext(false)
-//                                disconnect()
-//                            }
+                            if (it.cause.message.equals("java.io.IOException: Software caused connection abort")) {
+                                disconnectSubject.onNext(false)
+                                disconnect()
+                            }
                             mqttConnectionState.onNext(CONNECTION_FAILURE)
                             Log.e(TAG,"Connection Disconnected -> ${it.cause.message ?: ""}")
 
@@ -115,7 +117,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
     }
 
     fun connect() {
-        this.token = sharedPreferences.getString("token",null).toString()
+        this.token =sharedPreferences.getString("token",null).toString()
 //        this.userId = prefRepository.getUser()?.id ?: 0
         if (mqttClient == null) {
             Log.e(TAG, "connect: client is null , recreating client ")

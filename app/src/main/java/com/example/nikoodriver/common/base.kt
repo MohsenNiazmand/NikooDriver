@@ -1,8 +1,10 @@
 package com.example.nikoodriver.common
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.location.LocationManager
@@ -16,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -164,10 +167,24 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
 
 
     open fun CheckGps(): Boolean {
-        val status: Boolean
-        val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
-        status = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        var status: Boolean =true
+
+        if (ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ){
+
+            val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+
+            status = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+        }
+
         return status
+
     }
 
 

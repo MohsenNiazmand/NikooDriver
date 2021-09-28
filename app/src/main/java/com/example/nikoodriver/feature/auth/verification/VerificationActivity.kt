@@ -20,8 +20,14 @@ import kotlinx.android.synthetic.main.activity_verification.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.example.nikoodriver.common.BaseActivity
 import com.google.android.material.snackbar.Snackbar
+import io.reactivex.Single
+import io.reactivex.SingleObserver
+import io.reactivex.disposables.Disposable
+import retrofit2.HttpException
 import retrofit2.Response
 import timber.log.Timber
+import org.json.JSONObject
+import java.lang.Exception
 
 
 class VerificationActivity : BaseActivity() {
@@ -64,16 +70,9 @@ class VerificationActivity : BaseActivity() {
 
                             val response = t.body()?.data
                             val token="Bearer "+t.body()?.data?.token
-                            val message=t.body()?.message
-                            insertYourNumberTv.setOnClickListener {
-                                Toast.makeText(applicationContext, message.toString(), Toast.LENGTH_SHORT).show()
-                            }
-
                             if (t.code()==200 && response != null){
 
                                 //for checking the driver position in registering
-
-
                                     when (response.driver.status) {
                                         "active" ->{ finishAffinity()
                                             startActivity(Intent(this@VerificationActivity, HomeActivity::class.java)) }
@@ -87,12 +86,16 @@ class VerificationActivity : BaseActivity() {
                                             runOnUiThread { kotlin.run { Toast.makeText(applicationContext, "با پشتیبانی تماس بگیرید", Toast.LENGTH_SHORT).show() } }
                                     }
 
-                            }else if (t.code()==403 && t.body()?.data==null){ runOnUiThread {kotlin.run { Toast.makeText(applicationContext, "ورود ناموفق", Toast.LENGTH_SHORT).show()} } }
-
+                            }else if (t.code()==403 && t.body()?.data==null){
+                                try {
+                                    val jObjError = JSONObject(t.errorBody()!!.string())
+                                    Toast.makeText(applicationContext, jObjError.getString("message"), Toast.LENGTH_LONG).show()
+                                } catch (e: Exception) {
+                                    Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
+                                }
                             }
 
-
-
+                        }
 
                     })
 

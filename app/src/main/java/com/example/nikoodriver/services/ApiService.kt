@@ -1,6 +1,7 @@
 package com.example.nikoodriver.services
 
 import com.example.nikoodriver.data.TokenContainer
+import com.example.nikoodriver.data.fcmResponse.FcmResponse
 import com.example.nikoodriver.data.fillInfoResponse.DriverUploadPhotoResponse.UploadPhotoDriverResponse
 import com.example.nikoodriver.data.fillInfoResponse.FillInfoResponse
 import com.example.nikoodriver.data.loginResponse.LoginResponse
@@ -47,6 +48,9 @@ interface ApiService {
 
     @POST("auth/driver/docs/all")
     fun submitDocs(@Header("Authorization") token:String,@Body jsonObject: JsonObject) : Single<Response<SubmitDocsResponse>>
+
+    @POST("driver/profile/fcm")
+    fun sendFcmToken(@Body jsonObject: JsonObject):Single<Response<FcmResponse>>
 
 
 }

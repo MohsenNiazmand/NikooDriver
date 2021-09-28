@@ -13,23 +13,35 @@ import android.view.View
 import android.widget.Toast
 import com.example.nikoodriver.R
 import com.example.nikoodriver.common.BaseActivity
+import com.example.nikoodriver.common.NikoSingleObserver
+import com.example.nikoodriver.data.fcmResponse.FcmResponse
 import com.example.nikoodriver.feature.auth.login.LoginActivity
 import com.example.nikoodriver.feature.home.credit.CreditDialog
 import com.example.nikoodriver.feature.current_travel.CurrentTravelActivity
 import com.example.nikoodriver.feature.declined_passengers.DeclinedPassengersActivity
 import com.example.nikoodriver.feature.travel_registeration.TravelRegistrationActivity
+import com.example.nikoodriver.services.createApiServiceInstance
+import com.example.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
+import com.google.gson.JsonObject
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.ext.android.inject
+import retrofit2.Response
 import timber.log.Timber
 
 class HomeActivity : BaseActivity() {
+    val compositeDisposable=CompositeDisposable()
     val sharedPreferences: SharedPreferences by inject()
-
+    val hiveMqttManager:HiveMqttManager by inject()
     override fun onStart() {
         super.onStart()
         //we check tokenExistence ,if it exist user goes to home
@@ -75,6 +87,7 @@ class HomeActivity : BaseActivity() {
             activationTv.visibility= View.GONE
             activeBtn.visibility= View.GONE
             deActiveBtn.visibility=View.VISIBLE
+            hiveMqttManager.connect()
 
         }
 
@@ -82,6 +95,7 @@ class HomeActivity : BaseActivity() {
             activationTv.visibility= View.VISIBLE
             activeBtn.visibility= View.VISIBLE
             deActiveBtn.visibility=View.GONE
+            hiveMqttManager.disconnect()
 
         }
 
@@ -120,21 +134,21 @@ class HomeActivity : BaseActivity() {
 
 
 
-//        Firebase.messaging.getToken().addOnCompleteListener(OnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                Timber.i("Fetching FCM registration token failed"+ task.exception)
-//                return@OnCompleteListener
-//            }
-//
-//            // Get new FCM registration token
-//            val token = task.result
-//
-//            // Log and toast
-//            val msg = token
-//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-//        })
-//        // [END log_reg_token]
-//        Toast.makeText(applicationContext, "See README for setup instructions", Toast.LENGTH_SHORT).show()
+            Firebase.messaging.getToken().addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Timber.i("Fetching FCM registration token failed"+ task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new FCM registration token
+                val token = task.result
+
+
+
+            })
+
+
+
 
 
 

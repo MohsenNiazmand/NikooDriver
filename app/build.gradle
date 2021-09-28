@@ -83,6 +83,8 @@ dependencies {
 
     implementation("com.hivemq:hivemq-mqtt-client-shaded:1.2.2")
 
+    implementation 'androidx.multidex:multidex:2.0.1'
+
 
 
 }
