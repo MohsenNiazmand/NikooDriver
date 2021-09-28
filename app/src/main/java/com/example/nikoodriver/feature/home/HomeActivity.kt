@@ -5,10 +5,12 @@ package com.example.nikoodriver.feature.home
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.view.View
 import android.widget.Toast
 import com.example.nikoodriver.R
@@ -43,6 +45,8 @@ class HomeActivity : BaseActivity() {
     val sharedPreferences: SharedPreferences by inject()
     val hiveMqttManager:HiveMqttManager by inject()
     val homeViewModel:HomeViewModel by inject()
+    private lateinit var wakeLock: PowerManager.WakeLock
+
     override fun onStart() {
         super.onStart()
         //we check tokenExistence ,if it exist user goes to home
@@ -51,6 +55,8 @@ class HomeActivity : BaseActivity() {
             finish()
             startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
             overridePendingTransition(0, 0);
+        }else{
+            sendFireBaseToken()
         }
     }
 
@@ -58,7 +64,7 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        sendFireBaseToken()
+        wakeLockSetup()
         if (!CheckInternet()){
             val snackBar = Snackbar
                 .make(
@@ -143,6 +149,28 @@ class HomeActivity : BaseActivity() {
             val token = task.result
             homeViewModel.sendFcmToken(token)
         })
+    }
+
+
+    private fun wakeLockSetup() {
+        wakeLock =
+            (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Nikoo::PassengerLock").apply {
+                    acquire(10 * 60 * 1000L /*10 minutes*/)
+                }
+            }
+    }
+
+    private fun destroyWakeLock() {
+        when {
+            wakeLock.isHeld -> wakeLock.release()
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        destroyWakeLock()
     }
 
 
