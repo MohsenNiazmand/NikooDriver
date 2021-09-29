@@ -1,5 +1,6 @@
 package com.akaf.nikoodriver
 
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
@@ -39,8 +40,7 @@ class App : MultiDexApplication() {
         //these are project dependencies
         val myModules= module {
             single { createApiServiceInstance() }
-
-            single { HiveMqttManager(get()) }
+            single { HiveMqttManager(androidContext()) }
             single<SharedPreferences> {
                 this@App.getSharedPreferences(
                     "app_settings",

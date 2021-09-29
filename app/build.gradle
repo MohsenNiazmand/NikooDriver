@@ -1,10 +1,9 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-android-extensions'
-    id 'com.google.gms.google-services'
+    apply plugin: 'com.android.application'
+    apply plugin: 'kotlin-android'
+    apply plugin: 'kotlin-android-extensions'
+    apply plugin: 'com.github.sgtsilvio.gradle.android-retrofix'
+    apply plugin: 'com.google.gms.google-services'
 
-}
 
 android {
     compileSdk 31
@@ -28,6 +27,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/io.netty.versions.properties'
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -82,6 +85,10 @@ dependencies {
 
 
     implementation("com.hivemq:hivemq-mqtt-client-shaded:1.2.2")
+
+    implementation 'net.sourceforge.streamsupport:android-retrostreams:1.7.4'
+    implementation 'net.sourceforge.streamsupport:android-retrofuture:1.7.4'
+
 
     implementation 'androidx.multidex:multidex:2.0.1'
 

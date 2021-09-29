@@ -133,7 +133,7 @@ class HomeActivity : BaseActivity() {
 
 
     private fun sendFireBaseToken() {
-        FirebaseMessaging.getInstance().subscribeToTopic("Drivers")
+//        FirebaseMessaging.getInstance().subscribeToTopic("Drivers")
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) return@OnCompleteListener
             val token = task.result
