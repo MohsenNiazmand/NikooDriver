@@ -1,5 +1,6 @@
 package com.akaf.nikoodriver.feature.home
 
+import android.annotation.SuppressLint
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.common.NikoSingleObserver
@@ -19,11 +20,14 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
     var currentTripLiveData = MutableLiveData<String>()
+    val onlineStatusLiveData = MutableLiveData<Boolean>()
+
 
 
     init {
         subscribeMqttState()
         subscribeToNewOffers()
+        subscribeToDisconnectSubject()
     }
 
 
@@ -46,6 +50,17 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
                     }
                 })
 
+
+    }
+
+    @SuppressLint("CheckResult")
+    private fun subscribeToDisconnectSubject() {
+        mqttManager.disconnectSubject
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                onlineStatusLiveData.postValue(it)
+            }
 
     }
 

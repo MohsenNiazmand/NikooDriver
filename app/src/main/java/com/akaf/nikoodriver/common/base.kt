@@ -168,13 +168,7 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
 
 
     open fun CheckGps(): Boolean {
-//        return ContextCompat.checkSelfPermission(
-//            applicationContext,
-//            Manifest.permission.ACCESS_FINE_LOCATION
-//        ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-//            applicationContext,
-//            Manifest.permission.ACCESS_COARSE_LOCATION
-//        ) == PackageManager.PERMISSION_GRANTED
+
         var status: Boolean =true
 
         if (ActivityCompat.checkSelfPermission(
