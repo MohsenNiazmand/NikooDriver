@@ -33,12 +33,7 @@ class VerificationRepositoryImpl(
     }
 
     fun onSuccessfulVerification(driverId:String,tokenResponse: VerificationData) {
-//        TokenContainer.update(tokenResponse.token, tokenResponse.refreshToken)
-//        tokenResponse.token?.let { tokenResponse.refreshToken?.let { it1 ->
-//            verificationLocalDataSource.saveToken(it,
-//                it1
-//            )
-//        } }
+
         TokenContainer.update(tokenResponse.token, tokenResponse.refreshToken)
         verificationLocalDataSource.saveToken(tokenResponse.token, tokenResponse.refreshToken)
         verificationLocalDataSource.saveDriverId(driverId)

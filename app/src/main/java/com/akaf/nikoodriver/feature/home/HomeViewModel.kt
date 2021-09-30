@@ -1,19 +1,25 @@
 package com.akaf.nikoodriver.feature.home
 
+import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
 import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
+import com.akaf.nikoodriver.data.location.SendLocation
 import com.akaf.nikoodriver.data.repositories.HomeRepository
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
+import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 import retrofit2.Response
 
 class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRepository):NikoViewModel() {
     val mqttState = MutableLiveData<Boolean>()
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
+    var currentTripLiveData = MutableLiveData<String>()
+
 
     init {
         subscribeMqttState()
@@ -67,6 +73,24 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
             }
         )
     }
+
+
+    fun sendDriverLocation(location: Location) {
+        mqttManager.publishDriverLocation(location)
+    }
+
+
+
+    fun sendDriverLocationToRest(sendLocation: SendLocation) {
+        //needs location rest
+    }
+
+
+    fun getCurrentTrip() {
+      //needs current trip rest
+    }
+
+
 
     fun sendFcmToken(fcmToken:String?){
         progressBarLiveData.value=true

@@ -28,7 +28,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
     private var mqttClient: Mqtt3RxClient? = null
     private var token = ""
-    private var userId = 0
+    private var driverId = 0
     private var state = 0
 //    var newTripSubject = PublishSubject.create<Trip>()
     var messageSubject = PublishSubject.create<Boolean>()
@@ -56,7 +56,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
     fun initMqtt() {
         try {
             this.token =sharedPreferences.getString("access_token",null).toString()
-
+            this.driverId=sharedPreferences.getString("driverId",null)!!.toInt()
 //            this.userId = prefRepository.getUser()?.id ?: 0
             Log.d("TAG", "confirmCode: " + token)
             if (token.isNotEmpty()) {
@@ -114,7 +114,8 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
     fun connect() {
         this.token =sharedPreferences.getString("access_token",null).toString()
-//        this.userId = prefRepository.getUser()?.id ?: 0
+        this.driverId=sharedPreferences.getString("driverId",null)!!.toInt()
+
         if (mqttClient == null) {
             Log.e(TAG, "connect: client is null , recreating client ")
             initMqtt()
@@ -222,6 +223,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                 locationObject.put("longitude", location.longitude)
                 locationObject.put("latitude", location.latitude)
                 locationObject.put("bearing", location.bearing)
+//                locationObject.put("example", location)
                 dataJson.put("location", locationObject)
                 json.put("data", dataJson)
                 val byteLocation = json.toString().toByteArray()
@@ -281,7 +283,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
     fun subscribeToNewOffers() {
 
-        val topic = "/driver/${userId}/Trip.New"
+        val topic = "/driver/${driverId}/Trip.New"
         val qos = 2
         try {
             val mqttSubscribe = Mqtt3Subscribe.builder()
@@ -309,7 +311,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
     fun subscribeToCanceledOffers() {
 
-        val topic = "/driver/${userId}/Offer.Rejected"
+        val topic = "/driver/${driverId}/Offer.Rejected"
         val qos = 2
         try {
             val mqttSubscribe = Mqtt3Subscribe.builder()
@@ -337,7 +339,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
     fun subscribeToPayedTrips() {
 
-        val topic = "/driver/${userId}/Trip.Registred"
+        val topic = "/driver/${driverId}/Trip.Registred"
         val qos = 2
         try {
             val mqttSubscribe = Mqtt3Subscribe.builder()
@@ -379,7 +381,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({
-                    // handleNewMessage(it)
+                     handleNewMessage(it)
                 }, {
                     Log.i(TAG, "subscribeToNewOffer Error -> ${it.localizedMessage ?: ""}")
 

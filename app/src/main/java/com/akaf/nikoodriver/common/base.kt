@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -90,7 +91,7 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
             if (photoFile != null) {
                 photoURI = FileProvider.getUriForFile(
                     this,
-                    "com.example.nikoodriver.common.fileprovider",
+                    "com.akaf.nikoodriver.common.fileprovider",
                     photoFile
                 )
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -167,6 +168,13 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
 
 
     open fun CheckGps(): Boolean {
+//        return ContextCompat.checkSelfPermission(
+//            applicationContext,
+//            Manifest.permission.ACCESS_FINE_LOCATION
+//        ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+//            applicationContext,
+//            Manifest.permission.ACCESS_COARSE_LOCATION
+//        ) == PackageManager.PERMISSION_GRANTED
         var status: Boolean =true
 
         if (ActivityCompat.checkSelfPermission(

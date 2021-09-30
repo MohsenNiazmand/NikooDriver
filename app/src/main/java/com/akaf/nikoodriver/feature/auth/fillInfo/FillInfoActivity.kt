@@ -26,9 +26,9 @@ import ir.hamsaa.persiandatepicker.api.PersianPickerDate
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener
 import kotlinx.android.synthetic.main.activity_fill_info.*
 import kotlinx.android.synthetic.main.activity_home.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import retrofit2.Response
@@ -197,9 +197,11 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
             openCropActivity(photoURI)
         }
         if (requestCode == REQ_CODE_CHOOSE_IMAGE_FROM_GALLERY ) {
+                if (uriToFile(data?.data)!=null){
+                    val galleryPicUri = Uri.fromFile(uriToFile(data!!.data))
+                    openCropActivity(galleryPicUri)
+                }
 
-            val galleryPicUri = Uri.fromFile(uriToFile(data!!.data))
-            openCropActivity(galleryPicUri)
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && data != null) {
             val result = CropImage.getActivityResult(data)
@@ -212,8 +214,10 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
 
 
-                    val body = finalFileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                    val formDataFile = MultipartBody.Part.createFormData("photo", URLEncoder.encode(finalFileImage.name, "utf-8"), body)
+//                    val body = finalFileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                    val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), finalFileImage)
+
+                    val formDataFile = MultipartBody.Part.createFormData("photo", URLEncoder.encode(finalFileImage.name, "utf-8"), requestBody)
 
                     //uploading driver photo
                     chooseDriverPicPart.visibility=View.INVISIBLE

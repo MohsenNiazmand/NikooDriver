@@ -69,7 +69,7 @@ fun createApiServiceInstance():ApiService{
                 newRequestBuilder.addHeader("Authorization", "Bearer ${TokenContainer.token}")
 
             newRequestBuilder.addHeader("Accept", "application/json")
-            newRequestBuilder.method(oldRequest.method, oldRequest.body)
+            newRequestBuilder.method(oldRequest.method(),oldRequest.body())
             return@addInterceptor it.proceed(newRequestBuilder.build())
         }
         .addInterceptor(HttpLoggingInterceptor().apply {

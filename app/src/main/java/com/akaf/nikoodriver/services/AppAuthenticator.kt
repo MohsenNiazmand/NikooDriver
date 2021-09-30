@@ -28,7 +28,8 @@ class AppAuthenticator : Authenticator, KoinComponent {
 
 
                 //work to do after getting new refresh token
-                return response.request.newBuilder().header("Authorization", "Bearer $token")
+
+                return response.request().newBuilder().header("Authorization", "Bearer $token")
                     .build()
 
             } catch (exception: Exception) {

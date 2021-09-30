@@ -18,9 +18,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_upload_docs.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody
 import org.koin.android.viewmodel.ext.android.viewModel
 import retrofit2.Response
 import timber.log.Timber
@@ -184,8 +184,10 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
                 if ( path != null) {
                     val  finalFileImage = File(path)
                     //upload
-                    val body = finalFileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                    val formDataFile = MultipartBody.Part.createFormData("doc", URLEncoder.encode(finalFileImage.name, "utf-8"), body)
+//                    val body = finalFileImage.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                    val requestBody = RequestBody.create(MediaType.parse("image/jpeg"), finalFileImage)
+
+                    val formDataFile = MultipartBody.Part.createFormData("doc", URLEncoder.encode(finalFileImage.name, "utf-8"), requestBody)
                     when(picNum.value){
 
                         1-> {
