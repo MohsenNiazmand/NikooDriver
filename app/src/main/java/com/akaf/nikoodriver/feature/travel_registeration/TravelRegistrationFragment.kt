@@ -1,27 +1,35 @@
 package com.akaf.nikoodriver.feature.travel_registeration
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.akaf.nikoodriver.R
+import com.akaf.nikoodriver.common.BaseFragment
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener
-import kotlinx.android.synthetic.main.activity_travel_registration.*
+import kotlinx.android.synthetic.main.fragment_travel_registration.view.*
 
 
-class TravelRegistrationActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_travel_registration)
+class TravelRegistrationFragment : BaseFragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_travel_registration, container, false)
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
 
     }
 
-     fun datePickerA(v: View){
-        val picker = PersianDatePickerDialog(this)
+    fun datePickerA(v: View){
+        val picker = PersianDatePickerDialog(context)
             .setPositiveButtonString("باشه")
             .setNegativeButton("بیخیال")
             .setTodayButton("امروز")
@@ -38,7 +46,7 @@ class TravelRegistrationActivity : AppCompatActivity() {
                 override fun onDateSelected(persianPickerDate: PersianPickerDate) {
                     val travelDateTxt =
                         persianPickerDate.persianYear.toString() + "/" + persianPickerDate.persianMonth + "/" + persianPickerDate.persianDay
-                    travelDateEt.setText(travelDateTxt)
+                    view?.travelDateEt?.text=travelDateTxt
 
 
 
@@ -54,4 +62,6 @@ class TravelRegistrationActivity : AppCompatActivity() {
             })
         picker.show()
     }
+
+
 }

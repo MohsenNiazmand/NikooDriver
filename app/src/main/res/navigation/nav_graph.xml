@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/currentTravelFragment"
+        android:name="com.akaf.nikoodriver.feature.current_travel.CurrentTravelFragment"
+        android:label="CurrentTravelFragment" />
+    <fragment
+        android:id="@+id/declinedPassengersFragment"
+        android:name="com.akaf.nikoodriver.feature.declined_passengers.DeclinedPassengersFragment"
+        android:label="fragment_current_travel"
+        tools:layout="@layout/fragment_current_travel" />
+    <fragment
+        android:id="@+id/travelRegistrationFragment"
+        android:name="com.akaf.nikoodriver.feature.travel_registeration.TravelRegistrationFragment"
+        android:label="fragment_travel_registration"
+        tools:layout="@layout/fragment_travel_registration" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.akaf.nikoodriver.feature.home.credit.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_currentTravelFragment"
+            app:destination="@id/currentTravelFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_declinedPassengersFragment"
+            app:destination="@id/declinedPassengersFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_travelRegistrationFragment"
+            app:destination="@id/travelRegistrationFragment" />
+    </fragment>
+</navigation>

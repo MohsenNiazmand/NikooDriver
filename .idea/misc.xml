@@ -26,7 +26,7 @@
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_declined_passengers.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_fill_info.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_finish_register.xml" value="0.25" />
-        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_home.xml" value="0.25" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_register.xml" value="0.22" />
@@ -37,6 +37,9 @@
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/bottom_sheet_choose_picture.xml" value="0.33" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/dialog_credit.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/dialog_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/fragment_declined_passengers.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/fragment_travel_registration.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/item_choose_picture.xml" value="0.25" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/item_current_travel.xml" value="0.22" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/item_declined_passenger.xml" value="0.25" />

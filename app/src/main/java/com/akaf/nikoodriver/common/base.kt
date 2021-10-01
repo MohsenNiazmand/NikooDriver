@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.FileProvider
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -194,7 +195,59 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
 }
 
 
-abstract class NikoFragment:Fragment(),NikoView{
+abstract class BaseFragment:Fragment(),NikoView{
+
+    override val rootView: CoordinatorLayout?
+        get() = view as CoordinatorLayout
+    override val viewContext: Context?
+        get() = context
+
+    open fun CheckInternet(): Boolean {
+        val wifiConnected: Boolean
+        val mobileConnected: Boolean
+        var returns = false
+        val connMgr = requireContext().getSystemService(AppCompatActivity.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeInfo = connMgr.activeNetworkInfo
+        if (activeInfo != null && activeInfo.isConnected) {
+            wifiConnected = activeInfo.type == ConnectivityManager.TYPE_WIFI
+            mobileConnected = activeInfo.type == ConnectivityManager.TYPE_MOBILE
+            if (wifiConnected) {
+                //Connected with Wifi
+            } else if (mobileConnected) {
+                //Connected with Mobile data
+            }
+            returns = true
+        } else {
+
+            returns = false
+        }
+        return returns
+    }
+
+
+
+    open fun CheckGps(): Boolean {
+
+        var status: Boolean =true
+
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ){
+
+            val locationManager = requireContext().getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
+
+            status = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+        }
+
+        return status
+
+    }
+
 
 }
 

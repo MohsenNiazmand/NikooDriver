@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/app_background"
     android:layoutDirection="rtl"
-    tools:context=".feature.travel_registeration.TravelRegistrationActivity">
+    tools:context=".feature.travel_registeration.TravelRegistrationFragment">
 
 
     <RelativeLayout

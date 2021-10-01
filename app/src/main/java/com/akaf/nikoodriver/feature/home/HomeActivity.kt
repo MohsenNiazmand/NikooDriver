@@ -16,16 +16,14 @@ import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseActivity
-import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.location.SendLocation
 import com.akaf.nikoodriver.feature.auth.login.LoginActivity
 import com.akaf.nikoodriver.feature.home.credit.CreditDialog
-import com.akaf.nikoodriver.feature.current_travel.CurrentTravelActivity
-import com.akaf.nikoodriver.feature.declined_passengers.DeclinedPassengersActivity
-import com.akaf.nikoodriver.feature.travel_registeration.TravelRegistrationActivity
+import com.akaf.nikoodriver.feature.current_travel.CurrentTravelFragment
+import com.akaf.nikoodriver.feature.declined_passengers.DeclinedPassengersFragment
+import com.akaf.nikoodriver.feature.travel_registeration.TravelRegistrationFragment
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
@@ -44,12 +42,10 @@ import timber.log.Timber
 class HomeActivity : BaseActivity() {
     val compositeDisposable=CompositeDisposable()
     val sharedPreferences: SharedPreferences by inject()
-    val hiveMqttManager:HiveMqttManager by inject()
-    val homeViewModel:HomeViewModel by inject()
+    val hiveMqttManager: HiveMqttManager by inject()
+    val homeViewModel: HomeViewModel by inject()
     private lateinit var wakeLock: PowerManager.WakeLock
-    private var fusedLocation: Location? = null
-    var isFastLocation = false
-    lateinit var fusedLocationClient: FusedLocationProviderClient
+
 
 
 
@@ -73,7 +69,6 @@ class HomeActivity : BaseActivity() {
         setContentView(R.layout.activity_home)
         wakeLockSetup()
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         if (!CheckInternet()){
             val snackBar = Snackbar
@@ -102,44 +97,6 @@ class HomeActivity : BaseActivity() {
 
 
 
-        activeBtn.setOnClickListener {
-            activationTv.visibility= View.GONE
-            activeBtn.visibility= View.GONE
-            deActiveBtn.visibility=View.VISIBLE
-            hiveMqttManager.connect()
-            checkPermStartLocationUpdate()
-
-        }
-
-        deActiveBtn.setOnClickListener {
-            activationTv.visibility= View.VISIBLE
-            activeBtn.visibility= View.VISIBLE
-            deActiveBtn.visibility=View.GONE
-            hiveMqttManager.disconnect()
-            stopLocationUpdates()
-
-        }
-
-        creditBtn.setOnClickListener {
-            val creditDialog = CreditDialog()
-            creditDialog.show(supportFragmentManager, null)
-
-        }
-
-        travelRegistrationBtn.setOnClickListener {
-            startActivity(Intent(this@HomeActivity, TravelRegistrationActivity::class.java))
-
-        }
-
-        declinedPassengersBtn.setOnClickListener {
-            startActivity(Intent(this@HomeActivity, DeclinedPassengersActivity::class.java))
-
-        }
-
-        currentTravelBtn.setOnClickListener {
-            startActivity(Intent(this@HomeActivity, CurrentTravelActivity::class.java))
-
-        }
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -154,20 +111,7 @@ class HomeActivity : BaseActivity() {
         }
 
 
-        homeViewModel.mqttState.observe(this) {
-            Log.d("TAG", "initConnectionState: " + it)
-            if (it) {
-                checkPermStartLocationUpdate()
-//                checkNewTrip()
-            } else {
-                if (homeViewModel.onlineStatusLiveData.value == true) {
-//                    txtConnectingToTheServer.visibility = View.VISIBLE
-                } else {
-//                    txtConnectingToTheServer.visibility = View.GONE
 
-                }
-            }
-        }
 
 //        homeViewModel.onlineStatusLiveData.observe(this) {
 //            when {
@@ -180,122 +124,14 @@ class HomeActivity : BaseActivity() {
 
 
 
-    var locationCallback = object : LocationCallback() {
-        @SuppressLint("BinaryOperationInTimber")
-        override fun onLocationResult(p0: LocationResult?) {
-            if (p0 != null) {
-                runOnUiThread {
-                    fusedLocation = p0.lastLocation
-                    val sendLocation = SendLocation()
-                    sendLocation.location.add(fusedLocation!!.longitude)
-                    sendLocation.location.add(fusedLocation!!.latitude)
-                    Timber.i("LOCATION11"+fusedLocation!!.longitude)
-                    homeViewModel.sendDriverLocation(fusedLocation!!)
-//                    homeViewModel.sendDriverLocationToRest(sendLocation)
-//                    checkFastLocUpdate(homeViewModel.currentTripLiveData.value)
-                }
-
-            }
-        }
-
-        override fun onLocationAvailability(p0: LocationAvailability?) {
-        }
-    }
 
 
 
 
-    //needs trip body
-//    private fun checkFastLocUpdate(trip: Trip?) {
-//        if (trip == null || trip.status == "trip_ended") {
-//            if (isFastLocation) {
-//                isFastLocation = false
-//                locationRequest = LocationRequest.create().apply {
-//                    smallestDisplacement = 100f
-//                    interval = 30 * 60 * 1000
-//                    this.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-//                }
-//                stopLocationUpdates()
-//                startLocationUpdates()
-//            }
-//            return
-//
-//        }
-//        if (homeViewModel.checkNeedFastLocUpdate(trip.sources, trip.destinations, fusedLocation)) {
-//            if (!isFastLocation) {
-//                isFastLocation = true
-//                locationRequest = LocationRequest.create().apply {
-//                    smallestDisplacement = 100f
-//                    interval = 30 * 1000
-//                    // interval = 30*1000
-//                    this.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-//                }
-//                stopLocationUpdates()
-//                startLocationUpdates()
-//
-//            }
-//        } else {
-//            if (isFastLocation) {
-//                isFastLocation = false
-//                locationRequest = LocationRequest.create().apply {
-//                    smallestDisplacement = 100f
-//                    interval = 30 * 60 * 1000
-//                    this.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-//                }
-//                stopLocationUpdates()
-//                startLocationUpdates()
-//            }
-//        }
-//    }
 
-    private fun stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
-    }
 
-    @SuppressLint("MissingPermission")
-    fun startLocationUpdates() {
 
-        if (!CheckGps()) {
-            return
-        }
-        else if (CheckGps()){
-            fusedLocationClient.requestLocationUpdates(
-                locationRequest,
-                locationCallback,
-                Looper.getMainLooper()
-            )
-        }
 
-    }
-
-    var locationRequest: LocationRequest = LocationRequest.create().apply {
-        interval = 60 * 30 * 1000
-        smallestDisplacement = 100f
-        this.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-    }
-
-    fun checkPermStartLocationUpdate() {
-        Dexter.withContext(this)
-            .withPermissions(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-            .withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
-                    if (p0?.areAllPermissionsGranted() == true) {
-                        startLocationUpdates()
-                    }
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    p0: MutableList<PermissionRequest>?,
-                    p1: PermissionToken?
-                ) {
-                    p1?.continuePermissionRequest()
-                }
-
-            }).check()
-    }
 
 
     private fun sendFireBaseToken() {
