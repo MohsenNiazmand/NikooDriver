@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.location.Location
 import android.util.Log
+import com.akaf.nikoodriver.data.offer.Trip
+import com.google.gson.Gson
 import com.hivemq.client.mqtt.MqttGlobalPublishFilter
 import com.hivemq.client.mqtt.datatypes.MqttQos
 import com.hivemq.client.mqtt.mqtt3.Mqtt3Client
@@ -30,7 +32,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
     private var token = ""
     private var driverId = 0
     private var state = 0
-//    var newTripSubject = PublishSubject.create<Trip>()
+    var newTripSubject = PublishSubject.create<Trip>()
     var messageSubject = PublishSubject.create<Boolean>()
     var disconnectSubject = PublishSubject.create<Boolean>()
     var canceledTripSubject = PublishSubject.create<Any>()
@@ -189,10 +191,10 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                         val baseObject = JSONObject(data)
                         if (baseObject.has("data")) {
 
-//                            val trip = Gson().fromJson(
-//                                baseObject.getJSONObject("data").toString(), Trip::class.java
-//                            )
-//                            newTripSubject.onNext(trip)
+                            val trip = Gson().fromJson(
+                                baseObject.getJSONObject("data").toString(), Trip::class.java
+                            )
+                            newTripSubject.onNext(trip)
                         }
                     }
 
@@ -223,7 +225,6 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                 locationObject.put("longitude", location.longitude)
                 locationObject.put("latitude", location.latitude)
                 locationObject.put("bearing", location.bearing)
-//                locationObject.put("example", location)
                 dataJson.put("location", locationObject)
                 json.put("data", dataJson)
                 val byteLocation = json.toString().toByteArray()

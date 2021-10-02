@@ -226,9 +226,9 @@
                             android:layout_below="@id/imgSeat"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
-                            android:text="@string/addingTravel"
-                            android:textColor="@color/blue"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />
+                            android:text="@string/seatsCount"
+                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                            android:textColor="@color/blue" />
 
 
                     </RelativeLayout>

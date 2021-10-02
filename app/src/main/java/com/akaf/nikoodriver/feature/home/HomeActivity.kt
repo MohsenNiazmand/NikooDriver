@@ -36,6 +36,7 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.item_declined_passenger.*
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
@@ -63,7 +64,7 @@ class HomeActivity : BaseActivity() {
         }
     }
 
-    @SuppressLint("CutPasteId", "BinaryOperationInTimber")
+    @SuppressLint("CutPasteId", "BinaryOperationInTimber", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -113,25 +114,21 @@ class HomeActivity : BaseActivity() {
 
 
 
-//        homeViewModel.onlineStatusLiveData.observe(this) {
-//            when {
-//                it -> hiveMqttManager.connect()
-//                else -> hiveMqttManager.disconnect()
-//            }
-//        }
+        homeViewModel.newOfferLiveData.observe(this){
+            newOfferView.visibility=View.VISIBLE
+            offerDistanceTv.text=it.data.options.disposalHour.toString()+"-"+it.data.options.distance
+            travelDistanceTv.text=it.data.startAt
+            offerCostTv.text=it.data.cost
+            originTv.text=it.data.startAt
+            destinationTv.text=it.data.destinationCity
+        }
+
+        acceptOfferBtn.setOnClickListener {
+            newOfferView.visibility=View.GONE
+        }
+
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     private fun sendFireBaseToken() {

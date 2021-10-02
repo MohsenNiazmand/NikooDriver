@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<RelativeLayout
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <EditText
+        android:id="@+id/emptySeatsEt"
+        style="@style/Theme.Niko.auth.EditText"
+        android:layout_marginHorizontal="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:hint="@string/seatsCount"
+        android:inputType="number" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emptySeatsEt"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancelEmptySeatsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_marginVertical="5dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="@color/orange"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="@string/neverMind"
+            android:layout_marginHorizontal="5dp"
+            app:cornerRadius="20dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/proceedEmptySeatsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_marginVertical="5dp"
+            android:layout_marginHorizontal="5dp"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="@string/proceed"
+            app:cornerRadius="20dp" />
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

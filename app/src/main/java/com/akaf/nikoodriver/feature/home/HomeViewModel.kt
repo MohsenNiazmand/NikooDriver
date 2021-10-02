@@ -5,8 +5,10 @@ import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
+import com.akaf.nikoodriver.common.SingleLiveEvent
 import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
 import com.akaf.nikoodriver.data.location.SendLocation
+import com.akaf.nikoodriver.data.offer.Trip
 import com.akaf.nikoodriver.data.repositories.HomeRepository
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.gson.Gson
@@ -21,6 +23,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     val tripPayedLiveData = MutableLiveData<Boolean>()
     var currentTripLiveData = MutableLiveData<String>()
     val onlineStatusLiveData = MutableLiveData<Boolean>()
+    val newOfferLiveData = SingleLiveEvent<Trip>()
 
 
 
@@ -65,13 +68,13 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     }
 
     private fun subscribeToNewOffers() {
-//        compositeDisposable.add(mqttManager.newTripSubject
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe {
-//                newOfferLiveData.postValue(it)
-//            }
-//        )
+        compositeDisposable.add(mqttManager.newTripSubject
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                newOfferLiveData.postValue(it)
+            }
+        )
         compositeDisposable.add(mqttManager.canceledTripSubject
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

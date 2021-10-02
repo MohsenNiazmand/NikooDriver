@@ -2,25 +2,23 @@ package com.akaf.nikoodriver.feature.home.credit
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
 import com.akaf.nikoodriver.data.location.SendLocation
-import com.akaf.nikoodriver.feature.current_travel.CurrentTravelFragment
-import com.akaf.nikoodriver.feature.declined_passengers.DeclinedPassengersFragment
 import com.akaf.nikoodriver.feature.home.HomeViewModel
-import com.akaf.nikoodriver.feature.travel_registeration.TravelRegistrationFragment
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
+import com.google.android.material.button.MaterialButton
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -56,6 +54,9 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+
+
+
         homeViewModel.mqttState.observe(viewLifecycleOwner) {
             Log.d("TAG", "initConnectionState: " + it)
             if (it) {
@@ -72,11 +73,12 @@ class HomeFragment : BaseFragment() {
         }
 
         activeBtn.setOnClickListener {
-            activationTv.visibility= View.GONE
-            activeBtn.visibility= View.GONE
-            deActiveBtn.visibility=View.VISIBLE
-            hiveMqttManager.connect()
-            checkPermStartLocationUpdate()
+            showEmptySeatsDialog()
+//            activationTv.visibility= View.GONE
+//            activeBtn.visibility= View.GONE
+//            deActiveBtn.visibility=View.VISIBLE
+//            hiveMqttManager.connect()
+//            checkPermStartLocationUpdate()
 
         }
 
@@ -114,6 +116,25 @@ class HomeFragment : BaseFragment() {
         }
 
 
+    }
+
+    private fun showEmptySeatsDialog() {
+        val emptySeatsView = layoutInflater.inflate(R.layout.dialog_empty_seats, null, false)
+        val emptySeatsDialog: AlertDialog = AlertDialog.Builder(requireContext()).create()
+        emptySeatsDialog.setView(emptySeatsView)
+        emptySeatsDialog.setCancelable(false)
+        emptySeatsView.findViewById<MaterialButton>(R.id.proceedEmptySeatsBtn).setOnClickListener {
+            emptySeatsDialog.dismiss()
+            activationTv.visibility= View.GONE
+            activeBtn.visibility= View.GONE
+            deActiveBtn.visibility=View.VISIBLE
+            hiveMqttManager.connect()
+            checkPermStartLocationUpdate()
+        }
+        emptySeatsView.findViewById<MaterialButton>(R.id.cancelEmptySeatsBtn).setOnClickListener {
+            emptySeatsDialog.dismiss()
+        }
+        emptySeatsDialog.show()
     }
 
     fun checkPermStartLocationUpdate() {
