@@ -103,6 +103,10 @@
     <string name="forExampleThreePerson">مثلا 3 نفر</string>
     <string name="successfulRegistration">ثبت نام موفق</string>
     <string name="finishingRegistration">به ناوگان حمل و نقل نیکو خوش آمدید،لطفا جهت تایید ثبت نام منتظر پیام از سوی کارشناسان ما باشید</string>
+    <string name="distance">فاصله:</string>
+    <string name="travelDistance">مسافت سفر:</string>
+    <string name="cost">هزینه:</string>
+
 
 
     <string-array name="Alphabet">

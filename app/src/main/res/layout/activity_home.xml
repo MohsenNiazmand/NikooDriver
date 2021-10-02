@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/homeRoot"
     android:background="@drawable/app_background"
+    android:layoutDirection="rtl"
     tools:context=".feature.home.HomeActivity">
 
 
@@ -17,6 +18,198 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
+
+    <RelativeLayout
+        android:id="@+id/newOfferView"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/getting_service_background">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bottomBox"
+            android:background="@drawable/background_shape_offer_box_top"
+            android:orientation="vertical"
+            android:elevation="2dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="10dp"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="20dp"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:layout_marginVertical="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/passenger_vector"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/distance"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                    android:layout_marginHorizontal="5dp"/>
+                <TextView
+                    android:id="@+id/offerDistanceTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline3"/>
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginVertical="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/route_copy"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/travelDistance"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                    android:layout_marginHorizontal="5dp"/>
+                <TextView
+                    android:id="@+id/travelDistanceTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline3"/>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginVertical="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/wallet"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cost"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                    android:layout_marginHorizontal="5dp"/>
+                <TextView
+                    android:id="@+id/offerCostTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline3"/>
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/bottomBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_shape_offer_box_bottom"
+            android:orientation="vertical"
+            android:elevation="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="20dp"
+            android:gravity="center_horizontal">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/copyframe" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/img"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                        android:text="@string/origin"/>
+
+                    <TextView
+                        android:id="@+id/offerOrigin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                        tools:text="@string/fakeDestination"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                        android:text="@string/destination"/>
+
+                    <TextView
+                        android:id="@+id/offerDestination"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                        tools:text="@string/fakeDestination"/>
+
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/acceptOfferBtn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:text="@string/acceptRequest"
+                app:cornerRadius="20dp" />
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+    </RelativeLayout>
 
 
 

@@ -9,6 +9,8 @@
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_et_register.xml" value="0.17592592592592593" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_shape_circle_profile.xml" value="0.2203125" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_shape_docs.xml" value="0.2203125" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_shape_offer_box_bottom.xml" value="0.2203125" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_shape_offer_box_top.xml" value="0.2203125" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_white.xml" value="0.2203125" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_white_card.xml" value="0.2203125" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/blue_background.xml" value="0.2169230769230769" />
@@ -26,7 +28,7 @@
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_declined_passengers.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_fill_info.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_finish_register.xml" value="0.25" />
-        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_home.xml" value="0.2" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/layout/activity_register.xml" value="0.22" />
