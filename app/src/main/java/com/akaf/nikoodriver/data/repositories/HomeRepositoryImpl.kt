@@ -10,7 +10,5 @@ class HomeRepositoryImpl(
     val homeRemoteDataSource:HomeDataSource
 
     ) : HomeRepository {
-    override fun sendFcmToken(fcmToken: String): Single<Response<FcmResponse>> {
-        return homeRemoteDataSource.sendFcmToken(fcmToken)
-    }
+
 }

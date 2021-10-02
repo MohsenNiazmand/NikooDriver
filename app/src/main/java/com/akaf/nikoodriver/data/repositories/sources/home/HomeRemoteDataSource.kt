@@ -6,10 +6,6 @@ import com.google.gson.JsonObject
 import io.reactivex.Single
 import retrofit2.Response
 
-class HomeRemoteDataSource(val apiService: ApiService):HomeDataSource {
-    override fun sendFcmToken(fcmToken: String): Single<Response<FcmResponse>> {
-        return apiService.sendFcmToken(JsonObject().apply {
-            addProperty("fcmToken",fcmToken)
-        })
-    }
+class HomeRemoteDataSource():HomeDataSource {
+
 }

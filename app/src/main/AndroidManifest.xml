@@ -61,15 +61,7 @@
         <activity
             android:name="com.akaf.nikoodriver.feature.auth.upload_docs.UploadDocsActivity"
             android:exported="true" />
-<!--        <activity-->
-<!--            android:name="com.akaf.nikoodriver.feature.declined_passengers.DeclinedPassengersFragment"-->
-<!--            android:exported="true" />-->
-<!--        <activity-->
-<!--            android:name="com.akaf.nikoodriver.feature.current_travel.CurrentTravelFragment"-->
-<!--            android:exported="true" />-->
-<!--        <activity-->
-<!--            android:name="com.akaf.nikoodriver.feature.travel_registeration.TravelRegistrationFragment"-->
-<!--            android:exported="true" />-->
+
         <activity
             android:name="com.akaf.nikoodriver.feature.auth.login.LoginActivity"
             android:exported="true"

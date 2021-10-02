@@ -19,7 +19,9 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_verification.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.akaf.nikoodriver.common.BaseActivity
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Response
 import org.json.JSONObject
 import java.lang.Exception
@@ -69,7 +71,9 @@ class VerificationActivity : BaseActivity() {
 
                                 //for checking the driver position in registering
                                     when (response.driver.status) {
-                                        "active" ->{ finishAffinity()
+                                        "active" ->{
+                                            sendFireBaseToken()
+                                            finishAffinity()
                                             startActivity(Intent(this@VerificationActivity, HomeActivity::class.java)) }
                                         "fillInfo" ->{ startActivity(Intent(this@VerificationActivity, FillInfoActivity::class.java).apply { putExtra("token",token) }) }
                                         "insufficient_docs" ->{ startActivity(Intent(this@VerificationActivity, UploadDocsActivity::class.java).apply { putExtra("token",token) }) }
@@ -104,6 +108,17 @@ class VerificationActivity : BaseActivity() {
         }
 
     }
+
+
+    private fun sendFireBaseToken() {
+        FirebaseMessaging.getInstance().subscribeToTopic("Drivers")
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) return@OnCompleteListener
+            val token = task.result
+            viewModel.sendFcmToken(token)
+        })
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()

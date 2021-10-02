@@ -3,6 +3,7 @@ package com.akaf.nikoodriver.services
 import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.refreshTokenResponse.RefreshTokenData
 import com.akaf.nikoodriver.data.repositories.sources.verification.VerificationDataSource
+import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.gson.JsonObject
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -18,6 +19,7 @@ class AppAuthenticator : Authenticator, KoinComponent {
 
 
     val apiService : ApiService by inject()
+    val hiveMqttManager:HiveMqttManager by inject()
     val verificationLocalDataSource : VerificationDataSource by inject()
     override fun authenticate(route: Route?, response: Response): Request? {
         if (TokenContainer.token != null && TokenContainer.refreshToken != null ) {
@@ -41,15 +43,19 @@ class AppAuthenticator : Authenticator, KoinComponent {
     }
 
     fun refreshToken(): String {
+        HiveMqttManager.mqttConnectionState.onNext(HiveMqttManager.CONNECTION_FAILURE)
+
         val response: retrofit2.Response<RefreshTokenData> =
             apiService.refreshToken(JsonObject().apply {
-                addProperty("access_token", TokenContainer.token)
-                addProperty("refresh_token", TokenContainer.refreshToken)
+                addProperty("token", TokenContainer.token)
+                addProperty("refreshToken", TokenContainer.refreshToken)
 
             }).execute()
         response.body()?.let {
             TokenContainer.update(it.token, it.refreshToken)
             verificationLocalDataSource.saveToken(it.token, it.refreshToken)
+            hiveMqttManager.disconnect()
+            hiveMqttManager.connect()
             return it.token
         }
 

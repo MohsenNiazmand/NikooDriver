@@ -2,12 +2,17 @@ package com.akaf.nikoodriver.data.repositories.sources.verification
 
 import android.content.SharedPreferences
 import com.akaf.nikoodriver.data.TokenContainer
+import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
 import com.akaf.nikoodriver.data.verificationResponse.VerificationResponse
 import io.reactivex.Single
 import retrofit2.Response
 
 class VerificationLocalDataSource(val sharedPreferences: SharedPreferences) : VerificationDataSource{
     override fun verification(phoneNumber: String, code: String): Single<Response<VerificationResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun sendFcmToken(fcmToken: String): Single<Response<FcmResponse>> {
         TODO("Not yet implemented")
     }
 

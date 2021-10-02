@@ -1,7 +1,10 @@
 package com.akaf.nikoodriver
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.akaf.nikoodriver.data.repositories.*
@@ -35,6 +38,14 @@ class App : MultiDexApplication() {
         MultiDex.install(baseContext)
         Timber.plant(Timber.DebugTree())
         Fresco.initialize(this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager=getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            val notificationChannel=NotificationChannel("NikooDriver","نیکو همراه",NotificationManager.IMPORTANCE_HIGH)
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+
+
 
 
         //these are project dependencies
@@ -81,7 +92,7 @@ class App : MultiDexApplication() {
             single<HomeRepository> {
                 HomeRepositoryImpl(
                     HomeLocalDataSource(),
-                    HomeRemoteDataSource(get())
+                    HomeRemoteDataSource()
                 )
             }
 

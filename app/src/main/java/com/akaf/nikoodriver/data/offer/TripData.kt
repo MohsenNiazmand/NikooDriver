@@ -17,7 +17,7 @@ data class TripData(
     val endAt: Any,
     val forOthers: List<ForOther>,
     val id: Int,
-    val options: Options,
+    val options: Options?=null,
     val payed: Any,
     val pickUpAt: Any,
     val realStartAt: Any,

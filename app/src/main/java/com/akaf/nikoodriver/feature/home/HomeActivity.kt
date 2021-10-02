@@ -59,8 +59,6 @@ class HomeActivity : BaseActivity() {
             finish()
             startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
             overridePendingTransition(0, 0);
-        }else{
-            sendFireBaseToken()
         }
     }
 
@@ -69,6 +67,7 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         wakeLockSetup()
+
 
 
         if (!CheckInternet()){
@@ -116,7 +115,7 @@ class HomeActivity : BaseActivity() {
 
         homeViewModel.newOfferLiveData.observe(this){
             newOfferView.visibility=View.VISIBLE
-            offerDistanceTv.text=it.data.options.disposalHour.toString()+"-"+it.data.options.distance
+            offerDistanceTv.text=it.data.options?.disposalHour.toString()+"-"+it.data.options?.distance
             travelDistanceTv.text=it.data.startAt
             offerCostTv.text=it.data.cost
             originTv.text=it.data.startAt
@@ -131,14 +130,7 @@ class HomeActivity : BaseActivity() {
     }
 
 
-    private fun sendFireBaseToken() {
-        FirebaseMessaging.getInstance().subscribeToTopic("Drivers")
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) return@OnCompleteListener
-            val token = task.result
-            homeViewModel.sendFcmToken(token)
-        })
-    }
+
 
 
     private fun wakeLockSetup() {

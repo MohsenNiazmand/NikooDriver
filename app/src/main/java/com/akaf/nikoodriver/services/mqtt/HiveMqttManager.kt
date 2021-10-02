@@ -60,7 +60,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
             this.token =sharedPreferences.getString("access_token",null).toString()
             this.driverId=sharedPreferences.getString("driverId",null)!!.toInt()
 //            this.userId = prefRepository.getUser()?.id ?: 0
-            Log.d("TAG", "confirmCode: " + token)
+            Log.i("TAG", "confirmCode: " + token)
             if (token.isNotEmpty()) {
                 mqttClient = Mqtt3Client.builder()
                     .identifier(UUID.randomUUID().toString())
@@ -100,7 +100,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
                     }
                     ?.doOnNext {
-                        Log.e(TAG, "publises received")
+                        Log.i(TAG, "publises received")
                         handleNewMessage(it)
 
                     }?.subscribe({}, {
@@ -119,22 +119,22 @@ class HiveMqttManager(val context: Context) : KoinComponent {
         this.driverId=sharedPreferences.getString("driverId",null)!!.toInt()
 
         if (mqttClient == null) {
-            Log.e(TAG, "connect: client is null , recreating client ")
+            Log.i(TAG, "connect: client is null , recreating client ")
             initMqtt()
         }
         try {
             if (mqttClient?.state?.isConnected == true) {
                 mqttConnectionState.onNext(CONNECTED)
-                Log.e(TAG, "connect: client is connected , return from connect ")
+                Log.i(TAG, "connect: client is connected , return from connect ")
 
                 return
             }
             if (mqttClient?.state?.isConnectedOrReconnect == true) {
-                Log.e(TAG, "connect: client is reconnecting  maybe ,re initiate client")
+                Log.i(TAG, "connect: client is reconnecting  maybe ,re initiate client")
                 initMqtt()
             }
             if (token.isBlank()) {
-                Log.e(TAG, "connect: token is null  , return from connect ")
+                Log.i(TAG, "connect: token is null  , return from connect ")
 
                 return
             }
@@ -165,7 +165,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
         val disconnectCompletable = mqttClient?.disconnect()?.doOnComplete {
         }?.subscribe({
             mqttConnectionState.onNext(CONNECTION_FAILURE)
-            Log.e(TAG, "Connectionsssssssssssssssssssssssssssss Connected ")
+            Log.i(TAG, "Connectionsssssssssssssssssssssssssssss Connected ")
         }, {
             Log.e(TAG, "Connectionsssssssssssssssssssssssssssss Disconnected Error -> ${it.cause}")
         })
@@ -177,8 +177,8 @@ class HiveMqttManager(val context: Context) : KoinComponent {
         try {
 
             if (message != null && !message.topic.toString().isNullOrBlank()) {
-                Log.d("TAG", "handleNewMessagesssssssssssss: " + message.topic.levels.last())
-                Log.d("TAG", "handleNewMessagesssssssssssss: " + String(message.payloadAsBytes))
+                Log.i("TAG", "handleNewMessagesssssssssssss: " + message.topic.levels.last())
+                Log.i("TAG", "handleNewMessagesssssssssssss: " + String(message.payloadAsBytes))
                 when (message.topic.levels.last()) {
                     "messages" -> {
                         messageSubject.onNext(true)
@@ -186,7 +186,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                     "Trip.New" -> {
                         //new offer received
                         val data = String(message.payloadAsBytes)
-                        Log.e(TAG, "${message.topic.toString()} received: ${data} ")
+                        Log.i(TAG, "${message.topic.toString()} received: ${data} ")
 
                         val baseObject = JSONObject(data)
                         if (baseObject.has("data")) {
@@ -200,12 +200,12 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
                     "Offer.Rejected" -> {
                         val data = String(message.payloadAsBytes)
-                        Log.e(TAG, "${message.topic.toString()} received: ${data} ")
+                        Log.i(TAG, "${message.topic.toString()} received: ${data} ")
                         canceledTripSubject.onNext(true)
                     }
                     "Trip.Registred" -> {
                         val data = String(message.payloadAsBytes)
-                        Log.e(TAG, "${message.topic.toString()} received: ${data} ")
+                        Log.i(TAG, "${message.topic.toString()} received: ${data} ")
                         payedTripSubject.onNext(true)
                     }
                 }
@@ -239,7 +239,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                     ?.doOnComplete {
                         Log.i(TAG, "publishDriverLocation: Done")
                     }?.subscribe({}, {
-                        Log.i(TAG, "publishDriverLocation: Error -> ${it.localizedMessage ?: ""}")
+                        Log.e(TAG, "publishDriverLocation: Error -> ${it.localizedMessage ?: ""}")
 
                     })
             } catch (e: Exception) {
@@ -265,7 +265,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                     ?.doOnComplete {
                         Log.i(TAG, "publishDriverLocation: Done")
                     }?.subscribe({}, {
-                        Log.i(TAG, "publishDriverLocation: Error -> ${it.localizedMessage ?: ""}")
+                        Log.e(TAG, "publishDriverLocation: Error -> ${it.localizedMessage ?: ""}")
 
                     })
             } catch (e: Exception) {
@@ -294,14 +294,14 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
             val subToken = mqttClient?.subscribePublishes(mqttSubscribe)
                 ?.doOnSingle {
-                    Log.e(TAG, "subscribeToNewOffer Sucess -> ${topic}")
+                    Log.i(TAG, "subscribeToNewOffer Sucess -> ${topic}")
                 }
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({
                     // handleNewMessage(it)
                 }, {
-                    Log.i(TAG, "subscribeToNewOffer Error -> ${it.localizedMessage ?: ""}")
+                    Log.e(TAG, "subscribeToNewOffer Error -> ${it.localizedMessage ?: ""}")
 
                 })
 
@@ -322,14 +322,14 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
             val subToken = mqttClient?.subscribePublishes(mqttSubscribe)
                 ?.doOnSingle {
-                    Log.e(TAG, "subscribeToNewOffer Sucess -> ${topic}")
+                    Log.i(TAG, "subscribeToNewOffer Sucess -> ${topic}")
                 }
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({
                     // handleNewMessage(it)
                 }, {
-                    Log.i(TAG, "subscribeToNewOffer Error -> ${it.localizedMessage ?: ""}")
+                    Log.e(TAG, "subscribeToNewOffer Error -> ${it.localizedMessage ?: ""}")
 
                 })
 
@@ -350,14 +350,14 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
             val subToken = mqttClient?.subscribePublishes(mqttSubscribe)
                 ?.doOnSingle {
-                    Log.e(TAG, "subscribe Sucess -> ${topic}")
+                    Log.i(TAG, "subscribe Sucess -> ${topic}")
                 }
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({
                     // handleNewMessage(it)
                 }, {
-                    Log.i(TAG, "subscribeTo ${topic} Error -> ${it.localizedMessage ?: ""}")
+                    Log.e(TAG, "subscribeTo ${topic} Error -> ${it.localizedMessage ?: ""}")
 
                 })
 
@@ -377,14 +377,14 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
             val subToken = mqttClient?.subscribePublishes(mqttSubscribe)
                 ?.doOnSingle {
-                    Log.e(TAG, "subscribeToNewOffer Sucess -> ${topic}")
+                    Log.i(TAG, "subscribeToNewOffer Sucess -> ${topic}")
                 }
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({
                      handleNewMessage(it)
                 }, {
-                    Log.i(TAG, "subscribeToNewOffer Error -> ${it.localizedMessage ?: ""}")
+                    Log.e(TAG, "subscribeToNewOffer Error -> ${it.localizedMessage ?: ""}")
 
                 })
 

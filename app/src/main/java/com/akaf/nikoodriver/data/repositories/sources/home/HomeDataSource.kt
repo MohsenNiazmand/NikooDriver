@@ -5,6 +5,5 @@ import io.reactivex.Single
 import retrofit2.Response
 
 interface HomeDataSource {
-    fun sendFcmToken(fcmToken:String): Single<Response<FcmResponse>>
 
 }

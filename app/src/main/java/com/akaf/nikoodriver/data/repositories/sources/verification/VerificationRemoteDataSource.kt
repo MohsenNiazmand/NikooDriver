@@ -1,5 +1,6 @@
 package com.akaf.nikoodriver.data.repositories.sources.verification
 
+import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
 import com.akaf.nikoodriver.data.verificationResponse.VerificationResponse
 import com.akaf.nikoodriver.services.ApiService
 import com.google.gson.JsonObject
@@ -11,6 +12,12 @@ class VerificationRemoteDataSource(val apiService: ApiService) : VerificationDat
         return apiService.verification(JsonObject().apply {
             addProperty("phoneNumber",phoneNumber)
             addProperty("code",code)
+        })
+    }
+
+    override fun sendFcmToken(fcmToken: String): Single<Response<FcmResponse>> {
+        return apiService.sendFcmToken(JsonObject().apply {
+            addProperty("fcmToken",fcmToken)
         })
     }
 

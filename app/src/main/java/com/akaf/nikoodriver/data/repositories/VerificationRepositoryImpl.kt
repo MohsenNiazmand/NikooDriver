@@ -1,6 +1,7 @@
 package com.akaf.nikoodriver.data.repositories
 
 import com.akaf.nikoodriver.data.TokenContainer
+import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
 import com.akaf.nikoodriver.data.repositories.sources.verification.VerificationDataSource
 import com.akaf.nikoodriver.data.verificationResponse.VerificationData
 import com.akaf.nikoodriver.data.verificationResponse.VerificationResponse
@@ -22,6 +23,10 @@ class VerificationRepositoryImpl(
 
     override fun loadToken() {
         verificationLocalDataSource.loadToken()
+    }
+
+    override fun sendFcmToken(fcmToken: String): Single<Response<FcmResponse>> {
+        return verificationRemoteDataSource.sendFcmToken(fcmToken)
     }
 
     override fun getUserName(): String {

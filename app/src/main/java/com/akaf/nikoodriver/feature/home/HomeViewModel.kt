@@ -23,7 +23,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     val tripPayedLiveData = MutableLiveData<Boolean>()
     var currentTripLiveData = MutableLiveData<String>()
     val onlineStatusLiveData = MutableLiveData<Boolean>()
-    val newOfferLiveData = SingleLiveEvent<Trip>()
+    val newOfferLiveData = MutableLiveData<Trip>()
 
 
 
@@ -110,21 +110,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
 
 
 
-    fun sendFcmToken(fcmToken:String?){
-        progressBarLiveData.value=true
-        if (fcmToken != null) {
-            homeRepository.sendFcmToken(fcmToken)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object :NikoSingleObserver<Response<FcmResponse>>(compositeDisposable){
-                    override fun onSuccess(t: Response<FcmResponse>) {
-                        progressBarLiveData.postValue(false)
-                    }
 
-                })
-        }
-
-    }
 
 
 }
