@@ -10,5 +10,8 @@ class HomeRepositoryImpl(
     val homeRemoteDataSource:HomeDataSource
 
     ) : HomeRepository {
+    override fun onlineStatus(isOnline: Boolean) {
+        homeLocalDataSource.onlineStatus(isOnline)
+    }
 
 }

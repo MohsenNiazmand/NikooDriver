@@ -5,6 +5,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
+import android.util.Log
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.akaf.nikoodriver.data.repositories.*
@@ -26,6 +29,7 @@ import com.akaf.nikoodriver.feature.home.HomeViewModel
 import com.akaf.nikoodriver.services.createApiServiceInstance
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.facebook.drawee.backends.pipeline.Fresco
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
@@ -33,6 +37,7 @@ import org.koin.dsl.module
 import timber.log.Timber
 
 class App : MultiDexApplication() {
+    val homeViewModel:HomeViewModel by inject()
     override fun onCreate() {
         super.onCreate()
         MultiDex.install(baseContext)
@@ -91,7 +96,7 @@ class App : MultiDexApplication() {
 
             single<HomeRepository> {
                 HomeRepositoryImpl(
-                    HomeLocalDataSource(),
+                    HomeLocalDataSource(get()),
                     HomeRemoteDataSource()
                 )
             }
@@ -101,7 +106,7 @@ class App : MultiDexApplication() {
             viewModel { VerificationViewModel(get()) }
             viewModel { UploadDocsViewModel(get()) }
             viewModel { FillInfoViewModel(get()) }
-            viewModel { HomeViewModel(get(),get()) }
+            viewModel { HomeViewModel(get(),get(),get()) }
 
         }
 
@@ -113,5 +118,6 @@ class App : MultiDexApplication() {
 
 
     }
+
 
 }

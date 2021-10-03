@@ -5,5 +5,6 @@ import io.reactivex.Single
 import retrofit2.Response
 
 interface HomeDataSource {
+    fun onlineStatus(isOnline: Boolean)
 
 }

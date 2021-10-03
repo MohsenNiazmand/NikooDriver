@@ -115,11 +115,11 @@ class HomeActivity : BaseActivity() {
 
         homeViewModel.newOfferLiveData.observe(this){
             newOfferView.visibility=View.VISIBLE
-            offerDistanceTv.text=it.data.options?.disposalHour.toString()+"-"+it.data.options?.distance
-            travelDistanceTv.text=it.data.startAt
-            offerCostTv.text=it.data.cost
-            originTv.text=it.data.startAt
-            destinationTv.text=it.data.destinationCity
+            offerDistanceTv.text=it.options?.disposalHour.toString()+"-"+it.options?.distance
+            travelDistanceTv.text=it.startAt
+            offerCostTv.text=it.cost
+            originTv.text=it.startAt
+            destinationTv.text=it.destinationCity
         }
 
         acceptOfferBtn.setOnClickListener {

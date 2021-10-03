@@ -1,6 +1,7 @@
 package com.akaf.nikoodriver.feature.home
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.common.NikoSingleObserver
@@ -9,6 +10,7 @@ import com.akaf.nikoodriver.common.SingleLiveEvent
 import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
 import com.akaf.nikoodriver.data.location.SendLocation
 import com.akaf.nikoodriver.data.offer.Trip
+import com.akaf.nikoodriver.data.offer.TripData
 import com.akaf.nikoodriver.data.repositories.HomeRepository
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.gson.Gson
@@ -17,13 +19,13 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import retrofit2.Response
 
-class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRepository):NikoViewModel() {
+class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRepository,val sharedPreferences: SharedPreferences):NikoViewModel() {
     val mqttState = MutableLiveData<Boolean>()
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
     var currentTripLiveData = MutableLiveData<String>()
     val onlineStatusLiveData = MutableLiveData<Boolean>()
-    val newOfferLiveData = MutableLiveData<Trip>()
+    val newOfferLiveData = MutableLiveData<TripData>()
 
 
 
@@ -32,6 +34,8 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
         subscribeToNewOffers()
         subscribeToDisconnectSubject()
     }
+
+
 
 
     private fun subscribeMqttState() {
@@ -63,6 +67,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 onlineStatusLiveData.postValue(it)
+                homeRepository.onlineStatus(it)
             }
 
     }
@@ -95,6 +100,15 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
 
     fun sendDriverLocation(location: Location) {
         mqttManager.publishDriverLocation(location)
+    }
+
+    fun setOnlineStatus(isOnline:Boolean){
+        onlineStatusLiveData.postValue(isOnline)
+        homeRepository.onlineStatus(isOnline)
+        when {
+            isOnline -> mqttManager.connect()
+            else -> mqttManager.disconnect()
+        }
     }
 
 

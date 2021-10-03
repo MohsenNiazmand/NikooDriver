@@ -7,5 +7,8 @@ import io.reactivex.Single
 import retrofit2.Response
 
 class HomeRemoteDataSource():HomeDataSource {
+    override fun onlineStatus(isOnline: Boolean) {
+        TODO("Not yet implemented")
+    }
 
 }

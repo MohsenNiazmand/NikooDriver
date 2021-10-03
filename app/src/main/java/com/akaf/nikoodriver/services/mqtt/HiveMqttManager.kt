@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.location.Location
 import android.util.Log
 import com.akaf.nikoodriver.data.offer.Trip
+import com.akaf.nikoodriver.data.offer.TripData
 import com.google.gson.Gson
 import com.hivemq.client.mqtt.MqttGlobalPublishFilter
 import com.hivemq.client.mqtt.datatypes.MqttQos
@@ -32,7 +33,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
     private var token = ""
     private var driverId = 0
     private var state = 0
-    var newTripSubject = PublishSubject.create<Trip>()
+    var newTripSubject = PublishSubject.create<TripData>()
     var messageSubject = PublishSubject.create<Boolean>()
     var disconnectSubject = PublishSubject.create<Boolean>()
     var canceledTripSubject = PublishSubject.create<Any>()
@@ -79,10 +80,10 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                     }
                     .addDisconnectedListener {
                         try {
-                            if (it.cause.message.equals("java.io.IOException: Software caused connection abort")) {
-                                disconnectSubject.onNext(false)
-                                disconnect()
-                            }
+//                            if (it.cause.message.equals("java.io.IOException: Software caused connection abort")) {
+//                                disconnectSubject.onNext(false)
+//                                disconnect()
+//                            }
                             mqttConnectionState.onNext(CONNECTION_FAILURE)
                             Log.e(TAG,"Connection Disconnected -> ${it.cause.message ?: ""}")
 
@@ -165,9 +166,9 @@ class HiveMqttManager(val context: Context) : KoinComponent {
         val disconnectCompletable = mqttClient?.disconnect()?.doOnComplete {
         }?.subscribe({
             mqttConnectionState.onNext(CONNECTION_FAILURE)
-            Log.i(TAG, "Connectionsssssssssssssssssssssssssssss Connected ")
+            Log.i(TAG, "Connection Connected ")
         }, {
-            Log.e(TAG, "Connectionsssssssssssssssssssssssssssss Disconnected Error -> ${it.cause}")
+            Log.e(TAG, "Connection Disconnected Error -> ${it.cause}")
         })
     }
 
@@ -177,8 +178,8 @@ class HiveMqttManager(val context: Context) : KoinComponent {
         try {
 
             if (message != null && !message.topic.toString().isNullOrBlank()) {
-                Log.i("TAG", "handleNewMessagesssssssssssss: " + message.topic.levels.last())
-                Log.i("TAG", "handleNewMessagesssssssssssss: " + String(message.payloadAsBytes))
+                Log.i("TAG", "handleNewMessagesQOS: " + message.topic.levels.last())
+                Log.i("TAG", "handleNewMessages: " + String(message.payloadAsBytes))
                 when (message.topic.levels.last()) {
                     "messages" -> {
                         messageSubject.onNext(true)
@@ -191,10 +192,10 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                         val baseObject = JSONObject(data)
                         if (baseObject.has("data")) {
 
-                            val trip = Gson().fromJson(
-                                baseObject.getJSONObject("data").toString(), Trip::class.java
+                            val tripData = Gson().fromJson(
+                                baseObject.getJSONObject("data").toString(), TripData::class.java
                             )
-                            newTripSubject.onNext(trip)
+                            newTripSubject.onNext(tripData)
                         }
                     }
 

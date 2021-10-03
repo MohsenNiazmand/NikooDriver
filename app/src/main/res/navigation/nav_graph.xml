@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_travel_registration" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.akaf.nikoodriver.feature.home.credit.HomeFragment"
+        android:name="com.akaf.nikoodriver.feature.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
