@@ -1,9 +1,11 @@
 package com.akaf.nikoodriver.services
 
 import com.akaf.nikoodriver.data.TokenContainer
+import com.akaf.nikoodriver.data.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
 import com.akaf.nikoodriver.data.fillInfoResponse.DriverUploadPhotoResponse.UploadPhotoDriverResponse
 import com.akaf.nikoodriver.data.fillInfoResponse.FillInfoResponse
+import com.akaf.nikoodriver.data.location.SendLocation
 import com.akaf.nikoodriver.data.loginResponse.LoginResponse
 import com.akaf.nikoodriver.data.refreshTokenResponse.RefreshTokenData
 import com.akaf.nikoodriver.data.submitDocsResponse.SubmitDocsResponse
@@ -51,6 +53,9 @@ interface ApiService {
 
     @POST("driver/profile/fcm")
     fun sendFcmToken(@Body jsonObject: JsonObject):Single<Response<FcmResponse>>
+
+    @POST("driver/profile/location")
+    fun sendLocation(@Body sendLocation: SendLocation):Single<Response<DriverLocationResponse>>
 
 
 }

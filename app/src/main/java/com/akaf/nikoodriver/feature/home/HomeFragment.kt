@@ -208,7 +208,7 @@ class HomeFragment : BaseFragment() {
                     val sendLocation = SendLocation()
                     sendLocation.location.add(fusedLocation!!.longitude)
                     sendLocation.location.add(fusedLocation!!.latitude)
-                    Timber.i("LOCATION11"+fusedLocation!!.longitude)
+                    Timber.i("LOCATION11"+fusedLocation!!.latitude+" "+fusedLocation!!.longitude)
                     homeViewModel.sendDriverLocation(fusedLocation!!)
 //                    homeViewModel.sendDriverLocationToRest(sendLocation)
 //                    checkFastLocUpdate(homeViewModel.currentTripLiveData.value)
