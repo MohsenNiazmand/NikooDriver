@@ -58,7 +58,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
     fun initMqtt() {
         try {
-            this.token =sharedPreferences.getString("access_token",null).toString()
+            this.token =sharedPreferences.getString("token",null).toString()
             this.driverId=sharedPreferences.getString("driverId",null)!!.toInt()
 //            this.userId = prefRepository.getUser()?.id ?: 0
             Log.i("TAG", "confirmCode: " + token)
@@ -116,7 +116,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
     }
 
     fun connect() {
-        this.token =sharedPreferences.getString("access_token",null).toString()
+        this.token =sharedPreferences.getString("token",null).toString()
         this.driverId=sharedPreferences.getString("driverId",null)!!.toInt()
 
         if (mqttClient == null) {
@@ -223,8 +223,8 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                 json.put("_type", "location")
                 val dataJson = JSONObject()
                 val locationObject = JSONObject()
-                locationObject.put("longitude", location.longitude)
                 locationObject.put("latitude", location.latitude)
+                locationObject.put("longitude", location.longitude)
                 locationObject.put("bearing", location.bearing)
                 dataJson.put("location", locationObject)
                 json.put("data", dataJson)

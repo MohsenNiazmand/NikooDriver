@@ -6,25 +6,25 @@ import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
-import com.akaf.nikoodriver.common.SingleLiveEvent
-import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
+import com.akaf.nikoodriver.data.TokenContainer
+import com.akaf.nikoodriver.data.TokenContainer.refreshToken
+import com.akaf.nikoodriver.data.TokenContainer.token
+import com.akaf.nikoodriver.data.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.location.SendLocation
-import com.akaf.nikoodriver.data.offer.Trip
 import com.akaf.nikoodriver.data.offer.TripData
+import com.akaf.nikoodriver.data.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.data.repositories.HomeRepository
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
-import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import retrofit2.HttpException
 import retrofit2.Response
+import timber.log.Timber
 
 class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRepository,val sharedPreferences: SharedPreferences):NikoViewModel() {
     val mqttState = MutableLiveData<Boolean>()
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
     var currentTripLiveData = MutableLiveData<String>()
-    val onlineStatusLiveData = MutableLiveData<Boolean>()
     val newOfferLiveData = MutableLiveData<TripData>()
 
 
@@ -66,7 +66,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                onlineStatusLiveData.postValue(it)
                 homeRepository.onlineStatus(it)
             }
 
@@ -103,7 +102,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     }
 
     fun setOnlineStatus(isOnline:Boolean){
-        onlineStatusLiveData.postValue(isOnline)
         homeRepository.onlineStatus(isOnline)
         when {
             isOnline -> mqttManager.connect()
@@ -114,7 +112,17 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
 
 
     fun sendDriverLocationToRest(sendLocation: SendLocation) {
-        //needs location rest
+        progressBarLiveData.value=true
+        homeRepository.sendLocation(sendLocation)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :NikoSingleObserver<Response<DriverLocationResponse>>(compositeDisposable){
+                override fun onSuccess(t: Response<DriverLocationResponse>) {
+                    progressBarLiveData.postValue(false)
+                }
+
+
+            })
     }
 
 
@@ -124,7 +132,28 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
 
 
 
+     fun sendRefreshToken(token:String, refreshToken:String){
+        progressBarLiveData.value=true
+            homeRepository.refreshToken(token,refreshToken)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object :NikoSingleObserver<Response<RefreshTokenResponse>>(compositeDisposable){
+                    override fun onSuccess(t: Response<RefreshTokenResponse>) {
+                        Timber.i("refresh token"+t.body().toString())
+                        if (t.isSuccessful){
+                            progressBarLiveData.postValue(false)
+                            homeRepository.saveTokenStatus(false)
 
+                        }else{
+                            progressBarLiveData.postValue(false)
+                            homeRepository.saveTokenStatus(true)
+                        }
+                    }
+
+                })
+
+
+    }
 
 
 }

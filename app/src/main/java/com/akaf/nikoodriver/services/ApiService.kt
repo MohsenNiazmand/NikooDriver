@@ -8,6 +8,7 @@ import com.akaf.nikoodriver.data.fillInfoResponse.FillInfoResponse
 import com.akaf.nikoodriver.data.location.SendLocation
 import com.akaf.nikoodriver.data.loginResponse.LoginResponse
 import com.akaf.nikoodriver.data.refreshTokenResponse.RefreshTokenData
+import com.akaf.nikoodriver.data.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.data.submitDocsResponse.SubmitDocsResponse
 import com.akaf.nikoodriver.data.uploadDocResponse.UploadDocResponse
 import com.akaf.nikoodriver.data.verificationResponse.VerificationResponse
@@ -41,7 +42,7 @@ interface ApiService {
 
 
     @POST("auth/refresh")
-    fun refreshToken(@Body jsonObject: JsonObject): Call<RefreshTokenData>
+    fun refreshToken(@Body jsonObject: JsonObject): Single<Response<RefreshTokenResponse>>
 
     @Multipart
     @POST("auth/driver/docs")

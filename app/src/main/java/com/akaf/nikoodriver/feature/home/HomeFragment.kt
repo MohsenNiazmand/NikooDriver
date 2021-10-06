@@ -54,11 +54,13 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val onlineStatus=sharedPreferences.getBoolean("isOnline",false)
-        if (onlineStatus){
-            active()
-        }else
-            deActive()
+
+            val tokenStatus=sharedPreferences.getBoolean("expired",false)
+            val onlineStatus=sharedPreferences.getBoolean("isOnline",false)
+                if (onlineStatus&& !tokenStatus){
+                    active()
+                }else
+                    deActive()
 
 
 
@@ -67,14 +69,15 @@ class HomeFragment : BaseFragment() {
             if (it) {
                 checkPermStartLocationUpdate()
 //                checkNewTrip()
-            } else {
-                if (homeViewModel.onlineStatusLiveData.value == true) {
+            }
+//            else {
+//                if (homeViewModel.onlineStatusLiveData.value == true) {
 //                    txtConnectingToTheServer.visibility = View.VISIBLE
-                } else {
+//                } else {
 //                    txtConnectingToTheServer.visibility = View.GONE
 
-                }
-            }
+//                }
+//            }
         }
 
         activeBtn.setOnClickListener {
@@ -111,12 +114,14 @@ class HomeFragment : BaseFragment() {
 
         }
 
-
+        homeViewModel.progressBarLiveData.observe(viewLifecycleOwner) {
+            setProgressIndicator(it)
+        }
 
 
     }
 
-    fun active(){
+    private fun active(){
         activationTv.visibility= View.GONE
         activeBtn.visibility= View.GONE
         deActiveBtn.visibility=View.VISIBLE
@@ -124,7 +129,7 @@ class HomeFragment : BaseFragment() {
         checkPermStartLocationUpdate()
     }
 
-    fun deActive(){
+    private fun deActive(){
         activationTv.visibility= View.VISIBLE
         activeBtn.visibility= View.VISIBLE
         deActiveBtn.visibility=View.GONE
@@ -206,11 +211,11 @@ class HomeFragment : BaseFragment() {
 //                runOnUiThread {
                     fusedLocation = p0.lastLocation
                     val sendLocation = SendLocation()
-                    sendLocation.location.add(fusedLocation!!.longitude)
                     sendLocation.location.add(fusedLocation!!.latitude)
+                    sendLocation.location.add(fusedLocation!!.longitude)
                     Timber.i("LOCATION11"+fusedLocation!!.latitude+" "+fusedLocation!!.longitude)
                     homeViewModel.sendDriverLocation(fusedLocation!!)
-//                    homeViewModel.sendDriverLocationToRest(sendLocation)
+                    homeViewModel.sendDriverLocationToRest(sendLocation)
 //                    checkFastLocUpdate(homeViewModel.currentTripLiveData.value)
 //                }
 
@@ -219,6 +224,7 @@ class HomeFragment : BaseFragment() {
 
         override fun onLocationAvailability(p0: LocationAvailability?) {
         }
+
     }
 
 

@@ -2,43 +2,25 @@
 
 package com.akaf.nikoodriver.feature.home
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.NotificationChannel
-import android.app.NotificationManager
+
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.location.Location
-import android.os.Build
 import android.os.Bundle
-import android.os.Looper
 import android.os.PowerManager
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseActivity
-import com.akaf.nikoodriver.data.location.SendLocation
 import com.akaf.nikoodriver.feature.auth.login.LoginActivity
-import com.akaf.nikoodriver.feature.home.credit.CreditDialog
-import com.akaf.nikoodriver.feature.current_travel.CurrentTravelFragment
-import com.akaf.nikoodriver.feature.declined_passengers.DeclinedPassengersFragment
-import com.akaf.nikoodriver.feature.travel_registeration.TravelRegistrationFragment
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.messaging.FirebaseMessaging
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_declined_passenger.*
 import org.koin.android.ext.android.inject
-import timber.log.Timber
 
 class HomeActivity : BaseActivity() {
     val compositeDisposable=CompositeDisposable()
@@ -46,21 +28,11 @@ class HomeActivity : BaseActivity() {
     val hiveMqttManager: HiveMqttManager by inject()
     val homeViewModel: HomeViewModel by inject()
     private lateinit var wakeLock: PowerManager.WakeLock
+    val token=sharedPreferences.getString("token", null)
+    val refreshToken=sharedPreferences.getString("refresh_token", null)
 
 
 
-
-
-    override fun onStart() {
-        super.onStart()
-        //we check tokenExistence ,if it exist user goes to home
-        val tokenExistence=sharedPreferences.getString("access_token", null)
-        if (tokenExistence==null){
-            finish()
-            startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
-            overridePendingTransition(0, 0);
-        }
-    }
 
     @SuppressLint("CutPasteId", "BinaryOperationInTimber", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,18 +69,26 @@ class HomeActivity : BaseActivity() {
 
 
 
+        //checks tokenExistence ,if it exist user goes to home
 
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create channel to show notifications.
-            val channelId = "fcm_id"
-            val channelName = "fcm_channel"
-            val notificationManager = getSystemService(NotificationManager::class.java)
-            notificationManager?.createNotificationChannel(
-                NotificationChannel(channelId,
-                channelName, NotificationManager.IMPORTANCE_LOW)
-            )
+        if (token==null){
+            finish()
+            startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
+            overridePendingTransition(0, 0);
         }
+
+        //checks token expire
+        else if (token!=null&& refreshToken!=null){
+            homeViewModel.sendRefreshToken(token,refreshToken)
+            val tokenStatus=sharedPreferences.getBoolean("expired",false)
+            if (tokenStatus){
+                finish()
+                startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
+                overridePendingTransition(0, 0);
+                Toast.makeText(applicationContext,"لطفا مجددا به حساب خود وارد شوید",Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
 
 

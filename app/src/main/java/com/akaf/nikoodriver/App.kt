@@ -93,11 +93,11 @@ class App : MultiDexApplication() {
                     FillInfoRemoteDataSource(get())
                 )
             }
-
+            single { HomeLocalDataSource(get()) }
             single<HomeRepository> {
                 HomeRepositoryImpl(
                     HomeLocalDataSource(get()),
-                    HomeRemoteDataSource()
+                    HomeRemoteDataSource(get())
                 )
             }
 
