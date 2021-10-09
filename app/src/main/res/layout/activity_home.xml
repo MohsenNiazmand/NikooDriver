@@ -49,15 +49,15 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/passenger_vector"/>
+                    android:src="@drawable/clock"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/distance"
+                    android:text="@string/deadlineForReceivingTravel"
                     android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
                     android:layout_marginHorizontal="5dp"/>
                 <TextView
-                    android:id="@+id/offerDistanceTv"
+                    android:id="@+id/deadlineForReceivingTravelTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.MyTheme.Headline3"/>

@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.PowerManager
 import android.view.View
 import android.widget.Toast
@@ -95,11 +96,12 @@ class HomeActivity : BaseActivity() {
 
         homeViewModel.newOfferLiveData.observe(this){
             newOfferView.visibility=View.VISIBLE
-//            offerDistanceTv.text=it.options?.disposalHour.toString()+"-"+it.options?.distance
-//            travelDistanceTv.text=it.startAt
-//            offerCostTv.text=it.cost
-//            originTv.text=it.startAt
+
+//            travelDistanceTv.text=it.cost.toString()
+//            offerCostTv.text=it.cost.toString()
+//            originTv.text=it.cost.toString()
 //            destinationTv.text=it.destinationCity
+            timer()
         }
 
         acceptOfferBtn.setOnClickListener {
@@ -111,6 +113,26 @@ class HomeActivity : BaseActivity() {
 
 
 
+    fun timer(){
+        val timer = object: CountDownTimer(20000, 1000) {
+            @SuppressLint("SetTextI18n")
+            override fun onTick(millisUntilFinished: Long) {
+                var diff = millisUntilFinished
+                val secondsInMilli: Long = 1000
+                val minutesInMilli = secondsInMilli * 60
+                val elapsedMinutes = diff / minutesInMilli
+                diff %= minutesInMilli
+
+                val elapsedSeconds = diff / secondsInMilli
+                deadlineForReceivingTravelTv.text="$elapsedMinutes:$elapsedSeconds"
+            }
+
+            override fun onFinish() {
+                newOfferView.visibility=View.GONE
+            }
+        }
+        timer.start()
+    }
 
 
     private fun wakeLockSetup() {

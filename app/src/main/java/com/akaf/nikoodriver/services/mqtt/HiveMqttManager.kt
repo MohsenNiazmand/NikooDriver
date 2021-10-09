@@ -33,7 +33,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
     private var token = ""
     private var driverId = 0
     private var state = 0
-    var newTripSubject = PublishSubject.create<TripData>()
+    var newTripSubject = PublishSubject.create<List<TripData>>()
     var messageSubject = PublishSubject.create<Boolean>()
     var disconnectSubject = PublishSubject.create<Boolean>()
     var canceledTripSubject = PublishSubject.create<Any>()
@@ -195,7 +195,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                             val tripData = Gson().fromJson(
                                 baseObject.getJSONObject("data").toString(), TripData::class.java
                             )
-                            newTripSubject.onNext(tripData)
+                            newTripSubject.onNext(listOf(tripData))
                         }
                     }
 

@@ -63,7 +63,6 @@ class HomeFragment : BaseFragment() {
                     deActive()
 
 
-
         homeViewModel.mqttState.observe(viewLifecycleOwner) {
             Log.d("TAG", "initConnectionState: " + it)
             if (it) {
@@ -120,6 +119,7 @@ class HomeFragment : BaseFragment() {
 
 
     }
+
 
     private fun active(){
         activationTv.visibility= View.GONE
