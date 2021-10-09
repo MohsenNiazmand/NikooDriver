@@ -1,23 +1,24 @@
 package com.akaf.nikoodriver.services
 
 import com.akaf.nikoodriver.data.TokenContainer
-import com.akaf.nikoodriver.data.driverLocationResponse.DriverLocationResponse
-import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
-import com.akaf.nikoodriver.data.fillInfoResponse.DriverUploadPhotoResponse.UploadPhotoDriverResponse
-import com.akaf.nikoodriver.data.fillInfoResponse.FillInfoResponse
-import com.akaf.nikoodriver.data.location.SendLocation
-import com.akaf.nikoodriver.data.loginResponse.LoginResponse
-import com.akaf.nikoodriver.data.refreshTokenResponse.RefreshTokenData
-import com.akaf.nikoodriver.data.refreshTokenResponse.RefreshTokenResponse
-import com.akaf.nikoodriver.data.submitDocsResponse.SubmitDocsResponse
-import com.akaf.nikoodriver.data.uploadDocResponse.UploadDocResponse
-import com.akaf.nikoodriver.data.verificationResponse.VerificationResponse
+import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
+import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
+import com.akaf.nikoodriver.data.responses.fcmResponse.FcmResponse
+import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoResponse.UploadPhotoDriverResponse
+import com.akaf.nikoodriver.data.responses.fillInfoResponse.FillInfoResponse
+import com.akaf.nikoodriver.data.responses.location.SendLocation
+import com.akaf.nikoodriver.data.responses.loginResponse.LoginResponse
+import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
+import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
+import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
+import com.akaf.nikoodriver.data.responses.submitDocsResponse.SubmitDocsResponse
+import com.akaf.nikoodriver.data.responses.uploadDocResponse.UploadDocResponse
+import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
 import com.google.gson.JsonObject
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -57,6 +58,18 @@ interface ApiService {
 
     @POST("driver/profile/location")
     fun sendLocation(@Body sendLocation: SendLocation):Single<Response<DriverLocationResponse>>
+
+    @PUT("driver/profile/capacity")
+    @FormUrlEncoded
+    fun setEmptySeats(@Field("capacity") emptySeats:Int):Single<Response<EmptySeatsResponse>>
+
+    @POST("driver/trips/{trip_id}/offer")
+    @FormUrlEncoded
+    fun acceptTrip(@Path("trip_id") tripId:Int,@Field("cost") cost:Int):Single<Response<AcceptOfferResponse>>
+
+    @POST("driver/trips/reject")
+    @FormUrlEncoded
+    fun rejectTrip(@Field("trip_id") tripId:Int):Single<Response<RejectOfferResponse>>
 
 
 }

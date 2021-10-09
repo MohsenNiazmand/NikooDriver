@@ -2,8 +2,8 @@ package com.akaf.nikoodriver.data.repositories.sources.verification
 
 import android.content.SharedPreferences
 import com.akaf.nikoodriver.data.TokenContainer
-import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
-import com.akaf.nikoodriver.data.verificationResponse.VerificationResponse
+import com.akaf.nikoodriver.data.responses.fcmResponse.FcmResponse
+import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
 import io.reactivex.Single
 import retrofit2.Response
 

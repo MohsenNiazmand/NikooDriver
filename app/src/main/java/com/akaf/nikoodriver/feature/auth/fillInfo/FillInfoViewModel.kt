@@ -1,8 +1,8 @@
 package com.akaf.nikoodriver.feature.auth.fillInfo
 
 import com.akaf.nikoodriver.common.NikoViewModel
-import com.akaf.nikoodriver.data.fillInfoResponse.DriverUploadPhotoResponse.UploadPhotoDriverResponse
-import com.akaf.nikoodriver.data.fillInfoResponse.FillInfoResponse
+import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoResponse.UploadPhotoDriverResponse
+import com.akaf.nikoodriver.data.responses.fillInfoResponse.FillInfoResponse
 import com.akaf.nikoodriver.data.repositories.FillInfoRepository
 import io.reactivex.Single
 import okhttp3.MultipartBody

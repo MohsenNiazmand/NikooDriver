@@ -1,7 +1,7 @@
 package com.akaf.nikoodriver.data.repositories.sources.fillInfo
 
-import com.akaf.nikoodriver.data.fillInfoResponse.DriverUploadPhotoResponse.UploadPhotoDriverResponse
-import com.akaf.nikoodriver.data.fillInfoResponse.FillInfoResponse
+import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoResponse.UploadPhotoDriverResponse
+import com.akaf.nikoodriver.data.responses.fillInfoResponse.FillInfoResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import retrofit2.Response

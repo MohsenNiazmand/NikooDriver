@@ -1,7 +1,7 @@
 package com.akaf.nikoodriver.data.repositories.sources.uploadDocs
 
-import com.akaf.nikoodriver.data.submitDocsResponse.SubmitDocsResponse
-import com.akaf.nikoodriver.data.uploadDocResponse.UploadDocResponse
+import com.akaf.nikoodriver.data.responses.submitDocsResponse.SubmitDocsResponse
+import com.akaf.nikoodriver.data.responses.uploadDocResponse.UploadDocResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import retrofit2.Response

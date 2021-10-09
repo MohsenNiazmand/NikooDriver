@@ -1,18 +1,10 @@
 package com.akaf.nikoodriver.services
 
-import com.akaf.nikoodriver.data.TokenContainer
-import com.akaf.nikoodriver.data.refreshTokenResponse.RefreshTokenData
-import com.akaf.nikoodriver.data.repositories.sources.home.HomeDataSource
-import com.akaf.nikoodriver.data.repositories.sources.verification.VerificationDataSource
-import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
-import com.google.gson.JsonObject
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
-import timber.log.Timber
 
 //this class works for refreshing token
 

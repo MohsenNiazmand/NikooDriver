@@ -4,8 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.location.Location
 import android.util.Log
-import com.akaf.nikoodriver.data.offer.Trip
-import com.akaf.nikoodriver.data.offer.TripData
+import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.google.gson.Gson
 import com.hivemq.client.mqtt.MqttGlobalPublishFilter
 import com.hivemq.client.mqtt.datatypes.MqttQos

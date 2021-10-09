@@ -1,9 +1,12 @@
 package com.akaf.nikoodriver.data.repositories.sources.home
 
 import android.content.SharedPreferences
-import com.akaf.nikoodriver.data.driverLocationResponse.DriverLocationResponse
-import com.akaf.nikoodriver.data.location.SendLocation
-import com.akaf.nikoodriver.data.refreshTokenResponse.RefreshTokenResponse
+import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
+import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
+import com.akaf.nikoodriver.data.responses.location.SendLocation
+import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
+import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
+import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import io.reactivex.Single
 import retrofit2.Response
 
@@ -40,5 +43,17 @@ class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSo
         sharedPreferences.edit().apply {
             putBoolean("expired", isExpired)
         }.apply()    }
+
+    override fun setEmptySeats(emptySeats: Int): Single<Response<EmptySeatsResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun acceptTrip(tripId: Int,cost:Int): Single<Response<AcceptOfferResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun rejectTrip(tripId: Int): Single<Response<RejectOfferResponse>> {
+        TODO("Not yet implemented")
+    }
 
 }

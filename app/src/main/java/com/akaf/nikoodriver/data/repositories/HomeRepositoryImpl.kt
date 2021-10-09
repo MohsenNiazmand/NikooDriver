@@ -1,10 +1,13 @@
 package com.akaf.nikoodriver.data.repositories
 
 import com.akaf.nikoodriver.data.TokenContainer
-import com.akaf.nikoodriver.data.driverLocationResponse.DriverLocationResponse
-import com.akaf.nikoodriver.data.location.SendLocation
-import com.akaf.nikoodriver.data.refreshTokenResponse.RefreshTokenResponse
+import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
+import com.akaf.nikoodriver.data.responses.location.SendLocation
+import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.data.repositories.sources.home.HomeDataSource
+import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
+import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
+import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import io.reactivex.Single
 import retrofit2.Response
 
@@ -43,6 +46,18 @@ class HomeRepositoryImpl(
 
     override fun saveTokenStatus(isExpired: Boolean) {
         return homeLocalDataSource.saveTokenStatus(isExpired)
+    }
+
+    override fun setEmptySeats(emptySeats: Int): Single<Response<EmptySeatsResponse>> {
+        return homeRemoteDataSource.setEmptySeats(emptySeats)
+    }
+
+    override fun acceptTrip(tripId: Int,cost:Int): Single<Response<AcceptOfferResponse>> {
+        return homeRemoteDataSource.acceptTrip(tripId,cost)
+    }
+
+    override fun rejectTrip(tripId: Int): Single<Response<RejectOfferResponse>> {
+        return homeRemoteDataSource.rejectTrip(tripId)
     }
 
 

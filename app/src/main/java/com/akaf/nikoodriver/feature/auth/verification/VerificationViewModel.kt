@@ -2,9 +2,9 @@ package com.akaf.nikoodriver.feature.auth.verification
 
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
-import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
+import com.akaf.nikoodriver.data.responses.fcmResponse.FcmResponse
 import com.akaf.nikoodriver.data.repositories.VerificationRepository
-import com.akaf.nikoodriver.data.verificationResponse.VerificationResponse
+import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

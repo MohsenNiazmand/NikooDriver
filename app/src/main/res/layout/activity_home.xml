@@ -40,32 +40,23 @@
             android:paddingHorizontal="20dp"
             android:gravity="center_horizontal">
 
-            <LinearLayout
-                android:layout_marginVertical="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/clock"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/deadlineForReceivingTravel"
-                    android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
-                    android:layout_marginHorizontal="5dp"/>
-                <TextView
-                    android:id="@+id/deadlineForReceivingTravelTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.MyTheme.Headline3"/>
+        <LinearLayout
+            android:layout_marginVertical="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal">
 
 
+            <ImageButton
+                android:id="@+id/rejectOfferBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_close"
+                android:background="?selectableItemBackground"
+                />
 
-            </LinearLayout>
-
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_marginVertical="5dp"
@@ -118,6 +109,33 @@
 
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginVertical="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/clock"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/deadlineForReceivingTravel"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+                    android:layout_marginHorizontal="5dp"/>
+                <TextView
+                    android:id="@+id/deadlineForReceivingTravelTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline3"/>
+
+
+
+            </LinearLayout>
+
 
         </LinearLayout>
         <LinearLayout

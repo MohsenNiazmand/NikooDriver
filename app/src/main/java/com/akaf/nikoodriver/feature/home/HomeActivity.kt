@@ -95,26 +95,56 @@ class HomeActivity : BaseActivity() {
 
 
         homeViewModel.newOfferLiveData.observe(this){
+
             newOfferView.visibility=View.VISIBLE
 
-//            travelDistanceTv.text=it.cost.toString()
-//            offerCostTv.text=it.cost.toString()
-//            originTv.text=it.cost.toString()
-//            destinationTv.text=it.destinationCity
+            travelDistanceTv.text=it.options.distance.toString()+" "+"کیلومتر"
+            offerCostTv.text=it.cost.toString()
+            offerOrigin.text=it.sourceCity
+            offerDestination.text=it.destinationCity
+            val tripId=it.id
             timer()
+
+
+            acceptOfferBtn.setOnClickListener {
+                homeViewModel.acceptTrip(tripId,-1)
+                newOfferView.visibility=View.GONE
+            }
+
+
+            rejectOfferBtn.setOnClickListener {
+                homeViewModel.rejectTrip(tripId)
+                newOfferView.visibility=View.GONE
+
+            }
+
         }
 
-        acceptOfferBtn.setOnClickListener {
-            newOfferView.visibility=View.GONE
-        }
+
 
 
     }
 
 
+    private fun pollNewOffer() {
+        val bundle = homeViewModel.offersQueue.poll()
+        bundle?.let {
+            homeViewModel.offerCountLiveData.postValue(homeViewModel.offersQueue.size)
+
+        }
+
+    }
+
+
+    fun showOfferInQueue(bundle: Bundle) {
+
+            homeViewModel.offersQueue.add(bundle)
+            homeViewModel.offerCountLiveData.postValue(homeViewModel.offersQueue.size)
+
+    }
 
     fun timer(){
-        val timer = object: CountDownTimer(20000, 1000) {
+        val timer = object: CountDownTimer(120000, 1000) {
             @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
                 var diff = millisUntilFinished

@@ -1,10 +1,10 @@
 package com.akaf.nikoodriver.data.repositories
 
 import com.akaf.nikoodriver.data.TokenContainer
-import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
+import com.akaf.nikoodriver.data.responses.fcmResponse.FcmResponse
 import com.akaf.nikoodriver.data.repositories.sources.verification.VerificationDataSource
-import com.akaf.nikoodriver.data.verificationResponse.VerificationData
-import com.akaf.nikoodriver.data.verificationResponse.VerificationResponse
+import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationData
+import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
 import io.reactivex.Single
 import retrofit2.Response
 

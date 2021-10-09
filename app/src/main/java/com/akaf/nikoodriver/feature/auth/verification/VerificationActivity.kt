@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.Toast
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.NikoSingleObserver
-import com.akaf.nikoodriver.data.verificationResponse.VerificationResponse
+import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
 import com.akaf.nikoodriver.feature.auth.fillInfo.FillInfoActivity
 import com.akaf.nikoodriver.feature.auth.upload_docs.UploadDocsActivity
 import com.akaf.nikoodriver.feature.home.HomeActivity

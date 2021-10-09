@@ -10,11 +10,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
-import com.akaf.nikoodriver.data.location.SendLocation
+import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.feature.home.credit.CreditDialog
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
@@ -143,9 +144,13 @@ class HomeFragment : BaseFragment() {
         val emptySeatsDialog: AlertDialog = AlertDialog.Builder(requireContext()).create()
         emptySeatsDialog.setView(emptySeatsView)
         emptySeatsDialog.setCancelable(false)
+        val emptySeatsEt= emptySeatsView.findViewById<EditText>(R.id.emptySeatsEt)
         emptySeatsView.findViewById<MaterialButton>(R.id.proceedEmptySeatsBtn).setOnClickListener {
-            emptySeatsDialog.dismiss()
-            active()
+            if (emptySeatsEt.text.isNotEmpty()){
+                homeViewModel.setEmptySeats(emptySeatsEt.text.toString().toInt())
+                emptySeatsDialog.dismiss()
+                active()
+            }
         }
         emptySeatsView.findViewById<MaterialButton>(R.id.cancelEmptySeatsBtn).setOnClickListener {
             emptySeatsDialog.dismiss()

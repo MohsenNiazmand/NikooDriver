@@ -3,22 +3,24 @@ package com.akaf.nikoodriver.feature.home
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.location.Location
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
-import com.akaf.nikoodriver.data.TokenContainer
-import com.akaf.nikoodriver.data.TokenContainer.refreshToken
-import com.akaf.nikoodriver.data.TokenContainer.token
-import com.akaf.nikoodriver.data.driverLocationResponse.DriverLocationResponse
-import com.akaf.nikoodriver.data.location.SendLocation
-import com.akaf.nikoodriver.data.offer.TripData
-import com.akaf.nikoodriver.data.refreshTokenResponse.RefreshTokenResponse
+import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
+import com.akaf.nikoodriver.data.responses.location.SendLocation
+import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
+import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.data.repositories.HomeRepository
+import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
+import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
+import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import timber.log.Timber
+import java.util.*
 
 class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRepository,val sharedPreferences: SharedPreferences):NikoViewModel() {
     val mqttState = MutableLiveData<Boolean>()
@@ -26,6 +28,9 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     val tripPayedLiveData = MutableLiveData<Boolean>()
     var currentTripLiveData = MutableLiveData<String>()
     val newOfferLiveData = MutableLiveData<TripData>()
+    val offerCountLiveData = MutableLiveData<Int>()
+    val offersQueue: Queue<Bundle> = LinkedList()
+
 
 
 
@@ -76,7 +81,8 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                newOfferLiveData.postValue(it[it.size-1])
+                for (i in it)
+                newOfferLiveData.postValue(i)
             }
         )
         compositeDisposable.add(mqttManager.canceledTripSubject
@@ -99,6 +105,45 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
 
     fun sendDriverLocation(location: Location) {
         mqttManager.publishDriverLocation(location)
+    }
+
+    fun setEmptySeats(emptySeats:Int){
+        progressBarLiveData.value=true
+        homeRepository.setEmptySeats(emptySeats)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : NikoSingleObserver<Response<EmptySeatsResponse>>(compositeDisposable){
+                override fun onSuccess(t: Response<EmptySeatsResponse>) {
+                    progressBarLiveData.postValue(false)
+                }
+
+            })
+    }
+
+    fun acceptTrip(tripId:Int,cost:Int){
+        progressBarLiveData.value=true
+        homeRepository.acceptTrip(tripId,cost)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : NikoSingleObserver<Response<AcceptOfferResponse>>(compositeDisposable){
+                override fun onSuccess(t: Response<AcceptOfferResponse>) {
+                    progressBarLiveData.postValue(false)
+                }
+
+            })
+    }
+
+    fun rejectTrip(tripId:Int){
+        progressBarLiveData.value=true
+        homeRepository.rejectTrip(tripId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : NikoSingleObserver<Response<RejectOfferResponse>>(compositeDisposable){
+                override fun onSuccess(t: Response<RejectOfferResponse>) {
+                    progressBarLiveData.postValue(false)
+                }
+
+            })
     }
 
     fun setOnlineStatus(isOnline:Boolean){

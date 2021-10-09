@@ -1,7 +1,7 @@
 package com.akaf.nikoodriver.data.repositories.sources.verification
 
-import com.akaf.nikoodriver.data.fcmResponse.FcmResponse
-import com.akaf.nikoodriver.data.verificationResponse.VerificationResponse
+import com.akaf.nikoodriver.data.responses.fcmResponse.FcmResponse
+import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
 import com.akaf.nikoodriver.services.ApiService
 import com.google.gson.JsonObject
 import io.reactivex.Single

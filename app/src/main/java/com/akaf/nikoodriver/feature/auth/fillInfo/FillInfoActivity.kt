@@ -13,8 +13,8 @@ import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseActivity
 import com.akaf.nikoodriver.common.NikoSingleObserver
-import com.akaf.nikoodriver.data.fillInfoResponse.DriverUploadPhotoResponse.UploadPhotoDriverResponse
-import com.akaf.nikoodriver.data.fillInfoResponse.FillInfoResponse
+import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoResponse.UploadPhotoDriverResponse
+import com.akaf.nikoodriver.data.responses.fillInfoResponse.FillInfoResponse
 import com.akaf.nikoodriver.feature.auth.chooseDialog.ChoosePictureDialog
 import com.akaf.nikoodriver.feature.auth.upload_docs.UploadDocsActivity
 import com.theartofdev.edmodo.cropper.CropImage
