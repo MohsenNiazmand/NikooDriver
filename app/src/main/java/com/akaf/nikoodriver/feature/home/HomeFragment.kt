@@ -56,7 +56,6 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-//            val tokenStatus=sharedPreferences.getBoolean("expired",false)
             val onlineStatus=sharedPreferences.getBoolean("isOnline",false)
                 if (onlineStatus){
                     active()
