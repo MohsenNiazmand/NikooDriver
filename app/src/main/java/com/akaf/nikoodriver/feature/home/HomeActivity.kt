@@ -22,6 +22,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_declined_passenger.*
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 class HomeActivity : BaseActivity() {
     val compositeDisposable=CompositeDisposable()
@@ -81,13 +82,16 @@ class HomeActivity : BaseActivity() {
         //checks token expire
         else if (token!=null&& refreshToken!=null){
             homeViewModel.sendRefreshToken(token,refreshToken)
-            val tokenStatus=sharedPreferences.getBoolean("expired",false)
-            if (tokenStatus){
-                finish()
-                startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
-                overridePendingTransition(0, 0);
-                Toast.makeText(applicationContext,"لطفا مجددا به حساب خود وارد شوید",Toast.LENGTH_SHORT).show()
+            homeViewModel.refreshTokenLiveData.observe(this){
+                if (it.code()==403){
+                    sharedPreferences.edit().clear().apply()
+                    finish()
+                    startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
+                    overridePendingTransition(0, 0);
+                    Toast.makeText(applicationContext,"لطفا مجددا به حساب خود وارد شوید",Toast.LENGTH_SHORT).show()
+                }
             }
+
         }
 
 

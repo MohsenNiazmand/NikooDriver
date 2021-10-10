@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
+import com.akaf.nikoodriver.common.SingleLiveEvent
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
@@ -27,9 +28,10 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
     var currentTripLiveData = MutableLiveData<String>()
-    val newOfferLiveData = MutableLiveData<TripData>()
+    val newOfferLiveData = SingleLiveEvent<TripData>()
     val offerCountLiveData = MutableLiveData<Int>()
     val offersQueue: Queue<Bundle> = LinkedList()
+    val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
 
 
 
@@ -184,16 +186,10 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object :NikoSingleObserver<Response<RefreshTokenResponse>>(compositeDisposable){
                     override fun onSuccess(t: Response<RefreshTokenResponse>) {
-                        Timber.i("refresh token"+t.body().toString())
-                        if (t.isSuccessful){
-                            progressBarLiveData.postValue(false)
-                            homeRepository.saveTokenStatus(false)
-
-                        }else{
-                            progressBarLiveData.postValue(false)
-                            homeRepository.saveTokenStatus(true)
+                            refreshTokenLiveData.postValue(t)
+                           progressBarLiveData.postValue(false)
                         }
-                    }
+
 
                 })
 
