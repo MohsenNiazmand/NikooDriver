@@ -116,8 +116,7 @@ class HomeActivity : BaseActivity() {
             offerOrigin.text=it.sourceCity
             offerDestination.text=it.destinationCity
             val tripId=it.id
-            timer()
-
+            startTimer()
 
             acceptOfferBtn.setOnClickListener {
                 homeViewModel.acceptTrip(tripId,-1)
@@ -128,6 +127,7 @@ class HomeActivity : BaseActivity() {
             rejectOfferBtn.setOnClickListener {
                 homeViewModel.rejectTrip(tripId)
                 newOfferView.visibility=View.GONE
+                cancelTimer()
 
             }
 
@@ -163,32 +163,39 @@ class HomeActivity : BaseActivity() {
 
     }
 
-    fun timer(){
-        val timer = object: CountDownTimer(120000, 1000) {
-            @SuppressLint("SetTextI18n")
-            override fun onTick(millisUntilFinished: Long) {
-                var diff = millisUntilFinished
-                val secondsInMilli: Long = 1000
-                val minutesInMilli = secondsInMilli * 60
-                val elapsedMinutes = diff / minutesInMilli
-                diff %= minutesInMilli
+    val timer = object: CountDownTimer(120000, 1000) {
+        @SuppressLint("SetTextI18n")
+        override fun onTick(millisUntilFinished: Long) {
+            var diff = millisUntilFinished
+            val secondsInMilli: Long = 1000
+            val minutesInMilli = secondsInMilli * 60
+            val elapsedMinutes = diff / minutesInMilli
+            diff %= minutesInMilli
 
-                val elapsedSeconds = diff / secondsInMilli
-                deadlineForReceivingTravelTv.text="$elapsedMinutes:$elapsedSeconds"
-            }
-
-            override fun onFinish() {
-                newOfferView.visibility=View.GONE
-            }
+            val elapsedSeconds = diff / secondsInMilli
+            deadlineForReceivingTravelTv.text="$elapsedMinutes:$elapsedSeconds"
         }
+
+        override fun onFinish() {
+            newOfferView.visibility=View.GONE
+        }
+    }
+
+    fun startTimer(){
         timer.start()
     }
+
+    fun cancelTimer(){
+        timer.cancel()
+    }
+
+
 
 
     private fun wakeLockSetup() {
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Nikoo::PassengerLock").apply {
+                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Nikoo::DriverLock").apply {
                     acquire(10 * 60 * 1000L /*10 minutes*/)
                 }
             }

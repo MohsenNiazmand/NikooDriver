@@ -17,6 +17,7 @@ import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.feature.home.credit.CreditDialog
+import com.akaf.nikoodriver.services.DriverForegroundService
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
 import com.google.android.material.button.MaterialButton
@@ -74,6 +75,8 @@ class HomeFragment : BaseFragment() {
             else {
                 connectedSign.visibility=View.GONE
                 disconnectSign.visibility=View.VISIBLE
+                DriverForegroundService.stopService(requireActivity().applicationContext)
+
 
             }
         }
@@ -162,12 +165,13 @@ class HomeFragment : BaseFragment() {
         Dexter.withContext(context)
             .withPermissions(
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
             )
             .withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
                     if (p0?.areAllPermissionsGranted() == true) {
                         startLocationUpdates()
+                        DriverForegroundService.startService(activity!!.applicationContext,"Nikoo Driver")
                     }
                 }
 
