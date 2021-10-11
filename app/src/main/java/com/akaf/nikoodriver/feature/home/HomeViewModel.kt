@@ -83,8 +83,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                for (i in it)
-                newOfferLiveData.postValue(i)
+                newOfferLiveData.postValue(it)
             }
         )
         compositeDisposable.add(mqttManager.canceledTripSubject

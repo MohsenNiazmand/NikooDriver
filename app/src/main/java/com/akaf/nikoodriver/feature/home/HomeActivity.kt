@@ -10,14 +10,19 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.PowerManager
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseActivity
 import com.akaf.nikoodriver.feature.auth.login.LoginActivity
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_declined_passenger.*
@@ -99,6 +104,10 @@ class HomeActivity : BaseActivity() {
 
 
         homeViewModel.newOfferLiveData.observe(this){
+            val bundle = bundleOf("trip" to Gson().toJson(it))
+            showOfferInQueue(bundle)
+
+
 
             newOfferView.visibility=View.VISIBLE
 
@@ -127,6 +136,13 @@ class HomeActivity : BaseActivity() {
 
 
 
+    }
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun onOfferDestroyed() {
+        Log.e("Offer", "offer destroyed")
+        pollNewOffer()
     }
 
 

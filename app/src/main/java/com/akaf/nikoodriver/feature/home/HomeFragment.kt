@@ -68,15 +68,14 @@ class HomeFragment : BaseFragment() {
             if (it) {
                 checkPermStartLocationUpdate()
 //                checkNewTrip()
+                connectedSign.visibility=View.VISIBLE
+                disconnectSign.visibility=View.GONE
             }
-//            else {
-//                if (homeViewModel.onlineStatusLiveData.value == true) {
-//                    txtConnectingToTheServer.visibility = View.VISIBLE
-//                } else {
-//                    txtConnectingToTheServer.visibility = View.GONE
+            else {
+                connectedSign.visibility=View.GONE
+                disconnectSign.visibility=View.VISIBLE
 
-//                }
-//            }
+            }
         }
 
         activeBtn.setOnClickListener {

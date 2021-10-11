@@ -63,11 +63,20 @@
                             android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />
 
                         <ImageView
+                            android:id="@+id/connectedSign"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tvConnection"
                             android:layout_centerHorizontal="true"
                             android:src="@drawable/ic_check" />
+                        <ImageView
+                            android:id="@+id/disconnectSign"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvConnection"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/ic_close_red" />
 
 
                     </RelativeLayout>
