@@ -8,33 +8,32 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.PowerManager
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseActivity
+import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.akaf.nikoodriver.feature.auth.login.LoginActivity
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_declined_passenger.*
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
+    var tripsAdapter=TripsAdapter()
     val compositeDisposable=CompositeDisposable()
     val sharedPreferences: SharedPreferences by inject()
     val hiveMqttManager: HiveMqttManager by inject()
     val homeViewModel: HomeViewModel by inject()
     private lateinit var wakeLock: PowerManager.WakeLock
+    val tripsList=ArrayList<TripData>()
     val token=sharedPreferences.getString("token", null)
     val refreshToken=sharedPreferences.getString("refresh_token", null)
 
@@ -99,98 +98,24 @@ class HomeActivity : BaseActivity() {
 
         }
 
-
-
+        rvTrips.layoutManager=LinearLayoutManager(this,RecyclerView.HORIZONTAL,false)
+        rvTrips.adapter=tripsAdapter
 
 
         homeViewModel.newOfferLiveData.observe(this){
-            val bundle = bundleOf("trip" to Gson().toJson(it))
-            showOfferInQueue(bundle)
-
-
-
-            newOfferView.visibility=View.VISIBLE
-
-            travelDistanceTv.text=it.options.distance.toString()+" "+"کیلومتر"
-            offerCostTv.text=it.cost.toString()
-            offerOrigin.text=it.sourceCity
-            offerDestination.text=it.destinationCity
-            val tripId=it.id
-            startTimer()
-
-            acceptOfferBtn.setOnClickListener {
-                homeViewModel.acceptTrip(tripId,-1)
-                newOfferView.visibility=View.GONE
-            }
-
-
-            rejectOfferBtn.setOnClickListener {
-                homeViewModel.rejectTrip(tripId)
-                newOfferView.visibility=View.GONE
-                cancelTimer()
-
-            }
+            tripsList.add(it)
+            tripsAdapter.cartItemViewCallBacks=this
+            tripView.visibility=View.VISIBLE
+            tripsAdapter.trips= tripsList
 
         }
-
-
-
-
-    }
-
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onOfferDestroyed() {
-        Log.e("Offer", "offer destroyed")
-        pollNewOffer()
-    }
-
-
-    private fun pollNewOffer() {
-        val bundle = homeViewModel.offersQueue.poll()
-        bundle?.let {
-            homeViewModel.offerCountLiveData.postValue(homeViewModel.offersQueue.size)
+        if (tripsList.size>1){
+            moreTripsPart.visibility=View.VISIBLE
+        }else{
+            moreTripsPart.visibility=View.GONE
 
         }
-
     }
-
-
-    fun showOfferInQueue(bundle: Bundle) {
-
-            homeViewModel.offersQueue.add(bundle)
-            homeViewModel.offerCountLiveData.postValue(homeViewModel.offersQueue.size)
-
-    }
-
-    val timer = object: CountDownTimer(120000, 1000) {
-        @SuppressLint("SetTextI18n")
-        override fun onTick(millisUntilFinished: Long) {
-            var diff = millisUntilFinished
-            val secondsInMilli: Long = 1000
-            val minutesInMilli = secondsInMilli * 60
-            val elapsedMinutes = diff / minutesInMilli
-            diff %= minutesInMilli
-
-            val elapsedSeconds = diff / secondsInMilli
-            deadlineForReceivingTravelTv.text="$elapsedMinutes:$elapsedSeconds"
-        }
-
-        override fun onFinish() {
-            newOfferView.visibility=View.GONE
-        }
-    }
-
-    fun startTimer(){
-        timer.start()
-    }
-
-    fun cancelTimer(){
-        timer.cancel()
-    }
-
-
-
 
     private fun wakeLockSetup() {
         wakeLock =
@@ -213,6 +138,29 @@ class HomeActivity : BaseActivity() {
         destroyWakeLock()
     }
 
+    override fun onRejectBtnClicked(tripData: TripData) {
+        handleTrips(tripData)
+        homeViewModel.rejectTrip(tripData.id)
+    }
+
+    override fun onAcceptBtnClicked(tripData: TripData) {
+        handleTrips(tripData)
+        homeViewModel.acceptTrip(tripData.id,-1)
+    }
+
+    override fun timerFinished(tripData: TripData) {
+        handleTrips(tripData)
+    }
+
+    private fun handleTrips(tripData: TripData){
+        if (tripsList.size==0){
+            tripView.visibility=View.GONE
+            tripsList.remove(tripData)
+        }else if (tripsList.size>0){
+            tripsAdapter.removeTripFromList(tripData)
+            tripsList.remove(tripData)
+        }
+    }
 
 
 }

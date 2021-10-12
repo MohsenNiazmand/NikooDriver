@@ -23,7 +23,7 @@ public class HomeActivity_LifecycleAdapter implements GeneratedAdapter {
         }
         if (event == Lifecycle.Event.ON_DESTROY) {
             if (!hasLogger || logger.approveCall("onOfferDestroyed", 1)) {
-                mReceiver.onOfferDestroyed();
+//                mReceiver.onOfferDestroyed();
             }
             return;
         }

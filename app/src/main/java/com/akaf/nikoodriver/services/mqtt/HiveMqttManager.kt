@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.location.Location
 import android.util.Log
+import com.akaf.nikoodriver.data.responses.mqttTripResponse.Trip
 import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.google.gson.Gson
 import com.hivemq.client.mqtt.MqttGlobalPublishFilter
@@ -24,6 +25,7 @@ import org.koin.core.component.inject
 
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 class HiveMqttManager(val context: Context) : KoinComponent {
     val sharedPreferences: SharedPreferences by inject()
@@ -59,8 +61,6 @@ class HiveMqttManager(val context: Context) : KoinComponent {
         try {
             this.token =sharedPreferences.getString("token",null).toString()
             this.driverId=sharedPreferences.getString("driverId",null)!!.toInt()
-//            this.userId = prefRepository.getUser()?.id ?: 0
-            Log.i("TAG", "confirmCode: " + token)
             if (token.isNotEmpty()) {
                 mqttClient = Mqtt3Client.builder()
                     .identifier(UUID.randomUUID().toString())
@@ -79,10 +79,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                     }
                     .addDisconnectedListener {
                         try {
-//                            if (it.cause.message.equals("java.io.IOException: Software caused connection abort")) {
-//                                disconnectSubject.onNext(false)
-//                                disconnect()
-//                            }
+
                             mqttConnectionState.onNext(CONNECTION_FAILURE)
                             Log.e(TAG,"Connection Disconnected -> ${it.cause.message ?: ""}")
 
@@ -191,10 +188,10 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                         val baseObject = JSONObject(data)
                         if (baseObject.has("data")) {
 
-                            val tripData = Gson().fromJson(
+                            val trip= Gson().fromJson(
                                 baseObject.getJSONObject("data").toString(), TripData::class.java
                             )
-                            newTripSubject.onNext(tripData)
+                            newTripSubject.onNext(trip)
                         }
                     }
 

@@ -3,12 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProjects/my_projects/NikoDriver/app/src/main/res/drawable/background_et_mobile.xml" value="0.26614583333333336" />
+        <entry key="..\:/AndroidProjects/my_projects/NikoDriver/app/src/main/res/drawable/background_et_seats.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidProjects/my_projects/NikoDriver/app/src/main/res/drawable/ic_close.xml" value="0.22314814814814815" />
         <entry key="..\:/AndroidProjects/my_projects/NikoDriver/app/src/main/res/layout/activity_home.xml" value="0.2371234207968902" />
         <entry key="..\:/AndroidProjects/my_projects/NikoDriver/app/src/main/res/layout/dialog_credit.xml" value="0.25" />
         <entry key="..\:/AndroidProjects/my_projects/NikoDriver/app/src/main/res/layout/dialog_empty_seats.xml" value="0.16802536231884058" />
         <entry key="..\:/AndroidProjects/my_projects/NikoDriver/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/AndroidProjects/my_projects/NikoDriver/app/src/main/res/layout/item_declined_passenger.xml" value="0.25" />
+        <entry key="..\:/AndroidProjects/my_projects/NikoDriver/app/src/main/res/layout/item_trip.xml" value="0.264" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_car_type.xml" value="0.17592592592592593" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_declined_passengers_count.xml" value="0.2203125" />
         <entry key="..\:/AndroidProjectsasd/my_projects/NikoDriver/app/src/main/res/drawable/background_dialog.xml" value="0.2169230769230769" />

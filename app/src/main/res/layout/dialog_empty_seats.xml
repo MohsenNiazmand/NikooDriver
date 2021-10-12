@@ -14,7 +14,7 @@
 
     <EditText
         android:id="@+id/emptySeatsEt"
-        style="@style/Theme.Niko.auth.EditText"
+        style="@style/Theme.Niko.auth.EditTextSeats"
         android:layout_marginHorizontal="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

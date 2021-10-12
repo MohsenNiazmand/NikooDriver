@@ -14,6 +14,7 @@ import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.data.repositories.HomeRepository
 import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
+import com.akaf.nikoodriver.data.responses.mqttTripResponse.Trip
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
@@ -22,13 +23,14 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRepository,val sharedPreferences: SharedPreferences):NikoViewModel() {
     val mqttState = MutableLiveData<Boolean>()
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
     var currentTripLiveData = MutableLiveData<String>()
-    val newOfferLiveData = SingleLiveEvent<TripData>()
+    val newOfferLiveData = MutableLiveData<TripData>()
     val offerCountLiveData = MutableLiveData<Int>()
     val offersQueue: Queue<Bundle> = LinkedList()
     val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
