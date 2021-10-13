@@ -27,28 +27,8 @@
         android:background="@drawable/getting_service_background"
 
         >
-        <RelativeLayout
-            android:id="@+id/moreTripsPart"
-            android:visibility="gone"
-            android:layout_above="@id/rvTrips"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/ic_more_trips"/>
-            <ImageView
-                android:rotation="180"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_more_trips"/>
 
-        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTrips"
@@ -58,6 +38,10 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             />
+
+
+
+
 
     </RelativeLayout>
 

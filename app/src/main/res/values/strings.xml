@@ -104,11 +104,11 @@
     <string name="successfulRegistration">ثبت نام موفق</string>
     <string name="finishingRegistration">به ناوگان حمل و نقل نیکو خوش آمدید،لطفا جهت تایید ثبت نام منتظر پیام از سوی کارشناسان ما باشید</string>
     <string name="distance">فاصله:</string>
-    <string name="deadlineForReceivingTravel">مهلت دریافت سفر:</string>
+    <string name="deadlineForReceivingTravel">مهلت دریافت سفر 2 دقیقه میباشد</string>
     <string name="travelDistance">مسافت سفر:</string>
     <string name="cost">هزینه:</string>
     <string name="neverMind">بیخیال</string>
-    <string name="otherTrips">سفر های دیگر</string>
+    <string name="newOffer">درخواست جدید</string>
 
 
 

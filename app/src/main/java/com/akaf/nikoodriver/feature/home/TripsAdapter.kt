@@ -1,10 +1,12 @@
 package com.akaf.nikoodriver.feature.home
 
+import android.R.string.cancel
 import android.annotation.SuppressLint
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +14,9 @@ import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import kotlinx.android.synthetic.main.item_trip.view.*
 import timber.log.Timber
+import android.R.string.no
+import android.content.Context
+
 
 class TripsAdapter() : RecyclerView.Adapter<TripsAdapter.TripsViewHolder>() {
     var cartItemViewCallBacks: CartItemViewCallBacks?=null
@@ -24,49 +29,29 @@ class TripsAdapter() : RecyclerView.Adapter<TripsAdapter.TripsViewHolder>() {
     }
 
     inner class TripsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-
-
         val travelDistanceTv=itemView.findViewById<TextView>(R.id.travelDistanceTv)
         val offerCostTv=itemView.findViewById<TextView>(R.id.offerCostTv)
         val offerOrigin=itemView.findViewById<TextView>(R.id.offerOrigin)
         val offerDestination=itemView.findViewById<TextView>(R.id.offerDestination)
-        val deadlineForReceivingTravelTv=itemView.findViewById<TextView>(R.id.deadlineForReceivingTravelTv)
-        val moreTripsPart=itemView.findViewById<RelativeLayout>(R.id.moreTripsPart)
-
-
         @SuppressLint("SetTextI18n")
         fun bind(trip: TripData){
 
             val timer = object: CountDownTimer(120000, 1000) {
                 @SuppressLint("SetTextI18n")
                 override fun onTick(millisUntilFinished: Long) {
-                    var diff = millisUntilFinished
-                    val secondsInMilli: Long = 1000
-                    val minutesInMilli = secondsInMilli * 60
-                    val elapsedMinutes = diff / minutesInMilli
-                    diff %= minutesInMilli
-                    val elapsedSeconds = diff / secondsInMilli
-              deadlineForReceivingTravelTv.text="$elapsedMinutes:$elapsedSeconds"
+
                 }
 
                 override fun onFinish() {
+                    removeTripFromList(trip)
                     cartItemViewCallBacks?.timerFinished(trip)
-//                    newOfferView.visibility=View.GONE
                 }
 
-            }
+            }.start()
+              fun cancelTimer(){ timer.cancel() }
 
-            fun startTimer(){
-                timer.start()
-            }
 
-            fun cancelTimer(){
-                timer.cancel()
-            }
-            trips.forEach {
-                startTimer()
-            }
+
             travelDistanceTv.text=trip.options.distance.toString()+" "+"کیلومتر"
             offerCostTv.text=trip.cost
             offerOrigin.text=trip.sourceCity
@@ -88,7 +73,6 @@ class TripsAdapter() : RecyclerView.Adapter<TripsAdapter.TripsViewHolder>() {
                 cancelTimer()
                 cartItemViewCallBacks?.onAcceptBtnClicked(trip)
             }
-
         }
 
     }
@@ -101,6 +85,7 @@ class TripsAdapter() : RecyclerView.Adapter<TripsAdapter.TripsViewHolder>() {
 
     override fun onBindViewHolder(holder: TripsViewHolder, position: Int) {
         holder.bind(trips[position])
+
     }
 
     override fun getItemCount(): Int {
@@ -123,12 +108,4 @@ class TripsAdapter() : RecyclerView.Adapter<TripsAdapter.TripsViewHolder>() {
 
     }
 
-//    fun addTrip(tripData: TripData){
-//        val index=trips.indexOf(tripData)
-//        if (index>-1){
-//            trips.add(index,tripData)
-//            notifyItemInserted(index)
-//        }
-//
-//    }
 }

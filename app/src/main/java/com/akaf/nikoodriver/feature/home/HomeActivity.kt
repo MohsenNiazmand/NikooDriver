@@ -10,6 +10,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.PowerManager
 import android.view.View
+import android.widget.AbsListView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,12 @@ import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_declined_passenger.*
 import org.koin.android.ext.android.inject
 import timber.log.Timber
+import androidx.recyclerview.widget.PagerSnapHelper
+
+import androidx.recyclerview.widget.SnapHelper
+
+
+
 
 class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
     var tripsAdapter=TripsAdapter()
@@ -36,7 +43,6 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
     val tripsList=ArrayList<TripData>()
     val token=sharedPreferences.getString("token", null)
     val refreshToken=sharedPreferences.getString("refresh_token", null)
-
 
 
 
@@ -97,31 +103,29 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
             }
 
         }
-
+        val snapHelper: SnapHelper = PagerSnapHelper()
         rvTrips.layoutManager=LinearLayoutManager(this,RecyclerView.HORIZONTAL,false)
+        snapHelper.attachToRecyclerView(rvTrips)
         rvTrips.adapter=tripsAdapter
-
 
         homeViewModel.newOfferLiveData.observe(this){
             tripsList.add(it)
             tripsAdapter.cartItemViewCallBacks=this
             tripView.visibility=View.VISIBLE
             tripsAdapter.trips= tripsList
-
+            val index=tripsAdapter.trips.size-1
+            rvTrips.smoothScrollToPosition(index)
         }
-        if (tripsList.size>1){
-            moreTripsPart.visibility=View.VISIBLE
-        }else{
-            moreTripsPart.visibility=View.GONE
 
-        }
+
+
     }
 
     private fun wakeLockSetup() {
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                 newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Nikoo::DriverLock").apply {
-                    acquire(10 * 60 * 1000L /*10 minutes*/)
+                    acquire(25 * 60 * 1000L /*25 minutes*/)
                 }
             }
     }
@@ -153,11 +157,13 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
     }
 
     private fun handleTrips(tripData: TripData){
+        Timber.i("TListSize"+tripsList.size.toString())
         if (tripsList.size==0){
             tripView.visibility=View.GONE
             tripsList.remove(tripData)
         }else if (tripsList.size>0){
             tripsAdapter.removeTripFromList(tripData)
+            rvTrips.smoothScrollToPosition(tripsAdapter.trips.size)
             tripsList.remove(tripData)
         }
     }

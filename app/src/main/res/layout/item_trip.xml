@@ -12,10 +12,25 @@
         android:layout_height="match_parent"
         >
 
+        <TextView
+            android:id="@+id/newTripTv"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+            android:text="@string/newOffer"
+            android:layout_above="@id/topBox"
+            android:layout_alignParentEnd="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/background_shape_offer_box_top"
+            app:drawableEndCompat="@drawable/ic_arrow_back" />
+
 
 
 
         <LinearLayout
+            android:id="@+id/topBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/bottomBox"
@@ -114,11 +129,11 @@
                     android:text="@string/deadlineForReceivingTravel"
                     android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
                     android:layout_marginHorizontal="5dp"/>
-                <TextView
-                    android:id="@+id/deadlineForReceivingTravelTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.MyTheme.Headline3"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/deadlineForReceivingTravelTv"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textAppearance="@style/TextAppearance.MyTheme.Headline3"/>-->
 
 
 
