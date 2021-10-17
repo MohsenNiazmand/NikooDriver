@@ -160,7 +160,6 @@
 
                         <TextView
                             android:id="@+id/travelDateEt"
-                            android:onClick="datePickerA"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.datePicker"

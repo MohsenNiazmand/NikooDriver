@@ -53,7 +53,7 @@ class TripsAdapter() : RecyclerView.Adapter<TripsAdapter.TripsViewHolder>() {
 
 
             travelDistanceTv.text=trip.options.distance.toString()+" "+"کیلومتر"
-            offerCostTv.text=trip.cost
+            offerCostTv.text=trip.cost+" "+"تومان"
             offerOrigin.text=trip.sourceCity
             offerDestination.text=trip.destinationCity
            itemView.rejectOfferBtn.setOnClickListener {

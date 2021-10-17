@@ -26,12 +26,23 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_currentTravelFragment"
-            app:destination="@id/currentTravelFragment" />
+            app:destination="@id/currentTravelFragment"
+            />
         <action
             android:id="@+id/action_homeFragment_to_declinedPassengersFragment"
             app:destination="@id/declinedPassengersFragment" />
         <action
             android:id="@+id/action_homeFragment_to_travelRegistrationFragment"
-            app:destination="@id/travelRegistrationFragment" />
+            app:destination="@id/travelRegistrationFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            />
+        <action
+            android:id="@+id/action_homeFragment_to_currentTravelFragment2"
+            app:destination="@id/currentTravelFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+
+            />
     </fragment>
 </navigation>

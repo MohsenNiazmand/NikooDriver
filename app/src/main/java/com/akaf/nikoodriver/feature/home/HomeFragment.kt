@@ -43,6 +43,8 @@ class HomeFragment : BaseFragment() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
+
+
     }
 
     override fun onCreateView(
@@ -50,18 +52,18 @@ class HomeFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-            val onlineStatus=sharedPreferences.getBoolean("isOnline",false)
-                if (onlineStatus){
-                    active()
-                }else
-                    deActive()
+        val onlineStatus=sharedPreferences.getBoolean("isOnline",false)
+        if (onlineStatus){
+            active()
+        }else
+            deActive()
 
 
         homeViewModel.mqttState.observe(viewLifecycleOwner) {
@@ -75,7 +77,6 @@ class HomeFragment : BaseFragment() {
             else {
                 connectedSign.visibility=View.GONE
                 disconnectSign.visibility=View.VISIBLE
-                DriverForegroundService.stopService(requireContext())
             }
         }
 
@@ -134,6 +135,7 @@ class HomeFragment : BaseFragment() {
         activeBtn.visibility= View.VISIBLE
         deActiveBtn.visibility=View.GONE
         homeViewModel.setOnlineStatus(false)
+        DriverForegroundService.stopService(requireContext())
         stopLocationUpdates()
     }
 
@@ -169,7 +171,6 @@ class HomeFragment : BaseFragment() {
                 override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
                     if (p0?.areAllPermissionsGranted() == true) {
                         startLocationUpdates()
-                        DriverForegroundService.startService(activity!!.applicationContext,"Nikoo Driver")
                     }
                 }
 

@@ -26,6 +26,7 @@ import com.akaf.nikoodriver.feature.auth.login.LoginViewModel
 import com.akaf.nikoodriver.feature.auth.upload_docs.UploadDocsViewModel
 import com.akaf.nikoodriver.feature.auth.verification.VerificationViewModel
 import com.akaf.nikoodriver.feature.home.HomeViewModel
+import com.akaf.nikoodriver.services.DriverForegroundService
 import com.akaf.nikoodriver.services.createApiServiceInstance
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -43,6 +44,9 @@ class App : MultiDexApplication() {
         MultiDex.install(baseContext)
         Timber.plant(Timber.DebugTree())
         Fresco.initialize(this)
+
+        DriverForegroundService.startService(applicationContext,"Nikoo Driver")
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager=getSystemService(NOTIFICATION_SERVICE) as NotificationManager

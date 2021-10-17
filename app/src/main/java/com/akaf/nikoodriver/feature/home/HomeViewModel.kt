@@ -31,8 +31,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     val tripPayedLiveData = MutableLiveData<Boolean>()
     var currentTripLiveData = MutableLiveData<String>()
     val newOfferLiveData = MutableLiveData<TripData>()
-    val offerCountLiveData = MutableLiveData<Int>()
-    val offersQueue: Queue<Bundle> = LinkedList()
     val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
 
 
