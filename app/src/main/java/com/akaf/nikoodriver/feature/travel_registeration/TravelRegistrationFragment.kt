@@ -6,12 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.addCallback
+import androidx.navigation.Navigation
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener
 import kotlinx.android.synthetic.main.fragment_travel_registration.view.*
+
+
 
 
 class TravelRegistrationFragment : BaseFragment() {
@@ -25,12 +29,10 @@ class TravelRegistrationFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val travelDateEt=view.findViewById<TextView>(R.id.travelDateEt)
+        val travelDateEt=view.findViewById<TextView>(com.akaf.nikoodriver.R.id.travelDateEt)
         travelDateEt.setOnClickListener {
             datePickerA(view)
         }
-
-
 
     }
 
@@ -68,6 +70,8 @@ class TravelRegistrationFragment : BaseFragment() {
             })
         picker.show()
     }
+
+
 
 
 }

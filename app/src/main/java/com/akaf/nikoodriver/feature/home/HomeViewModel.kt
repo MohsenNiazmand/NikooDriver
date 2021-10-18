@@ -29,7 +29,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     val mqttState = MutableLiveData<Boolean>()
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
-    var currentTripLiveData = MutableLiveData<String>()
+    var currentTripLiveData = MutableLiveData<TripData>()
     val newOfferLiveData = MutableLiveData<TripData>()
     val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
 
@@ -37,6 +37,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
 
 
     init {
+        retrieveOnlineStatus()
         subscribeMqttState()
         subscribeToNewOffers()
         subscribeToDisconnectSubject()
@@ -147,6 +148,11 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
             })
     }
 
+    fun retrieveOnlineStatus(){
+        val isOnline=sharedPreferences.getBoolean("isOnline",false)
+        setOnlineStatus(isOnline)
+    }
+
     fun setOnlineStatus(isOnline:Boolean){
         homeRepository.onlineStatus(isOnline)
         when {
@@ -173,7 +179,18 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
 
 
     fun getCurrentTrip() {
-      //needs current trip rest
+        progressBarLiveData.value=true
+        homeRepository.getCurrentTrip()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :NikoSingleObserver<Response<TripData>>(compositeDisposable){
+                override fun onSuccess(t: Response<TripData>) {
+                    currentTripLiveData.postValue(t.body())
+                    progressBarLiveData.postValue(false)
+
+                }
+
+            })
     }
 
 

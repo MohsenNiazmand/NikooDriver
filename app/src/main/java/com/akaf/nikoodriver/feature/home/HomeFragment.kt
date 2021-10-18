@@ -2,6 +2,7 @@ package com.akaf.nikoodriver.feature.home
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Location
@@ -18,6 +19,7 @@ import com.akaf.nikoodriver.common.BaseFragment
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.feature.auth.login.LoginActivity
 import com.akaf.nikoodriver.feature.home.credit.CreditDialog
+import com.akaf.nikoodriver.services.DriverForegroundService
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
 import com.google.android.material.button.MaterialButton
@@ -63,14 +65,16 @@ class HomeFragment : BaseFragment() {
         val onlineStatus=sharedPreferences.getBoolean("isOnline",false)
         if (onlineStatus){
             active()
+
         }else
             deActive()
+
 
 
         homeViewModel.mqttState.observe(viewLifecycleOwner) {
             if (it) {
                 checkPermStartLocationUpdate()
-//                checkNewTrip()
+                getCurrentTrip()
                 mqttState=it
                 connectedSign.visibility=View.VISIBLE
                 disconnectSign.visibility=View.GONE
@@ -81,6 +85,8 @@ class HomeFragment : BaseFragment() {
                 disconnectSign.visibility=View.VISIBLE
             }
         }
+
+
 
         logoutBtn.setOnClickListener {
             showLogoutDialog()
@@ -129,6 +135,12 @@ class HomeFragment : BaseFragment() {
     }
 
 
+
+    fun getCurrentTrip(){
+        homeViewModel.getCurrentTrip()
+    }
+
+
     private fun showLogoutDialog() {
         val logoutView = layoutInflater.inflate(R.layout.dialog_logout, null, false)
         val logoutDialog: AlertDialog = AlertDialog.Builder(requireContext()).create()
@@ -157,7 +169,9 @@ class HomeFragment : BaseFragment() {
         activeBtn.visibility= View.GONE
         deActiveBtn.visibility=View.VISIBLE
         homeViewModel.setOnlineStatus(true)
-        checkPermStartLocationUpdate()
+        if (DriverForegroundService.instance==null)
+            DriverForegroundService.startService(requireContext(),"Nikoo Driver")
+//        checkPermStartLocationUpdate()
     }
 
     private fun deActive(){
@@ -166,6 +180,9 @@ class HomeFragment : BaseFragment() {
         deActiveBtn.visibility=View.GONE
         homeViewModel.setOnlineStatus(false)
         stopLocationUpdates()
+
+        if (DriverForegroundService.instance!=null)
+            DriverForegroundService.stopService(requireContext())
     }
 
 

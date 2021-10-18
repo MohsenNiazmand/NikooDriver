@@ -6,6 +6,7 @@ import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.data.repositories.sources.home.HomeDataSource
 import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
+import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import io.reactivex.Single
@@ -62,6 +63,10 @@ class HomeRepositoryImpl(
 
     override fun rejectTrip(tripId: Int): Single<Response<RejectOfferResponse>> {
         return homeRemoteDataSource.rejectTrip(tripId)
+    }
+
+    override fun getCurrentTrip(): Single<Response<TripData>> {
+        return homeRemoteDataSource.getCurrentTrip()
     }
 
 

@@ -3,6 +3,7 @@ package com.akaf.nikoodriver.data.repositories.sources.home
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
 import com.akaf.nikoodriver.data.responses.location.SendLocation
+import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
@@ -19,5 +20,6 @@ interface HomeDataSource {
     fun setEmptySeats(emptySeats:Int):Single<Response<EmptySeatsResponse>>
     fun acceptTrip(tripId:Int,cost:Int):Single<Response<AcceptOfferResponse>>
     fun rejectTrip(tripId:Int):Single<Response<RejectOfferResponse>>
+    fun getCurrentTrip():Single<Response<TripData>>
 
 }

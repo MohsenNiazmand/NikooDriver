@@ -29,15 +29,13 @@ import timber.log.Timber
 import androidx.recyclerview.widget.PagerSnapHelper
 
 import androidx.recyclerview.widget.SnapHelper
-
-
+import com.akaf.nikoodriver.services.DriverForegroundService
 
 
 class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
     var tripsAdapter=TripsAdapter()
     val compositeDisposable=CompositeDisposable()
     val sharedPreferences: SharedPreferences by inject()
-    val hiveMqttManager: HiveMqttManager by inject()
     val homeViewModel: HomeViewModel by inject()
     private lateinit var wakeLock: PowerManager.WakeLock
     val tripsList=ArrayList<TripData>()
@@ -51,6 +49,7 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         wakeLockSetup()
+
 
 
 
@@ -177,6 +176,8 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
             tripsList.remove(tripData)
         }
     }
+
+
 
 
 }

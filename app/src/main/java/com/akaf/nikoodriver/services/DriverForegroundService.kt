@@ -61,16 +61,18 @@ class DriverForegroundService : Service() {
 
 
     companion object {
-        private var isUserOnline =  true
+        var isUserOnline =  false
         var instance : DriverForegroundService? =null
         fun startService(context: Context, message: String) {
             val startIntent = Intent(context, DriverForegroundService::class.java)
+            isUserOnline=true
             startIntent.putExtra("inputExtra", message)
             ContextCompat.startForegroundService(context, startIntent)
         }
 
         fun stopService(context: Context) {
             val stopIntent = Intent(context, DriverForegroundService::class.java)
+            isUserOnline=false
             context.stopService(stopIntent)
         }
     }
