@@ -177,6 +177,10 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     }
 
 
+    fun clearSharedPreference(){
+        homeRepository.clearSharedPreference()
+    }
+
 
      fun sendRefreshToken(token:String, refreshToken:String){
          progressBarLiveData.value=true

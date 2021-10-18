@@ -109,6 +109,9 @@
     <string name="cost">هزینه:</string>
     <string name="neverMind">بیخیال</string>
     <string name="newOffer">درخواست جدید</string>
+    <string name="areYouSureToLogout">آیا میخواهید از حساب خود خارج شوید؟</string>
+    <string name="yes">بله</string>
+    <string name="no">خیر</string>
 
 
 

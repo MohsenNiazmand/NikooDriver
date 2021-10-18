@@ -94,9 +94,19 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
             homeViewModel.sendRefreshToken(token,refreshToken)
             homeViewModel.refreshTokenLiveData.observe(this){
                 if (it.code()==403){
-                    sharedPreferences.edit().clear().apply()
+                    homeViewModel.clearSharedPreference()
+                    applicationContext.cacheDir.deleteRecursively()
                     finish()
-                    startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
+
+                    val intent=Intent(this@HomeActivity, LoginActivity::class.java).apply {
+                        action = "com.package.ACTION_LOGOUT"
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        addFlags( Intent.FLAG_ACTIVITY_NO_HISTORY)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    startActivity(intent)
+
+
                     overridePendingTransition(0, 0);
                     Toast.makeText(applicationContext,"لطفا مجددا به حساب خود وارد شوید",Toast.LENGTH_SHORT).show()
                 }

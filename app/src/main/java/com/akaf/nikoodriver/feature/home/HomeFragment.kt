@@ -2,11 +2,11 @@ package com.akaf.nikoodriver.feature.home
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +16,8 @@ import androidx.navigation.Navigation
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
 import com.akaf.nikoodriver.data.responses.location.SendLocation
+import com.akaf.nikoodriver.feature.auth.login.LoginActivity
 import com.akaf.nikoodriver.feature.home.credit.CreditDialog
-import com.akaf.nikoodriver.services.DriverForegroundService
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
 import com.google.android.material.button.MaterialButton
@@ -37,6 +37,7 @@ class HomeFragment : BaseFragment() {
     private var fusedLocation: Location? = null
     var isFastLocation = false
     lateinit var fusedLocationClient: FusedLocationProviderClient
+    var mqttState:Boolean=true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,17 +68,23 @@ class HomeFragment : BaseFragment() {
 
 
         homeViewModel.mqttState.observe(viewLifecycleOwner) {
-            Log.d("TAG", "initConnectionState: " + it)
             if (it) {
                 checkPermStartLocationUpdate()
 //                checkNewTrip()
+                mqttState=it
                 connectedSign.visibility=View.VISIBLE
                 disconnectSign.visibility=View.GONE
             }
             else {
+                mqttState=it
                 connectedSign.visibility=View.GONE
                 disconnectSign.visibility=View.VISIBLE
             }
+        }
+
+        logoutBtn.setOnClickListener {
+            showLogoutDialog()
+
         }
 
         activeBtn.setOnClickListener {
@@ -122,6 +129,29 @@ class HomeFragment : BaseFragment() {
     }
 
 
+    private fun showLogoutDialog() {
+        val logoutView = layoutInflater.inflate(R.layout.dialog_logout, null, false)
+        val logoutDialog: AlertDialog = AlertDialog.Builder(requireContext()).create()
+        logoutDialog.setView(logoutView)
+        logoutView.findViewById<MaterialButton>(R.id.logoutBtnYes).setOnClickListener {
+            logoutDialog.dismiss()
+            homeViewModel.clearSharedPreference()
+            hiveMqttManager.disconnect()
+            requireActivity().cacheDir.deleteRecursively()
+            val intent=Intent(activity, LoginActivity::class.java).apply {
+                action = "com.package.ACTION_LOGOUT"
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                addFlags( Intent.FLAG_ACTIVITY_NO_HISTORY)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intent)
+        }
+        logoutView.findViewById<MaterialButton>(R.id.logoutBtnNo).setOnClickListener {
+            logoutDialog.dismiss()
+        }
+        logoutDialog.show()
+    }
+
     private fun active(){
         activationTv.visibility= View.GONE
         activeBtn.visibility= View.GONE
@@ -135,7 +165,6 @@ class HomeFragment : BaseFragment() {
         activeBtn.visibility= View.VISIBLE
         deActiveBtn.visibility=View.GONE
         homeViewModel.setOnlineStatus(false)
-        DriverForegroundService.stopService(requireContext())
         stopLocationUpdates()
     }
 

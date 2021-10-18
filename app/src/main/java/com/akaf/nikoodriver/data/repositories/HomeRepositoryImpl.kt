@@ -48,6 +48,10 @@ class HomeRepositoryImpl(
         return homeLocalDataSource.saveTokenStatus(isExpired)
     }
 
+    override fun clearSharedPreference() {
+        return homeLocalDataSource.clearSharedPreference()
+    }
+
     override fun setEmptySeats(emptySeats: Int): Single<Response<EmptySeatsResponse>> {
         return homeRemoteDataSource.setEmptySeats(emptySeats)
     }
