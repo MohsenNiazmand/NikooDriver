@@ -149,6 +149,7 @@ class HomeFragment : BaseFragment() {
             logoutDialog.dismiss()
             homeViewModel.clearSharedPreference()
             hiveMqttManager.disconnect()
+            DriverForegroundService.stopService(requireContext())
             requireActivity().cacheDir.deleteRecursively()
             val intent=Intent(activity, LoginActivity::class.java).apply {
                 action = "com.package.ACTION_LOGOUT"

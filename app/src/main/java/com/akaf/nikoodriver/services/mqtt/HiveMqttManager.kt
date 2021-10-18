@@ -72,7 +72,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                     .password(token.toByteArray())
                     .applySimpleAuth()
                     .automaticReconnect()
-                    .initialDelay(5000L, TimeUnit.MILLISECONDS)
+                    .initialDelay(500L, TimeUnit.MILLISECONDS)
                     .applyAutomaticReconnect()
                     .addConnectedListener {
                         mqttConnectionState.onNext(CONNECTED)

@@ -52,7 +52,6 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
 
 
 
-
         if (!CheckInternet()){
             val snackBar = Snackbar
                 .make(
@@ -96,13 +95,14 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
                     homeViewModel.clearSharedPreference()
                     applicationContext.cacheDir.deleteRecursively()
                     finish()
-
+                    DriverForegroundService.stopService(applicationContext)
                     val intent=Intent(this@HomeActivity, LoginActivity::class.java).apply {
                         action = "com.package.ACTION_LOGOUT"
                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         addFlags( Intent.FLAG_ACTIVITY_NO_HISTORY)
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }
+
                     startActivity(intent)
 
 
