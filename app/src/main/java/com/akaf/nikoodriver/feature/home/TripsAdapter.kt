@@ -53,7 +53,7 @@ class TripsAdapter() : RecyclerView.Adapter<TripsAdapter.TripsViewHolder>() {
 
 
             travelDistanceTv.text=trip.options.distance.toString()+" "+"کیلومتر"
-            offerCostTv.text=trip.cost+" "+"تومان"
+            offerCostTv.text=trip.cost+" "+"ریال"
             offerOrigin.text=trip.sourceCity
             offerDestination.text=trip.destinationCity
            itemView.rejectOfferBtn.setOnClickListener {
@@ -70,6 +70,7 @@ class TripsAdapter() : RecyclerView.Adapter<TripsAdapter.TripsViewHolder>() {
                }
             }
             itemView.acceptOfferBtn.setOnClickListener {
+                removeTripFromList(trip)
                 cancelTimer()
                 cartItemViewCallBacks?.onAcceptBtnClicked(trip)
             }

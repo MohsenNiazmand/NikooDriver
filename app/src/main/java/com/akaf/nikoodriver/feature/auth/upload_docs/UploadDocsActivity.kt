@@ -5,14 +5,18 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseActivity
 import com.akaf.nikoodriver.common.NikoSingleObserver
+import com.akaf.nikoodriver.data.TokenContainer.token
 import com.akaf.nikoodriver.data.responses.submitDocsResponse.SubmitDocsResponse
 import com.akaf.nikoodriver.data.responses.uploadDocResponse.UploadDocResponse
 import com.akaf.nikoodriver.feature.auth.chooseDialog.ChoosePictureDialog
+import com.akaf.nikoodriver.feature.auth.fillInfo.FillInfoActivity
 import com.akaf.nikoodriver.feature.auth.finishReg.FinishRegisterActivity
+import com.google.android.material.button.MaterialButton
 import com.theartofdev.edmodo.cropper.CropImage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -38,11 +42,11 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
     val workBookId = MutableLiveData<String>()
     val compositeDisposable= CompositeDisposable()
     val viewModel:UploadDocsViewModel by viewModel()
-
+    var token:String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload_docs)
-        val token=intent!!.getStringExtra("token")
+        token=intent!!.getStringExtra("token")
 
 
 
@@ -114,7 +118,7 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
 
             if (token != null && carCardId.value!=null && badRecordsId.value!=null&&certificateCardId.value!=null&&nationalCardId.value!=null&&technicalDiagnosisId.value!=null&&workBookId.value!=null){
 
-                    viewModel.submitDocs(token,carCardId.value.toString(),badRecordsId.value.toString(),certificateCardId.value.toString(),nationalCardId.value.toString(),technicalDiagnosisId.value.toString(),workBookId.value.toString())
+                    viewModel.submitDocs(token!!,carCardId.value.toString(),badRecordsId.value.toString(),certificateCardId.value.toString(),nationalCardId.value.toString(),technicalDiagnosisId.value.toString(),workBookId.value.toString())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(object : NikoSingleObserver<Response<SubmitDocsResponse>>(compositeDisposable){
@@ -163,6 +167,27 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
             setProgressIndicator(it)
         }
 
+    }
+
+
+    private fun showBackDialog() {
+        val backDialogView = layoutInflater.inflate(R.layout.dialog_back, null, false)
+        val backDialog: AlertDialog = AlertDialog.Builder(this).create()
+        backDialog.setView(backDialogView)
+        backDialog.setCancelable(false)
+        backDialogView.findViewById<MaterialButton>(R.id.backBtnYes).setOnClickListener {
+            backDialog.dismiss()
+            startActivity(Intent(this@UploadDocsActivity,FillInfoActivity::class.java).apply {
+                putExtra("token",token)
+            })
+
+        }
+
+        backDialogView.findViewById<MaterialButton>(R.id.backBtnNo).setOnClickListener {
+            backDialog.dismiss()
+
+        }
+        backDialog.show()
     }
 
 
@@ -345,6 +370,7 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
     }
 
     override fun onBackPressed() {
+        showBackDialog()
     }
 
 }

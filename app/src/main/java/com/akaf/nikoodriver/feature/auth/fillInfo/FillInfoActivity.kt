@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseActivity
@@ -16,7 +18,9 @@ import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoResponse.UploadPhotoDriverResponse
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.FillInfoResponse
 import com.akaf.nikoodriver.feature.auth.chooseDialog.ChoosePictureDialog
+import com.akaf.nikoodriver.feature.auth.login.LoginActivity
 import com.akaf.nikoodriver.feature.auth.upload_docs.UploadDocsActivity
+import com.google.android.material.button.MaterialButton
 import com.theartofdev.edmodo.cropper.CropImage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -77,18 +81,8 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
 
 
-        //Persian date picker
-//        insuranceExpireEt.setOnFocusChangeListener { view, b ->
-//            runOnUiThread {
-//                kotlin.run {
-//
-//
-//
-//                }
-//
-//            }
-//
-//        }
+
+
         //for auto focusing next edittext
         firstPlaqueEtReg.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -278,7 +272,29 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
     }
 
     override fun onBackPressed() {
+        showBackDialog()
     }
+
+
+    private fun showBackDialog() {
+        val backDialogView = layoutInflater.inflate(R.layout.dialog_back_fill_info, null, false)
+        val backDialog: AlertDialog = AlertDialog.Builder(this).create()
+        backDialog.setView(backDialogView)
+        backDialog.setCancelable(false)
+        backDialogView.findViewById<MaterialButton>(R.id.backBtnYes).setOnClickListener {
+            backDialog.dismiss()
+            startActivity(Intent(this@FillInfoActivity,LoginActivity::class.java))
+
+        }
+
+        backDialogView.findViewById<MaterialButton>(R.id.backBtnNo).setOnClickListener {
+            backDialog.dismiss()
+
+        }
+        backDialog.show()
+    }
+
+
 
     fun datePicker(v: View){
         val picker = PersianDatePickerDialog(this)
@@ -286,10 +302,10 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
             .setNegativeButton("بیخیال")
             .setTodayButton("امروز")
             .setTodayButtonVisible(true)
-            .setMinYear(1300)
+            .setMinYear(1398)
+            .setMaxYear(1450)
             .setAllButtonsTextSize(16)
             .setPickerBackgroundColor(Color.WHITE)
-            .setMaxYear(PersianDatePickerDialog.THIS_YEAR)
             .setInitDate(1374, 2, 1)
             .setActionTextColor(Color.BLACK)
             .setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR)

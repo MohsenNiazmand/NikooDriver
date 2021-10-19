@@ -11,13 +11,13 @@
 
         <TextView
             android:id="@+id/tvT"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/areYouSureToLogout" />
+            android:text="@string/doYouNeedToEditYourInfos"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />
 
 
         <LinearLayout
@@ -30,7 +30,7 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/logoutBtnNo"
+                android:id="@+id/backBtnNo"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="56dp"
@@ -44,7 +44,7 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/logoutBtnYes"
+                android:id="@+id/backBtnYes"
                 android:layout_width="wrap_content"
                 android:layout_height="56dp"
                 android:layout_marginHorizontal="5dp"
