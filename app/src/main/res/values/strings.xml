@@ -33,7 +33,7 @@
     <string name="insertYourFamily">نام خانوادگی خود را وارد نمایید</string>
     <string name="insertYourNationalCode">کد ملی خود را وارد نمایید</string>
     <string name="mobileHint">09*********</string>
-    <string name="insertYourCertificateCode">کد گواهینامه خود را وارد نمایید(ده رقمی)</string>
+    <string name="insertYourCertificateCode">(ده رقمی)</string>
     <string name="iran">ایران</string>
     <string name="twoLines">- -</string>
     <string name="threeLines">- - -</string>

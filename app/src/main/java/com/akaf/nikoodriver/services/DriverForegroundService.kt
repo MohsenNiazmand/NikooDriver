@@ -16,9 +16,13 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
+import androidx.appcompat.widget.AppCompatDrawableManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.feature.home.HomeActivity
@@ -118,22 +122,36 @@ class DriverForegroundService : Service() {
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val notificationIntent = Intent(this, HomeActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(
-            this,
-            0, notificationIntent, 0
-        )
+//        val notificationIntent = Intent(this, HomeActivity::class.java)
+//        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY)
+//        val pendingIntent = PendingIntent.getActivity(
+//            this,
+//            0, notificationIntent, 0
+//        )
+
+
+        // Create an Intent for the activity you want to start
+        val resultIntent = Intent(this, HomeActivity::class.java)
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY)
+        // Create the TaskStackBuilder
+        val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(this).run {
+            // Add the intent, which inflates the back stack
+            addNextIntentWithParentStack(resultIntent)
+            // Get the PendingIntent containing the entire back stack
+            getPendingIntent(0, 0)
+        }
+
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("سرویس نیکو همراه")
-            .setSmallIcon(R.drawable.ic__car)
-            .setContentIntent(pendingIntent)
+            .setSmallIcon(R.drawable.niko_logo_24)
+            .setContentIntent(resultPendingIntent)
             .build()
 
         startForeground(1, notification)
         startLocationUpdates()
 
 //        hiveMqtt.connect()
-        return START_STICKY
+        return START_NOT_STICKY
     }
 
 

@@ -53,9 +53,14 @@ class HomeRepositoryImpl(
         return homeLocalDataSource.clearSharedPreference()
     }
 
-    override fun setEmptySeats(emptySeats: Int): Single<Response<EmptySeatsResponse>> {
-        return homeRemoteDataSource.setEmptySeats(emptySeats)
+    override fun setEmptySeats(emptySeats: Int,isReady:Boolean): Single<Response<EmptySeatsResponse>> {
+        return homeRemoteDataSource.setEmptySeats(emptySeats,isReady)
     }
+
+    override fun emptySeatsCount(emptySeats: Int) {
+        return homeLocalDataSource.emptySeatsCount(emptySeats)
+    }
+
 
     override fun acceptTrip(tripId: Int,cost:Int): Single<Response<AcceptOfferResponse>> {
         return homeRemoteDataSource.acceptTrip(tripId,cost)

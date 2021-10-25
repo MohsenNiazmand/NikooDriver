@@ -32,6 +32,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     var currentTripLiveData = MutableLiveData<TripData>()
     val newOfferLiveData = MutableLiveData<TripData>()
     val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
+//    val emptySeatsCount= MutableLiveData<Int>()
 
 
 
@@ -109,9 +110,9 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
         mqttManager.publishDriverLocation(location)
     }
 
-    fun setEmptySeats(emptySeats:Int){
+    fun setEmptySeats(emptySeats:Int,isReady:Boolean){
         progressBarLiveData.value=true
-        homeRepository.setEmptySeats(emptySeats)
+        homeRepository.setEmptySeats(emptySeats,isReady)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : NikoSingleObserver<Response<EmptySeatsResponse>>(compositeDisposable){
@@ -120,6 +121,10 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
                 }
 
             })
+    }
+
+    fun emptySeatsCount(emptySeats: Int){
+        homeRepository.emptySeatsCount(emptySeats)
     }
 
     fun acceptTrip(tripId:Int,cost:Int){
@@ -187,6 +192,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
                 override fun onSuccess(t: Response<TripData>) {
                     currentTripLiveData.postValue(t.body())
                     progressBarLiveData.postValue(false)
+                    Timber.i("currentTripLiveData"+t.body().toString())
 
                 }
 

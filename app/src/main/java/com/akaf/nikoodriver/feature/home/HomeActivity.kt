@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.os.PowerManager
 import android.view.View
 import android.widget.AbsListView
@@ -130,6 +131,7 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
 
     }
 
+
     private fun wakeLockSetup() {
         wakeLock =
             (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
@@ -176,6 +178,8 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
             tripsList.remove(tripData)
         }
     }
+
+
 
 
 

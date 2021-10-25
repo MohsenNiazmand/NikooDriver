@@ -62,11 +62,14 @@ interface ApiService {
 
     @PUT("driver/profile/capacity")
     @FormUrlEncoded
-    fun setEmptySeats(@Field("capacity") emptySeats:Int):Single<Response<EmptySeatsResponse>>
+    fun setEmptySeats(@Field("capacity") emptySeats:Int,@Field("isReady") isReady:Boolean):Single<Response<EmptySeatsResponse>>
+
 
     @POST("driver/trips/{trip_id}/offer")
     @FormUrlEncoded
     fun acceptTrip(@Path("trip_id") tripId:Int,@Field("cost") cost:Int):Single<Response<AcceptOfferResponse>>
+
+
 
     @POST("driver/trips/reject")
     @FormUrlEncoded

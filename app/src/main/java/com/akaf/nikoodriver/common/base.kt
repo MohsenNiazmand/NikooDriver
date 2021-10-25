@@ -34,6 +34,12 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import android.content.ClipData
+
+import android.os.Build
+
+
+
 
 //this class is the base of our project and other classes extend this
 
@@ -96,6 +102,10 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
                     photoFile
                 )
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+                    takePictureIntent.clipData = ClipData.newRawUri("", photoURI)
+                    takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         }
     }

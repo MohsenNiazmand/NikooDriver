@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
@@ -85,7 +86,6 @@ class HomeFragment : BaseFragment() {
                 disconnectSign.visibility=View.VISIBLE
             }
         }
-
 
 
         logoutBtn.setOnClickListener {
@@ -170,9 +170,14 @@ class HomeFragment : BaseFragment() {
         activeBtn.visibility= View.GONE
         deActiveBtn.visibility=View.VISIBLE
         homeViewModel.setOnlineStatus(true)
+        val seatsCount=sharedPreferences.getInt("seatsCount",0)
+        if (seatsCount>0){
+            homeViewModel.setEmptySeats(seatsCount,true)
+            setEmptySeatText()
+
+        }
         if (DriverForegroundService.instance==null)
             DriverForegroundService.startService(requireContext(),"Nikoo Driver")
-//        checkPermStartLocationUpdate()
     }
 
     private fun deActive(){
@@ -184,6 +189,9 @@ class HomeFragment : BaseFragment() {
 
         if (DriverForegroundService.instance!=null)
             DriverForegroundService.stopService(requireContext())
+        emptySeatsTv.visibility=View.GONE
+        homeViewModel.setEmptySeats(0,false)
+
     }
 
 
@@ -195,8 +203,10 @@ class HomeFragment : BaseFragment() {
         val emptySeatsEt= emptySeatsView.findViewById<EditText>(R.id.emptySeatsEt)
         emptySeatsView.findViewById<MaterialButton>(R.id.proceedEmptySeatsBtn).setOnClickListener {
             if (emptySeatsEt.text.isNotEmpty()){
-                homeViewModel.setEmptySeats(emptySeatsEt.text.toString().toInt())
+                homeViewModel.setEmptySeats(emptySeatsEt.text.toString().toInt(),true)
                 emptySeatsDialog.dismiss()
+                homeViewModel.emptySeatsCount(emptySeatsEt.text.toString().toInt())
+                setEmptySeatText()
                 active()
             }
         }
@@ -204,6 +214,11 @@ class HomeFragment : BaseFragment() {
             emptySeatsDialog.dismiss()
         }
         emptySeatsDialog.show()
+    }
+
+    private fun setEmptySeatText(){
+        emptySeatsTv.visibility=View.VISIBLE
+        emptySeatsTv.text= sharedPreferences.getInt("seatsCount",0).toString()
     }
 
 

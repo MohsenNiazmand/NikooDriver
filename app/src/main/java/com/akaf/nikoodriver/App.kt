@@ -45,7 +45,6 @@ class App : MultiDexApplication() {
         Timber.plant(Timber.DebugTree())
         Fresco.initialize(this)
 
-//        DriverForegroundService.startService(applicationContext,"Nikoo Driver")
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

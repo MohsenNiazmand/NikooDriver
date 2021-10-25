@@ -45,8 +45,15 @@ class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSo
             putBoolean("expired", isExpired)
         }.apply()    }
 
-    override fun setEmptySeats(emptySeats: Int): Single<Response<EmptySeatsResponse>> {
+    override fun setEmptySeats(emptySeats: Int,isReady:Boolean): Single<Response<EmptySeatsResponse>> {
         TODO("Not yet implemented")
+    }
+
+    override fun emptySeatsCount(emptySeats: Int) {
+        sharedPreferences.edit().apply{
+            putInt("seatsCount",emptySeats)
+//            putBoolean("isReady",isReady)
+        }.apply()
     }
 
     override fun acceptTrip(tripId: Int,cost:Int): Single<Response<AcceptOfferResponse>> {
@@ -60,5 +67,6 @@ class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSo
     override fun getCurrentTrip(): Single<Response<TripData>> {
         TODO("Not yet implemented")
     }
+
 
 }

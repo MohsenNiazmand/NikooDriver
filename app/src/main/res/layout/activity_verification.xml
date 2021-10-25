@@ -152,11 +152,12 @@
                     android:layout_width="150dp"
                     android:layout_height="56dp"
                     android:layoutDirection="rtl"
-                    android:drawableEnd="@drawable/ic_next"
+                    app:drawableEndCompat="@drawable/ic_next"
                     android:gravity="center"
                     android:minHeight="48dp"
                     android:text="@string/next"
-                    app:cornerRadius="20dp" />
+                    app:cornerRadius="20dp"
+                    />
 
 
             </LinearLayout>

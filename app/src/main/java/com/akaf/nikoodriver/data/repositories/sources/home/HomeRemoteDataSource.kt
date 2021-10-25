@@ -40,8 +40,13 @@ class HomeRemoteDataSource(val apiService: ApiService):HomeDataSource {
         TODO("Not yet implemented")
     }
 
-    override fun setEmptySeats(emptySeats: Int): Single<Response<EmptySeatsResponse>> {
-        return apiService.setEmptySeats(emptySeats)
+
+    override fun setEmptySeats(emptySeats: Int,isReady:Boolean): Single<Response<EmptySeatsResponse>> {
+        return apiService.setEmptySeats(emptySeats,isReady)
+    }
+
+    override fun emptySeatsCount(emptySeats: Int) {
+        TODO("Not yet implemented")
     }
 
     override fun acceptTrip(tripId: Int,cost:Int): Single<Response<AcceptOfferResponse>> {

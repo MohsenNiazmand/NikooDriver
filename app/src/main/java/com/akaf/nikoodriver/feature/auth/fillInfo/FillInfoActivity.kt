@@ -306,7 +306,7 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
             .setMaxYear(1450)
             .setAllButtonsTextSize(16)
             .setPickerBackgroundColor(Color.WHITE)
-            .setInitDate(1374, 2, 1)
+            .setInitDate(1400, 1, 1)
             .setActionTextColor(Color.BLACK)
             .setTitleType(PersianDatePickerDialog.WEEKDAY_DAY_MONTH_YEAR)
             .setShowInBottomSheet(true)
