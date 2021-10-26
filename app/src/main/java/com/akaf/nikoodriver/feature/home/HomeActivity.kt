@@ -8,10 +8,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.os.PowerManager
 import android.view.View
-import android.widget.AbsListView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,14 +17,12 @@ import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseActivity
 import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.akaf.nikoodriver.feature.auth.login.LoginActivity
-import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.item_declined_passenger.*
 import org.koin.android.ext.android.inject
-import timber.log.Timber
 import androidx.recyclerview.widget.PagerSnapHelper
 
 import androidx.recyclerview.widget.SnapHelper
@@ -42,7 +38,6 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
     val tripsList=ArrayList<TripData>()
     val token=sharedPreferences.getString("token", null)
     val refreshToken=sharedPreferences.getString("refresh_token", null)
-
 
 
     @SuppressLint("CutPasteId", "BinaryOperationInTimber", "SetTextI18n")
@@ -128,6 +123,16 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
         }
 
 
+//        homeViewModel.allOpenTripsLiveData.observe(this){
+//            tripsAdapter.cartItemViewCallBacks=this
+//            tripView.visibility=View.VISIBLE
+//            val triips=it.data
+//            tripsAdapter.trips= triips as ArrayList<TripData>
+//            val index=tripsAdapter.trips.size-1
+//            rvTrips.smoothScrollToPosition(index)
+//        }
+
+
 
     }
 
@@ -167,15 +172,18 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
         handleTrips(tripData)
     }
 
+    @SuppressLint("CommitPrefEdits")
     private fun handleTrips(tripData: TripData){
-        Timber.i("TListSize"+tripsList.size.toString())
+
         if (tripsList.size==0){
             tripView.visibility=View.GONE
             tripsList.remove(tripData)
+
         }else if (tripsList.size>0){
             tripsAdapter.removeTripFromList(tripData)
             rvTrips.smoothScrollToPosition(tripsAdapter.trips.size)
             tripsList.remove(tripData)
+
         }
     }
 

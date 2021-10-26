@@ -348,7 +348,7 @@
                                 android:src="@drawable/sad" />
 
                             <TextView
-                                android:id="@+id/declinedPassengersTv"
+                                android:id="@+id/unAcceptedPassengersTv"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:layout_gravity="bottom|start"

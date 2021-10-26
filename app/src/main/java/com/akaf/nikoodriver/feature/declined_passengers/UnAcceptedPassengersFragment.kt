@@ -6,9 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
+import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 
-class DeclinedPassengersFragment : BaseFragment() {
+class UnAcceptedPassengersFragment : BaseFragment() {
+    val unAcceptedPassengersViewModel:UnAcceptedPassengersViewModel by inject()
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -19,5 +24,12 @@ class DeclinedPassengersFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        unAcceptedPassengersViewModel.unAcceptedPassengersResponse.observe(viewLifecycleOwner){
+            if (it!=null)
+            Timber.i("unAcceptedPassengersResponse"+" "+it.toString())
+        }
+
+
     }
 }

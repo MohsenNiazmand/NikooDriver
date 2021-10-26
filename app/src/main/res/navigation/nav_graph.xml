@@ -11,7 +11,7 @@
         android:label="CurrentTravelFragment" />
     <fragment
         android:id="@+id/declinedPassengersFragment"
-        android:name="com.akaf.nikoodriver.feature.declined_passengers.DeclinedPassengersFragment"
+        android:name="com.akaf.nikoodriver.feature.declined_passengers.UnAcceptedPassengersFragment"
         android:label="fragment_current_travel"
         tools:layout="@layout/fragment_current_travel" />
     <fragment

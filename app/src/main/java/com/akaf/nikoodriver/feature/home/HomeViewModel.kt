@@ -3,36 +3,33 @@ package com.akaf.nikoodriver.feature.home
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.location.Location
-import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
-import com.akaf.nikoodriver.common.SingleLiveEvent
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.data.repositories.HomeRepository
+import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassengersResponse
 import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
-import com.akaf.nikoodriver.data.responses.mqttTripResponse.Trip
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
+import com.akaf.nikoodriver.services.createApiServiceInstance
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.ArrayList
 
 class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRepository,val sharedPreferences: SharedPreferences):NikoViewModel() {
     val mqttState = MutableLiveData<Boolean>()
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
-    var currentTripLiveData = MutableLiveData<TripData>()
+    var unAcceptedPassengersCount = MutableLiveData<Int>()
     val newOfferLiveData = MutableLiveData<TripData>()
     val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
-//    val emptySeatsCount= MutableLiveData<Int>()
 
 
 
@@ -42,6 +39,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
         subscribeMqttState()
         subscribeToNewOffers()
         subscribeToDisconnectSubject()
+        unAcceptedPassengersCount()
     }
 
 
@@ -183,17 +181,17 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     }
 
 
-    fun getCurrentTrip() {
-        progressBarLiveData.value=true
-        homeRepository.getCurrentTrip()
+    private fun unAcceptedPassengersCount() {
+        homeRepository.unAcceptedPassengersCount()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object :NikoSingleObserver<Response<TripData>>(compositeDisposable){
-                override fun onSuccess(t: Response<TripData>) {
-                    currentTripLiveData.postValue(t.body())
-                    progressBarLiveData.postValue(false)
-                    Timber.i("currentTripLiveData"+t.body().toString())
-
+            .subscribe(object :NikoSingleObserver<Response<UnAcceptedPassengersResponse>>(compositeDisposable){
+                override fun onSuccess(t: Response<UnAcceptedPassengersResponse>) {
+                    if (t.body()?.data.isNullOrEmpty()){
+                        unAcceptedPassengersCount.postValue(0)
+                    }else{
+                        unAcceptedPassengersCount.postValue(t.body()?.data?.size)
+                    }
                 }
 
             })

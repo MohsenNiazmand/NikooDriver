@@ -42,7 +42,7 @@
     <string name="connection">اتصال</string>
     <string name="credit">اعتبار</string>
     <string name="rate">رتبه</string>
-    <string name="addingTravel">ثبت سفر</string>
+    <string name="addingTravel">جستجوی سفر</string>
     <string name="seatsCount">تعداد صندلی خالی</string>
     <string name="currentTravel">سفر جاری</string>
     <string name="declinedPassengers">مسافران تایید نشده</string>

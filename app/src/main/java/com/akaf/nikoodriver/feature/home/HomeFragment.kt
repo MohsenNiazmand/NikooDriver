@@ -2,7 +2,6 @@ package com.akaf.nikoodriver.feature.home
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Location
@@ -13,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
@@ -71,11 +69,21 @@ class HomeFragment : BaseFragment() {
             deActive()
 
 
+        homeViewModel.unAcceptedPassengersCount.observe(viewLifecycleOwner) {
+            if (it != null) {
+                if (it > 0) {
+                    unAcceptedPassengersTv.visibility = View.VISIBLE
+                    unAcceptedPassengersTv.setText(it.toString())
+                } else if (it == 0) {
+                    unAcceptedPassengersTv.visibility = View.GONE
+                }
+            }
+        }
 
-        homeViewModel.mqttState.observe(viewLifecycleOwner) {
+
+            homeViewModel.mqttState.observe(viewLifecycleOwner) {
             if (it) {
                 checkPermStartLocationUpdate()
-                getCurrentTrip()
                 mqttState=it
                 connectedSign.visibility=View.VISIBLE
                 disconnectSign.visibility=View.GONE
@@ -135,10 +143,19 @@ class HomeFragment : BaseFragment() {
     }
 
 
-
-    fun getCurrentTrip(){
-        homeViewModel.getCurrentTrip()
-    }
+//    fun unAcceptedPassengerCount(){
+//        homeViewModel.unAcceptedPassengersCount()
+//        homeViewModel.unAcceptedPassengersCount.observe(viewLifecycleOwner){
+//            if (it!=null){
+//                if (it>0){
+//                    unAcceptedPassengersTv.visibility=View.VISIBLE
+//                    unAcceptedPassengersTv.setText(it.toString())
+//                }else if (it==0){
+//                    unAcceptedPassengersTv.visibility=View.GONE
+//                }
+//            }
+//        }
+//    }
 
 
     private fun showLogoutDialog() {
@@ -178,6 +195,7 @@ class HomeFragment : BaseFragment() {
         }
         if (DriverForegroundService.instance==null)
             DriverForegroundService.startService(requireContext(),"Nikoo Driver")
+//        unAcceptedPassengerCount()
     }
 
     private fun deActive(){
@@ -191,6 +209,7 @@ class HomeFragment : BaseFragment() {
             DriverForegroundService.stopService(requireContext())
         emptySeatsTv.visibility=View.GONE
         homeViewModel.setEmptySeats(0,false)
+        unAcceptedPassengersTv.visibility=View.GONE
 
     }
 

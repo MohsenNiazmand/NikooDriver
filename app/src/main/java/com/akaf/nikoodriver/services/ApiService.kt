@@ -1,6 +1,7 @@
 package com.akaf.nikoodriver.services
 
 import com.akaf.nikoodriver.data.TokenContainer
+import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassengersResponse
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
 import com.akaf.nikoodriver.data.responses.fcmResponse.FcmResponse
@@ -8,7 +9,6 @@ import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoRes
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.FillInfoResponse
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.loginResponse.LoginResponse
-import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
@@ -75,8 +75,8 @@ interface ApiService {
     @FormUrlEncoded
     fun rejectTrip(@Field("trip_id") tripId:Int):Single<Response<RejectOfferResponse>>
 
-    @GET("v1/driver/trips/current")
-    fun getCurrentTrip(): Single<Response<TripData>>
+    @GET("driver/trips/open?page=1")
+    fun unAcceptedPassengers(): Single<Response<UnAcceptedPassengersResponse>>
 
 }
 
