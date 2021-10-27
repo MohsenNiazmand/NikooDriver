@@ -69,6 +69,7 @@ class HomeFragment : BaseFragment() {
             deActive()
 
 
+        homeViewModel.unAcceptedPassengersCount()
         homeViewModel.unAcceptedPassengersCount.observe(viewLifecycleOwner) {
             if (it != null) {
                 if (it > 0) {
@@ -117,13 +118,13 @@ class HomeFragment : BaseFragment() {
 
         }
 
-        travelRegistrationBtn.setOnClickListener {
+        searchTravelBtn.setOnClickListener {
             Navigation.findNavController(view)
                 .navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
 
         }
 
-        declinedPassengersBtn.setOnClickListener {
+        unAcceptedPassengersBtn.setOnClickListener {
             Navigation.findNavController(view)
                 .navigate(R.id.action_homeFragment_to_declinedPassengersFragment)
 
@@ -141,21 +142,6 @@ class HomeFragment : BaseFragment() {
 
 
     }
-
-
-//    fun unAcceptedPassengerCount(){
-//        homeViewModel.unAcceptedPassengersCount()
-//        homeViewModel.unAcceptedPassengersCount.observe(viewLifecycleOwner){
-//            if (it!=null){
-//                if (it>0){
-//                    unAcceptedPassengersTv.visibility=View.VISIBLE
-//                    unAcceptedPassengersTv.setText(it.toString())
-//                }else if (it==0){
-//                    unAcceptedPassengersTv.visibility=View.GONE
-//                }
-//            }
-//        }
-//    }
 
 
     private fun showLogoutDialog() {
@@ -195,7 +181,6 @@ class HomeFragment : BaseFragment() {
         }
         if (DriverForegroundService.instance==null)
             DriverForegroundService.startService(requireContext(),"Nikoo Driver")
-//        unAcceptedPassengerCount()
     }
 
     private fun deActive(){

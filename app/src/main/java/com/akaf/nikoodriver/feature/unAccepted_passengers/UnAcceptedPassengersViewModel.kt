@@ -1,4 +1,4 @@
-package com.akaf.nikoodriver.feature.declined_passengers
+package com.akaf.nikoodriver.feature.unAccepted_passengers
 
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.common.NikoSingleObserver

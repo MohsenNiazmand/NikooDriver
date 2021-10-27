@@ -39,7 +39,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
         subscribeMqttState()
         subscribeToNewOffers()
         subscribeToDisconnectSubject()
-        unAcceptedPassengersCount()
     }
 
 
@@ -125,6 +124,10 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
         homeRepository.emptySeatsCount(emptySeats)
     }
 
+    fun decreaseSeatsCount(emptySeats: Int){
+        sharedPreferences.edit().putInt("seatsCount",emptySeats-1).apply()
+    }
+
     fun acceptTrip(tripId:Int,cost:Int){
         progressBarLiveData.value=true
         homeRepository.acceptTrip(tripId,cost)
@@ -181,7 +184,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     }
 
 
-    private fun unAcceptedPassengersCount() {
+    fun unAcceptedPassengersCount() {
         homeRepository.unAcceptedPassengersCount()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

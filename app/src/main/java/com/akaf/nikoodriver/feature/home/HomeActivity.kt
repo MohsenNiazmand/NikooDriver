@@ -166,6 +166,8 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
     override fun onAcceptBtnClicked(tripData: TripData) {
         handleTrips(tripData)
         homeViewModel.acceptTrip(tripData.id,-1)
+        val count=sharedPreferences.getInt("seatsCount",0)
+        homeViewModel.decreaseSeatsCount(count)
     }
 
     override fun timerFinished(tripData: TripData) {

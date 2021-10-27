@@ -143,7 +143,7 @@ class DriverForegroundService : Service() {
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("سرویس نیکو همراه")
-            .setSmallIcon(R.drawable.niko_logo_24)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentIntent(resultPendingIntent)
             .build()
 

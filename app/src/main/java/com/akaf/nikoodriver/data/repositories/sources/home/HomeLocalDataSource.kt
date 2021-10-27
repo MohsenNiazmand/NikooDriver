@@ -52,7 +52,6 @@ class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSo
     override fun emptySeatsCount(emptySeats: Int) {
         sharedPreferences.edit().apply{
             putInt("seatsCount",emptySeats)
-//            putBoolean("isReady",isReady)
         }.apply()
     }
 

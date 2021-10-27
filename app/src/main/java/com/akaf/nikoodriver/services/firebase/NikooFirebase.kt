@@ -28,7 +28,7 @@ class NikooFirebase : FirebaseMessagingService() {
         val notificationManager=getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val notification=NotificationCompat.Builder(applicationContext,"NikooDriver")
             .setContentText(remoteMessage.notification?.body)
-            .setSmallIcon(R.drawable.niko_logo_24)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)

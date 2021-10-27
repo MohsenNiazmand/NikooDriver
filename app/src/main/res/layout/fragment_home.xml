@@ -186,7 +186,7 @@
                     android:orientation="horizontal">
 
                     <RelativeLayout
-                        android:id="@+id/travelRegistrationBtn"
+                        android:id="@+id/searchTravelBtn"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -326,7 +326,7 @@
                         android:background="@color/blue" />
 
                     <RelativeLayout
-                        android:id="@+id/declinedPassengersBtn"
+                        android:id="@+id/unAcceptedPassengersBtn"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

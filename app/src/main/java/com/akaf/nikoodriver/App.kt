@@ -2,12 +2,8 @@ package com.akaf.nikoodriver
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
-import android.util.Log
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.akaf.nikoodriver.data.repositories.*
@@ -27,9 +23,8 @@ import com.akaf.nikoodriver.feature.auth.fillInfo.FillInfoViewModel
 import com.akaf.nikoodriver.feature.auth.login.LoginViewModel
 import com.akaf.nikoodriver.feature.auth.upload_docs.UploadDocsViewModel
 import com.akaf.nikoodriver.feature.auth.verification.VerificationViewModel
-import com.akaf.nikoodriver.feature.declined_passengers.UnAcceptedPassengersViewModel
+import com.akaf.nikoodriver.feature.unAccepted_passengers.UnAcceptedPassengersViewModel
 import com.akaf.nikoodriver.feature.home.HomeViewModel
-import com.akaf.nikoodriver.services.DriverForegroundService
 import com.akaf.nikoodriver.services.createApiServiceInstance
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.facebook.drawee.backends.pipeline.Fresco
