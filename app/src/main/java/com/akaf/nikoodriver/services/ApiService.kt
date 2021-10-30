@@ -2,7 +2,10 @@ package com.akaf.nikoodriver.services
 
 import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassengersResponse
+import com.akaf.nikoodriver.data.responses.completeTripResponse.CompleteTripResponse
+import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsResponse
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
+import com.akaf.nikoodriver.data.responses.dropOfResponse.DropOfResponse
 import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
 import com.akaf.nikoodriver.data.responses.fcmResponse.FcmResponse
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoResponse.UploadPhotoDriverResponse
@@ -11,7 +14,9 @@ import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.loginResponse.LoginResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
+import com.akaf.nikoodriver.data.responses.pickUpResponse.PickUpResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
+import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
 import com.akaf.nikoodriver.data.responses.submitDocsResponse.SubmitDocsResponse
 import com.akaf.nikoodriver.data.responses.uploadDocResponse.UploadDocResponse
 import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
@@ -77,6 +82,22 @@ interface ApiService {
 
     @GET("driver/trips/open?page=1")
     fun unAcceptedPassengers(): Single<Response<UnAcceptedPassengersResponse>>
+
+
+    @GET("driver/trips/current")
+    fun currentTrips():Single<Response<CurrentTripsResponse>>
+
+    @PUT("driver/trips/{trip_id}/start")
+    fun startTrip(@Path("trip_id") tripId:Int):Single<Response<StartTripResponse>>
+
+    @PUT("driver/trips/{trip_id}/{source_id}")
+    fun pickUp(@Path("trip_id") tripId: Int,@Path("source_id") sourceId:Int):Single<Response<PickUpResponse>>
+
+    @DELETE("driver/trips/{trip_id}/{source_id}")
+    fun dropOf(@Path("trip_id") tripId: Int,@Path("source_id") sourceId:Int):Single<Response<DropOfResponse>>
+
+    @PUT("driver/trips/{trip_id}/complete")
+    fun completeTrip(@Path("trip_id") tripId: Int):Single<Response<CompleteTripResponse>>
 
 }
 

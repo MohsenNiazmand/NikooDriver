@@ -7,12 +7,15 @@ import androidx.core.app.NotificationCompat
 import android.media.RingtoneManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.feature.home.HomeActivity
 import com.google.firebase.messaging.RemoteMessage
 
 
 class NikooFirebase : FirebaseMessagingService() {
+
 
     @SuppressLint("UnspecifiedImmutableFlag")
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -22,7 +25,7 @@ class NikooFirebase : FirebaseMessagingService() {
         val intent = Intent(this, HomeActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_ONE_SHOT)
+            PendingIntent.FLAG_MUTABLE)
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         val notificationManager=getSystemService(NOTIFICATION_SERVICE) as NotificationManager

@@ -86,6 +86,8 @@
     <string name="unPaid">پرداخت نشده: </string>
     <string name="person">نفر</string>
     <string name="iRode">سوار کردم</string>
+    <string name="endTrip">پایان سفر</string>
+    <string name="startTrip">شروع سفر</string>
     <string name="line">-</string>
     <string name="MohsenNiazmand">محسن نیازمند</string>
     <string name="uploadDocs">ارسال مدارک</string>
@@ -114,6 +116,7 @@
     <string name="doYouWantToExitRegistration">آیا میخواهید مراحل ثبت نام را ترک کنید؟</string>
     <string name="yes">بله</string>
     <string name="no">خیر</string>
+    <string name="listIsEmpty">لیست خالی میباشد!!</string>
 
 
 

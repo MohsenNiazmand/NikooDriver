@@ -7,6 +7,8 @@ import android.os.Build
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.akaf.nikoodriver.data.repositories.*
+import com.akaf.nikoodriver.data.repositories.sources.CurrentTrips.CurrentTripsLocalDataSource
+import com.akaf.nikoodriver.data.repositories.sources.CurrentTrips.CurrentTripsRemoteDataSource
 import com.akaf.nikoodriver.data.repositories.sources.UnAcceptedPassengers.UnAcceptedPassengersLocalDataSource
 import com.akaf.nikoodriver.data.repositories.sources.UnAcceptedPassengers.UnAcceptedPassengersRemoteDataSource
 import com.akaf.nikoodriver.data.repositories.sources.fillInfo.FillInfoLocalDataSource
@@ -23,6 +25,7 @@ import com.akaf.nikoodriver.feature.auth.fillInfo.FillInfoViewModel
 import com.akaf.nikoodriver.feature.auth.login.LoginViewModel
 import com.akaf.nikoodriver.feature.auth.upload_docs.UploadDocsViewModel
 import com.akaf.nikoodriver.feature.auth.verification.VerificationViewModel
+import com.akaf.nikoodriver.feature.current_trips.CurrentTripsViewModel
 import com.akaf.nikoodriver.feature.unAccepted_passengers.UnAcceptedPassengersViewModel
 import com.akaf.nikoodriver.feature.home.HomeViewModel
 import com.akaf.nikoodriver.services.createApiServiceInstance
@@ -109,6 +112,13 @@ class App : MultiDexApplication() {
                 )
             }
 
+            single<CurrentTripsRepository> {
+                CurrentTripsRepositoryImpl(
+                    CurrentTripsLocalDataSource(),
+                    CurrentTripsRemoteDataSource(get())
+                )
+            }
+
 
             viewModel { LoginViewModel(get()) }
             viewModel { VerificationViewModel(get()) }
@@ -116,6 +126,7 @@ class App : MultiDexApplication() {
             viewModel { FillInfoViewModel(get()) }
             viewModel { HomeViewModel(get(),get(),get()) }
             viewModel { UnAcceptedPassengersViewModel(get()) }
+            viewModel { CurrentTripsViewModel(get()) }
 
         }
 

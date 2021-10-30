@@ -138,8 +138,9 @@ class DriverForegroundService : Service() {
             // Add the intent, which inflates the back stack
             addNextIntentWithParentStack(resultIntent)
             // Get the PendingIntent containing the entire back stack
-            getPendingIntent(0, 0)
+            getPendingIntent(0, PendingIntent.FLAG_MUTABLE)
         }
+
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("سرویس نیکو همراه")

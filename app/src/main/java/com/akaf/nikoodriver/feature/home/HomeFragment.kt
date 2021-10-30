@@ -69,17 +69,17 @@ class HomeFragment : BaseFragment() {
             deActive()
 
 
-        homeViewModel.unAcceptedPassengersCount()
-        homeViewModel.unAcceptedPassengersCount.observe(viewLifecycleOwner) {
-            if (it != null) {
-                if (it > 0) {
-                    unAcceptedPassengersTv.visibility = View.VISIBLE
-                    unAcceptedPassengersTv.setText(it.toString())
-                } else if (it == 0) {
-                    unAcceptedPassengersTv.visibility = View.GONE
-                }
-            }
-        }
+//        homeViewModel.unAcceptedPassengersCount()
+//        homeViewModel.unAcceptedPassengersCount.observe(viewLifecycleOwner) {
+//            if (it != null) {
+//                if (it > 0) {
+//                    unAcceptedPassengersTv.visibility = View.VISIBLE
+//                    unAcceptedPassengersTv.setText(it.toString())
+//                } else if (it == 0) {
+//                    unAcceptedPassengersTv.visibility = View.GONE
+//                }
+//            }
+//        }
 
 
             homeViewModel.mqttState.observe(viewLifecycleOwner) {
@@ -175,7 +175,7 @@ class HomeFragment : BaseFragment() {
         homeViewModel.setOnlineStatus(true)
         val seatsCount=sharedPreferences.getInt("seatsCount",0)
         if (seatsCount>0){
-            homeViewModel.setEmptySeats(seatsCount,true)
+//            homeViewModel.setEmptySeats(seatsCount,true)
             setEmptySeatText()
 
         }
@@ -193,7 +193,7 @@ class HomeFragment : BaseFragment() {
         if (DriverForegroundService.instance!=null)
             DriverForegroundService.stopService(requireContext())
         emptySeatsTv.visibility=View.GONE
-        homeViewModel.setEmptySeats(0,false)
+//        homeViewModel.setEmptySeats(0,false)
         unAcceptedPassengersTv.visibility=View.GONE
 
     }
@@ -209,8 +209,8 @@ class HomeFragment : BaseFragment() {
             if (emptySeatsEt.text.isNotEmpty()){
                 homeViewModel.setEmptySeats(emptySeatsEt.text.toString().toInt(),true)
                 emptySeatsDialog.dismiss()
-                homeViewModel.emptySeatsCount(emptySeatsEt.text.toString().toInt())
-                setEmptySeatText()
+//                homeViewModel.emptySeatsCount(emptySeatsEt.text.toString().toInt())
+//                setEmptySeatText()
                 active()
             }
         }
@@ -221,8 +221,8 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setEmptySeatText(){
-        emptySeatsTv.visibility=View.VISIBLE
-        emptySeatsTv.text= sharedPreferences.getInt("seatsCount",0).toString()
+//        emptySeatsTv.visibility=View.VISIBLE
+//        emptySeatsTv.text= sharedPreferences.getInt("seatsCount",0).toString()
     }
 
 

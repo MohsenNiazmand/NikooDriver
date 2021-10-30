@@ -27,7 +27,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     val mqttState = MutableLiveData<Boolean>()
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
-    var unAcceptedPassengersCount = MutableLiveData<Int>()
+//    var unAcceptedPassengersCount = MutableLiveData<Int>()
     val newOfferLiveData = MutableLiveData<TripData>()
     val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
 
@@ -120,9 +120,9 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
             })
     }
 
-    fun emptySeatsCount(emptySeats: Int){
-        homeRepository.emptySeatsCount(emptySeats)
-    }
+//    fun emptySeatsCount(emptySeats: Int){
+//        homeRepository.emptySeatsCount(emptySeats)
+//    }
 
     fun decreaseSeatsCount(emptySeats: Int){
         sharedPreferences.edit().putInt("seatsCount",emptySeats-1).apply()
@@ -184,21 +184,21 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     }
 
 
-    fun unAcceptedPassengersCount() {
-        homeRepository.unAcceptedPassengersCount()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object :NikoSingleObserver<Response<UnAcceptedPassengersResponse>>(compositeDisposable){
-                override fun onSuccess(t: Response<UnAcceptedPassengersResponse>) {
-                    if (t.body()?.data.isNullOrEmpty()){
-                        unAcceptedPassengersCount.postValue(0)
-                    }else{
-                        unAcceptedPassengersCount.postValue(t.body()?.data?.size)
-                    }
-                }
-
-            })
-    }
+//    fun unAcceptedPassengersCount() {
+//        homeRepository.unAcceptedPassengersCount()
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(object :NikoSingleObserver<Response<UnAcceptedPassengersResponse>>(compositeDisposable){
+//                override fun onSuccess(t: Response<UnAcceptedPassengersResponse>) {
+//                    if (t.body()?.data.isNullOrEmpty()){
+//                        unAcceptedPassengersCount.postValue(0)
+//                    }else{
+//                        unAcceptedPassengersCount.postValue(t.body()?.data?.size)
+//                    }
+//                }
+//
+//            })
+//    }
 
 
     fun clearSharedPreference(){

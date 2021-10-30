@@ -123,16 +123,6 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
         }
 
 
-//        homeViewModel.allOpenTripsLiveData.observe(this){
-//            tripsAdapter.cartItemViewCallBacks=this
-//            tripView.visibility=View.VISIBLE
-//            val triips=it.data
-//            tripsAdapter.trips= triips as ArrayList<TripData>
-//            val index=tripsAdapter.trips.size-1
-//            rvTrips.smoothScrollToPosition(index)
-//        }
-
-
 
     }
 
