@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 
 import androidx.recyclerview.widget.SnapHelper
 import com.akaf.nikoodriver.services.DriverForegroundService
+import timber.log.Timber
 
 
 class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
@@ -39,6 +40,16 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
     val token=sharedPreferences.getString("token", null)
     val refreshToken=sharedPreferences.getString("refresh_token", null)
 
+    override fun onStart() {
+        super.onStart()
+        if (token != null) {
+            if (refreshToken != null) {
+                homeViewModel.sendRefreshToken(token,refreshToken)
+            }
+        }
+
+    }
+
 
     @SuppressLint("CutPasteId", "BinaryOperationInTimber", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +57,7 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
         setContentView(R.layout.activity_home)
         wakeLockSetup()
 
+        Timber.i("TOKEN11 Main: "+token.toString())
 
 
         if (!CheckInternet()){
@@ -84,8 +96,7 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
         }
 
         //checks token expire
-        else if (token!=null&& refreshToken!=null){
-            homeViewModel.sendRefreshToken(token,refreshToken)
+        else if (token!=null&& refreshToken!=null && CheckInternet()){
             homeViewModel.refreshTokenLiveData.observe(this){
                 if (it.code()==403){
                     homeViewModel.clearSharedPreference()

@@ -1,6 +1,6 @@
 package com.akaf.nikoodriver.services
 
-import com.akaf.nikoodriver.data.TokenContainer
+import android.content.SharedPreferences
 import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassengersResponse
 import com.akaf.nikoodriver.data.responses.completeTripResponse.CompleteTripResponse
 import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsResponse
@@ -15,6 +15,7 @@ import com.akaf.nikoodriver.data.responses.loginResponse.LoginResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import com.akaf.nikoodriver.data.responses.pickUpResponse.PickUpResponse
+import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
 import com.akaf.nikoodriver.data.responses.submitDocsResponse.SubmitDocsResponse
@@ -30,6 +31,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 interface ApiService {
@@ -99,10 +101,15 @@ interface ApiService {
     @PUT("driver/trips/{trip_id}/complete")
     fun completeTrip(@Path("trip_id") tripId: Int):Single<Response<CompleteTripResponse>>
 
+    @GET("driver/profile")
+    fun getProfile():Single<Response<ProfileResponse>>
+
 }
 
 
-fun createApiServiceInstance():ApiService{
+fun createApiServiceInstance(sharedPreferences: SharedPreferences):ApiService{
+
+
 
     val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
@@ -111,9 +118,10 @@ fun createApiServiceInstance():ApiService{
         .addInterceptor {
             val oldRequest = it.request()
             val newRequestBuilder = oldRequest.newBuilder()
-            if (TokenContainer.token != null)
-                newRequestBuilder.addHeader("Authorization", "Bearer ${TokenContainer.token}")
-
+            val token=sharedPreferences.getString("token", null)
+            if (token != null)
+                newRequestBuilder.addHeader("Authorization", "Bearer ${token}")
+                Timber.i("TOKEN11 api: "+token.toString())
             newRequestBuilder.addHeader("Accept", "application/json")
             newRequestBuilder.method(oldRequest.method(),oldRequest.body())
             return@addInterceptor it.proceed(newRequestBuilder.build())

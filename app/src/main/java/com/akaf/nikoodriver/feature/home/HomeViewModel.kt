@@ -15,6 +15,8 @@ import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassen
 import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
+import com.akaf.nikoodriver.data.responses.profileResponse.ProfileData
+import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.services.createApiServiceInstance
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,12 +29,13 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     val mqttState = MutableLiveData<Boolean>()
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
-//    var unAcceptedPassengersCount = MutableLiveData<Int>()
     val newOfferLiveData = MutableLiveData<TripData>()
     val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
+    val profileLiveData=MutableLiveData<ProfileData?>()
 
 
-
+    val username:String
+    get() =sharedPreferences.getString("username","")?:""
 
     init {
         retrieveOnlineStatus()
@@ -40,6 +43,10 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
         subscribeToNewOffers()
         subscribeToDisconnectSubject()
     }
+
+
+
+
 
 
 
@@ -120,9 +127,21 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
             })
     }
 
-//    fun emptySeatsCount(emptySeats: Int){
-//        homeRepository.emptySeatsCount(emptySeats)
-//    }
+
+    fun getProfile(){
+        progressBarLiveData.value=true
+        homeRepository.getProfile()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :NikoSingleObserver<Response<ProfileResponse>>(compositeDisposable){
+                @SuppressLint("BinaryOperationInTimber")
+                override fun onSuccess(t: Response<ProfileResponse>) {
+                    profileLiveData.postValue(t.body()?.data)
+                    progressBarLiveData.postValue(false)
+                }
+
+            })
+    }
 
     fun decreaseSeatsCount(emptySeats: Int){
         sharedPreferences.edit().putInt("seatsCount",emptySeats-1).apply()
@@ -183,22 +202,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
             })
     }
 
-
-//    fun unAcceptedPassengersCount() {
-//        homeRepository.unAcceptedPassengersCount()
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(object :NikoSingleObserver<Response<UnAcceptedPassengersResponse>>(compositeDisposable){
-//                override fun onSuccess(t: Response<UnAcceptedPassengersResponse>) {
-//                    if (t.body()?.data.isNullOrEmpty()){
-//                        unAcceptedPassengersCount.postValue(0)
-//                    }else{
-//                        unAcceptedPassengersCount.postValue(t.body()?.data?.size)
-//                    }
-//                }
-//
-//            })
-//    }
 
 
     fun clearSharedPreference(){

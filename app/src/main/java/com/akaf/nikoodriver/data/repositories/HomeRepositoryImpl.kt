@@ -1,6 +1,6 @@
 package com.akaf.nikoodriver.data.repositories
 
-import com.akaf.nikoodriver.data.TokenContainer
+import android.annotation.SuppressLint
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
@@ -9,6 +9,7 @@ import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassen
 import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
+import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import io.reactivex.Single
 import retrofit2.Response
 
@@ -25,18 +26,26 @@ class HomeRepositoryImpl(
        return homeRemoteDataSource.sendLocation(sendLocation)
     }
 
+    @SuppressLint("CheckResult")
     override fun refreshToken(
         token: String,
         refreshToken: String
     ): Single<Response<RefreshTokenResponse>> {
-        return homeRemoteDataSource.refreshToken(token,refreshToken).doOnSuccess {
+        return homeRemoteDataSource.refreshToken(token,refreshToken)
+            .doOnSuccess {
             it.body()?.data?.token?.let { it1 -> it.body()?.data?.refreshToken?.let { it2 ->
-                TokenContainer.update(it1, it2)
                 homeLocalDataSource.saveToken(it1, it2)
 
             } }
-        }.doOnError {
-            homeLocalDataSource.clearSharedPreference()
+        }
+            .doOnError {
+                homeRemoteDataSource.refreshToken(token,refreshToken)
+                    .doOnSuccess {
+                        it.body()?.data?.token?.let { it1 -> it.body()?.data?.refreshToken?.let { it2 ->
+                            homeLocalDataSource.saveToken(it1, it2)
+
+                        } }
+                    }
 
         }
     }
@@ -57,10 +66,6 @@ class HomeRepositoryImpl(
         return homeRemoteDataSource.setEmptySeats(emptySeats,isReady)
     }
 
-    override fun emptySeatsCount(emptySeats: Int) {
-        return homeLocalDataSource.emptySeatsCount(emptySeats)
-    }
-
 
     override fun acceptTrip(tripId: Int,cost:Int): Single<Response<AcceptOfferResponse>> {
         return homeRemoteDataSource.acceptTrip(tripId,cost)
@@ -72,6 +77,13 @@ class HomeRepositoryImpl(
 
     override fun unAcceptedPassengersCount(): Single<Response<UnAcceptedPassengersResponse>> {
         return homeRemoteDataSource.unAcceptedPassengersCount()
+    }
+
+    override fun getProfile(): Single<Response<ProfileResponse>> {
+        return homeRemoteDataSource.getProfile().doOnSuccess {
+            homeLocalDataSource.saveUsername(it.body()?.data?.fname+" "+it.body()?.data?.lname)
+
+    }
     }
 
 }

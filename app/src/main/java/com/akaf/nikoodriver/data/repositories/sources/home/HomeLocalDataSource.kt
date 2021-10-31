@@ -7,6 +7,7 @@ import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
+import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import io.reactivex.Single
 import retrofit2.Response
@@ -49,11 +50,6 @@ class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSo
         TODO("Not yet implemented")
     }
 
-    override fun emptySeatsCount(emptySeats: Int) {
-        sharedPreferences.edit().apply{
-            putInt("seatsCount",emptySeats)
-        }.apply()
-    }
 
     override fun acceptTrip(tripId: Int,cost:Int): Single<Response<AcceptOfferResponse>> {
         TODO("Not yet implemented")
@@ -65,6 +61,16 @@ class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSo
 
     override fun unAcceptedPassengersCount(): Single<Response<UnAcceptedPassengersResponse>> {
         TODO("Not yet implemented")
+    }
+
+    override fun getProfile(): Single<Response<ProfileResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun saveUsername(userName: String) {
+        sharedPreferences.edit().apply{
+            putString("username",userName)
+        }.apply()
     }
 
 }

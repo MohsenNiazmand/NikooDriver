@@ -50,6 +50,9 @@ class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.
 
         }
 
+        unAcceptedPassengersViewModel.progressBarLiveData.observe(viewLifecycleOwner) {
+            setProgressIndicator(it)
+        }
 
     }
 

@@ -11,11 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
+import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.data.responses.location.SendLocation
+import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.feature.auth.login.LoginActivity
 import com.akaf.nikoodriver.feature.home.credit.CreditDialog
 import com.akaf.nikoodriver.services.DriverForegroundService
@@ -27,8 +30,12 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
+import retrofit2.Response
 import timber.log.Timber
 
 class HomeFragment : BaseFragment() {
@@ -39,12 +46,13 @@ class HomeFragment : BaseFragment() {
     var isFastLocation = false
     lateinit var fusedLocationClient: FusedLocationProviderClient
     var mqttState:Boolean=true
+    val compositeDisposable = CompositeDisposable()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
 
 
     }
@@ -58,28 +66,66 @@ class HomeFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    @SuppressLint("SetTextI18n", "BinaryOperationInTimber")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        userNameTv.text = homeViewModel.username
+
+
         val onlineStatus=sharedPreferences.getBoolean("isOnline",false)
+
         if (onlineStatus){
             active()
+
 
         }else
             deActive()
 
 
-//        homeViewModel.unAcceptedPassengersCount()
-//        homeViewModel.unAcceptedPassengersCount.observe(viewLifecycleOwner) {
-//            if (it != null) {
-//                if (it > 0) {
-//                    unAcceptedPassengersTv.visibility = View.VISIBLE
-//                    unAcceptedPassengersTv.setText(it.toString())
-//                } else if (it == 0) {
-//                    unAcceptedPassengersTv.visibility = View.GONE
-//                }
-//            }
-//        }
+        homeViewModel.getProfile()
+        homeViewModel.profileLiveData.observe(viewLifecycleOwner){
+
+            if (it!=null){
+
+                val fname=it.fname
+                val lname=it.lname
+                    userNameTv.text= "$fname $lname"
+                val capa=it.capacity
+                    if (capa >0){
+                        emptySeatsTv.visibility=View.VISIBLE
+                        emptySeatsTv.text=it.capacity.toString()
+                    }else if (capa == 0)
+                        emptySeatsTv.visibility=View.GONE
+                val openTrips=it.openTripsCount
+                 if (openTrips>0 ){
+                        unAcceptedPassengersTv.visibility=View.VISIBLE
+                        unAcceptedPassengersTv.text= openTrips.toString()
+                    } else if (openTrips==0)
+                        unAcceptedPassengersTv.visibility=View.GONE
+                val currents=it.currentTripsCount
+                    if (currents>0){
+                        currentTripsCountTv.visibility=View.VISIBLE
+                        currentTripsCountTv.text=currents.toString()
+                    }else if (currents==0){
+                        currentTripsCountTv.visibility=View.GONE
+
+                    }
+                val rate=it.rate
+                    rateTv.text=rate.toString()
+                val credit=it.credit
+                    creditTv.text=credit
+
+            }
+
+
+
+
+
+        }
+
+
 
 
             homeViewModel.mqttState.observe(viewLifecycleOwner) {
@@ -103,7 +149,10 @@ class HomeFragment : BaseFragment() {
         }
 
         activeBtn.setOnClickListener {
+            if(CheckInternet() && CheckGps())
             showEmptySeatsDialog()
+            else
+                Toast.makeText(requireContext(),"لطفا مکان یاب و اینترنت خود را فعال کنید",Toast.LENGTH_SHORT).show()
 
         }
 
@@ -119,26 +168,40 @@ class HomeFragment : BaseFragment() {
         }
 
         searchTravelBtn.setOnClickListener {
-            Navigation.findNavController(view)
-                .navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
+            if(CheckInternet() && CheckGps()){
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
+            }else
+                Toast.makeText(requireContext(),"لطفا مکان یاب و اینترنت خود را فعال کنید",Toast.LENGTH_SHORT).show()
+
 
         }
 
         unAcceptedPassengersBtn.setOnClickListener {
-            Navigation.findNavController(view)
-                .navigate(R.id.action_homeFragment_to_declinedPassengersFragment)
+            if(CheckInternet() && CheckGps()){
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_homeFragment_to_declinedPassengersFragment)
+            }else
+                Toast.makeText(requireContext(),"لطفا مکان یاب و اینترنت خود را فعال کنید",Toast.LENGTH_SHORT).show()
+
+
 
         }
 
         currentTravelBtn.setOnClickListener {
-            Navigation.findNavController(view)
-                .navigate(R.id.action_homeFragment_to_currentTravelFragment)
+            if(CheckInternet() && CheckGps()) {
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_homeFragment_to_currentTravelFragment)
+            }else
+                Toast.makeText(requireContext(),"لطفا مکان یاب و اینترنت خود را فعال کنید",Toast.LENGTH_SHORT).show()
 
         }
 
         homeViewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
         }
+
+
 
 
     }
@@ -172,13 +235,8 @@ class HomeFragment : BaseFragment() {
         activationTv.visibility= View.GONE
         activeBtn.visibility= View.GONE
         deActiveBtn.visibility=View.VISIBLE
+        emptySeatsTv.visibility=View.VISIBLE
         homeViewModel.setOnlineStatus(true)
-        val seatsCount=sharedPreferences.getInt("seatsCount",0)
-        if (seatsCount>0){
-//            homeViewModel.setEmptySeats(seatsCount,true)
-            setEmptySeatText()
-
-        }
         if (DriverForegroundService.instance==null)
             DriverForegroundService.startService(requireContext(),"Nikoo Driver")
     }
@@ -187,14 +245,15 @@ class HomeFragment : BaseFragment() {
         activationTv.visibility= View.VISIBLE
         activeBtn.visibility= View.VISIBLE
         deActiveBtn.visibility=View.GONE
+        currentTripsCountTv.visibility=View.GONE
+        unAcceptedPassengersTv.visibility=View.GONE
+        emptySeatsTv.visibility=View.GONE
         homeViewModel.setOnlineStatus(false)
         stopLocationUpdates()
-
         if (DriverForegroundService.instance!=null)
             DriverForegroundService.stopService(requireContext())
-        emptySeatsTv.visibility=View.GONE
-//        homeViewModel.setEmptySeats(0,false)
-        unAcceptedPassengersTv.visibility=View.GONE
+        homeViewModel.setEmptySeats(0,false)
+
 
     }
 
@@ -209,8 +268,7 @@ class HomeFragment : BaseFragment() {
             if (emptySeatsEt.text.isNotEmpty()){
                 homeViewModel.setEmptySeats(emptySeatsEt.text.toString().toInt(),true)
                 emptySeatsDialog.dismiss()
-//                homeViewModel.emptySeatsCount(emptySeatsEt.text.toString().toInt())
-//                setEmptySeatText()
+                homeViewModel.getProfile()
                 active()
             }
         }
@@ -219,12 +277,6 @@ class HomeFragment : BaseFragment() {
         }
         emptySeatsDialog.show()
     }
-
-    private fun setEmptySeatText(){
-//        emptySeatsTv.visibility=View.VISIBLE
-//        emptySeatsTv.text= sharedPreferences.getInt("seatsCount",0).toString()
-    }
-
 
 
     fun checkPermStartLocationUpdate() {
@@ -285,7 +337,7 @@ class HomeFragment : BaseFragment() {
                     val sendLocation = SendLocation()
                     sendLocation.location.add(fusedLocation!!.latitude)
                     sendLocation.location.add(fusedLocation!!.longitude)
-                    Timber.i("LOCATION11"+fusedLocation!!.latitude+" "+fusedLocation!!.longitude)
+                    Timber.i("LOCATION DRIVER:"+" "+fusedLocation!!.latitude+" "+fusedLocation!!.longitude)
                     homeViewModel.sendDriverLocation(fusedLocation!!)
                     homeViewModel.sendDriverLocationToRest(sendLocation)
 //                    checkFastLocUpdate(homeViewModel.currentTripLiveData.value)

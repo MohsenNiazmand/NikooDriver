@@ -10,7 +10,6 @@ import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseActivity
 import com.akaf.nikoodriver.common.NikoSingleObserver
-import com.akaf.nikoodriver.data.TokenContainer.token
 import com.akaf.nikoodriver.data.responses.submitDocsResponse.SubmitDocsResponse
 import com.akaf.nikoodriver.data.responses.uploadDocResponse.UploadDocResponse
 import com.akaf.nikoodriver.feature.auth.chooseDialog.ChoosePictureDialog

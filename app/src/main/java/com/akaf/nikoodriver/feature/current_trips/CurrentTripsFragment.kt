@@ -37,11 +37,15 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
         currentTripsViewModel.currentTripsLiveData.observe(viewLifecycleOwner){
 
             currentTripsAdapter.currentTripCallback=this
+            if (it.data!=null)
             currentTripsAdapter.currentTrips= it.data as ArrayList<CurrentTripsData>
 
         }
 
 
+        currentTripsViewModel.progressBarLiveData.observe(viewLifecycleOwner) {
+            setProgressIndicator(it)
+        }
 
     }
 

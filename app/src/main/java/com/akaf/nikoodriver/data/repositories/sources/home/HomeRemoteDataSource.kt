@@ -1,18 +1,20 @@
 package com.akaf.nikoodriver.data.repositories.sources.home
 
+import android.content.SharedPreferences
 import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassengersResponse
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
+import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.services.ApiService
 import com.google.gson.JsonObject
 import io.reactivex.Single
 import retrofit2.Response
 
-class HomeRemoteDataSource(val apiService: ApiService):HomeDataSource {
+class HomeRemoteDataSource(val apiService: ApiService,val sharedPreferences: SharedPreferences):HomeDataSource {
     override fun onlineStatus(isOnline: Boolean) {
         TODO("Not yet implemented")
     }
@@ -45,10 +47,6 @@ class HomeRemoteDataSource(val apiService: ApiService):HomeDataSource {
         return apiService.setEmptySeats(emptySeats,isReady)
     }
 
-    override fun emptySeatsCount(emptySeats: Int) {
-        TODO("Not yet implemented")
-    }
-
     override fun acceptTrip(tripId: Int,cost:Int): Single<Response<AcceptOfferResponse>> {
         return apiService.acceptTrip(tripId,cost)
     }
@@ -61,4 +59,14 @@ class HomeRemoteDataSource(val apiService: ApiService):HomeDataSource {
         return apiService.unAcceptedPassengers()
     }
 
+    override fun getProfile(): Single<Response<ProfileResponse>> {
+        return apiService.getProfile()
+        }
+
+    override fun saveUsername(userName: String) {
+        TODO("Not yet implemented")
+    }
+
+
 }
+

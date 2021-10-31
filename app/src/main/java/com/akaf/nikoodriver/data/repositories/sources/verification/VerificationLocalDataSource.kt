@@ -1,7 +1,6 @@
 package com.akaf.nikoodriver.data.repositories.sources.verification
 
 import android.content.SharedPreferences
-import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.responses.fcmResponse.FcmResponse
 import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
 import io.reactivex.Single
@@ -17,10 +16,7 @@ class VerificationLocalDataSource(val sharedPreferences: SharedPreferences) : Ve
     }
 
     override fun loadToken() {
-        TokenContainer.update(
-            sharedPreferences.getString("token", null),
-            sharedPreferences.getString("refresh_token", null)
-        )
+        TODO("Not yet implemented")
     }
 
     override fun saveToken(token: String, refreshToken: String) {

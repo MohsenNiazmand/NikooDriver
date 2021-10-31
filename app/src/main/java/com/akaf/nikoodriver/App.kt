@@ -59,7 +59,7 @@ class App : MultiDexApplication() {
 
         //these are project dependencies
         val myModules= module {
-            single { createApiServiceInstance() }
+            single { createApiServiceInstance(get()) }
             single { HiveMqttManager(androidContext()) }
             single<SharedPreferences> {
                 this@App.getSharedPreferences(
@@ -101,7 +101,7 @@ class App : MultiDexApplication() {
             single<HomeRepository> {
                 HomeRepositoryImpl(
                     HomeLocalDataSource(get()),
-                    HomeRemoteDataSource(get())
+                    HomeRemoteDataSource(get(),get())
                 )
             }
 

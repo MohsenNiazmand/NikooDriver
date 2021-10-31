@@ -19,7 +19,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="@string/userName"
+            tools:text="@string/userName"
             android:textAppearance="@style/TextAppearance.MyTheme.Headline1" />
 
         <ImageView
@@ -102,7 +102,7 @@
                         android:id="@+id/creditBtn"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:padding="5dp">
@@ -126,7 +126,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="5dp"
-                                android:text="@string/number1000"
+                                tools:text="@string/number1000"
+
                                 android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />
 
                             <TextView
@@ -166,7 +167,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/rate"
                             android:layout_centerHorizontal="true"
-                            android:text="@string/fiveHundred"
+                            tools:text="@string/fiveHundred"
                             android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />
 
 
@@ -255,7 +256,7 @@
                                 android:layout_gravity="bottom|start"
                                 android:background="@drawable/background_empty_seats_count"
                                 android:gravity="center"
-                                android:text="1"
+                                tools:text="1"
                                 android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
                                 android:visibility="gone" />
 
@@ -300,18 +301,36 @@
                         android:focusable="true"
                         android:padding="10dp">
 
+                        <FrameLayout
+                            android:id="@+id/ffl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true">
 
-                        <ImageView
-                            android:id="@+id/imgCurrentTravel"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_centerHorizontal="true"
-                            android:src="@drawable/traveling" />
+                            <ImageView
+                                android:id="@+id/imgCurrentTravel"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/traveling" />
+
+                            <TextView
+                                android:id="@+id/currentTripsCountTv"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="bottom|start"
+                                android:background="@drawable/background_declined_passengers_count"
+                                android:gravity="center"
+                                android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                                android:visibility="gone" />
+
+                        </FrameLayout>
+
+
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/imgCurrentTravel"
+                            android:layout_below="@id/ffl"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
                             android:text="@string/currentTravel"
