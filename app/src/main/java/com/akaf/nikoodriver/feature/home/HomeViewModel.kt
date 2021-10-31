@@ -6,6 +6,7 @@ import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
+import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
@@ -186,8 +187,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
         }
     }
 
-
-
     fun sendDriverLocationToRest(sendLocation: SendLocation) {
         progressBarLiveData.value=true
         homeRepository.sendLocation(sendLocation)
@@ -216,14 +215,19 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object :NikoSingleObserver<Response<RefreshTokenResponse>>(compositeDisposable){
                     override fun onSuccess(t: Response<RefreshTokenResponse>) {
-                            refreshTokenLiveData.postValue(t)
-                           progressBarLiveData.postValue(false)
+                        refreshTokenLiveData.value=t
+                        Timber.i("TOKENI az server miad: "+t.body()?.data?.token)
+                         progressBarLiveData.postValue(false)
                         }
 
 
                 })
 
 
+    }
+
+    fun saveToken(token: String,refreshToken: String){
+        homeRepository.saveToken(token,refreshToken)
     }
 
 

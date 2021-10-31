@@ -1,21 +1,16 @@
 package com.akaf.nikoodriver.feature.home
 
-import android.R.string.cancel
 import android.annotation.SuppressLint
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import kotlinx.android.synthetic.main.item_trip.view.*
-import timber.log.Timber
-import android.R.string.no
-import android.content.Context
+
 
 
 class TripsAdapter() : RecyclerView.Adapter<TripsAdapter.TripsViewHolder>() {
@@ -74,6 +69,7 @@ class TripsAdapter() : RecyclerView.Adapter<TripsAdapter.TripsViewHolder>() {
                 cancelTimer()
                 cartItemViewCallBacks?.onAcceptBtnClicked(trip)
             }
+
         }
 
     }

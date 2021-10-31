@@ -38,9 +38,9 @@ class HomeRemoteDataSource(val apiService: ApiService,val sharedPreferences: Sha
         TODO("Not yet implemented")
     }
 
-    override fun saveTokenStatus(isExpired: Boolean) {
-        TODO("Not yet implemented")
-    }
+//    override fun saveTokenStatus(isExpired: Boolean) {
+//        TODO("Not yet implemented")
+//    }
 
 
     override fun setEmptySeats(emptySeats: Int,isReady:Boolean): Single<Response<EmptySeatsResponse>> {

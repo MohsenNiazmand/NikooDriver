@@ -22,6 +22,7 @@ import io.reactivex.subjects.ReplaySubject
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import timber.log.Timber
 
 
 import java.util.*
@@ -62,6 +63,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
         try {
             this.token =sharedPreferences.getString("token",null).toString()
             this.driverId=sharedPreferences.getString("driverId",null)!!.toInt()
+            Timber.i("TOKENI mqtt: "+token.toString())
             if (token.isNotEmpty()) {
                 mqttClient = Mqtt3Client.builder()
                     .identifier(UUID.randomUUID().toString())

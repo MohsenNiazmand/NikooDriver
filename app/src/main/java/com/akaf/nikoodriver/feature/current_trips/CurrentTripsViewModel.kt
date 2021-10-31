@@ -1,6 +1,7 @@
 package com.akaf.nikoodriver.feature.current_trips
 
 import androidx.lifecycle.MutableLiveData
+import com.akaf.nikoodriver.common.NikoCompletableObserver
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
 import com.akaf.nikoodriver.data.repositories.CurrentTripsRepository
@@ -90,6 +91,21 @@ class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) 
                 }
 
             })
+    }
+
+    fun cancelTrip(tripId: Int){
+        progressBarLiveData.value=true
+        currentTripsRepository.cancelTrip(tripId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : NikoCompletableObserver(compositeDisposable){
+                override fun onComplete() {
+                    progressBarLiveData.postValue(false)
+
+                }
+
+            })
+
     }
 
 

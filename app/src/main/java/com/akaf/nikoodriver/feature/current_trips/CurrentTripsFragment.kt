@@ -71,4 +71,8 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
         currentTripsViewModel.dropOf(currentTrip.id,currentTrip.Source.id)
         currentTripsViewModel.completeTrip(currentTrip.id)
     }
+
+    override fun onCancelBtnClicked(currentTrip: CurrentTripsData) {
+        currentTripsViewModel.cancelTrip(currentTrip.id)
+    }
 }

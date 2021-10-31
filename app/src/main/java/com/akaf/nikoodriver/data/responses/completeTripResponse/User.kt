@@ -18,7 +18,7 @@ data class User(
     val rateCount: Int,
     val referral_id: Any,
     val status: String,
-    val totalKilometers: Int,
+    val totalKilometers: String,
     val tripsCount: Int,
     val updatedAt: String
 )

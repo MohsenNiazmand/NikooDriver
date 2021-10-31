@@ -26,6 +26,7 @@ import org.koin.android.ext.android.inject
 import androidx.recyclerview.widget.PagerSnapHelper
 
 import androidx.recyclerview.widget.SnapHelper
+import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.services.DriverForegroundService
 import timber.log.Timber
 
@@ -42,11 +43,12 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
 
     override fun onStart() {
         super.onStart()
-        if (token != null) {
-            if (refreshToken != null) {
-                homeViewModel.sendRefreshToken(token,refreshToken)
-            }
+
+        if (token!=null && refreshToken!=null){
+            homeViewModel.sendRefreshToken(token,refreshToken)
+
         }
+
 
     }
 
@@ -96,8 +98,19 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
         }
 
         //checks token expire
-        else if (token!=null&& refreshToken!=null && CheckInternet()){
+        else if (token!=null&& refreshToken!=null){
             homeViewModel.refreshTokenLiveData.observe(this){
+                if (it.code()==200){
+
+                        TokenContainer.update(it.body()?.data?.token, it.body()?.data?.refreshToken)
+                    it.body()?.data?.token?.let { it1 -> it.body()?.data?.refreshToken?.let { it2 ->
+                        homeViewModel.saveToken(it1,
+                            it2
+                        )
+                    } }
+
+
+                }
                 if (it.code()==403){
                     homeViewModel.clearSharedPreference()
                     applicationContext.cacheDir.deleteRecursively()

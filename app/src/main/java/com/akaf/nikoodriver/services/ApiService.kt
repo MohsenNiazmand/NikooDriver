@@ -1,6 +1,7 @@
 package com.akaf.nikoodriver.services
 
 import android.content.SharedPreferences
+import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassengersResponse
 import com.akaf.nikoodriver.data.responses.completeTripResponse.CompleteTripResponse
 import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsResponse
@@ -22,6 +23,7 @@ import com.akaf.nikoodriver.data.responses.submitDocsResponse.SubmitDocsResponse
 import com.akaf.nikoodriver.data.responses.uploadDocResponse.UploadDocResponse
 import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
 import com.google.gson.JsonObject
+import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -104,6 +106,9 @@ interface ApiService {
     @GET("driver/profile")
     fun getProfile():Single<Response<ProfileResponse>>
 
+    @DELETE("driver//trips/{trip_id}")
+    fun cancelTrip(@Path("trip_id") tripId: Int):Completable
+
 }
 
 
@@ -119,9 +124,9 @@ fun createApiServiceInstance(sharedPreferences: SharedPreferences):ApiService{
             val oldRequest = it.request()
             val newRequestBuilder = oldRequest.newBuilder()
             val token=sharedPreferences.getString("token", null)
-            if (token != null)
-                newRequestBuilder.addHeader("Authorization", "Bearer ${token}")
-                Timber.i("TOKEN11 api: "+token.toString())
+            if (TokenContainer.token != null)
+                newRequestBuilder.addHeader("Authorization", "Bearer ${TokenContainer.token}")
+                Timber.i("TOKENI apiService: "+TokenContainer.token.toString())
             newRequestBuilder.addHeader("Accept", "application/json")
             newRequestBuilder.method(oldRequest.method(),oldRequest.body())
             return@addInterceptor it.proceed(newRequestBuilder.build())

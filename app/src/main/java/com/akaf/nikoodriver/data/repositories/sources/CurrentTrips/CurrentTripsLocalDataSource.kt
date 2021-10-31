@@ -5,6 +5,7 @@ import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsResp
 import com.akaf.nikoodriver.data.responses.dropOfResponse.DropOfResponse
 import com.akaf.nikoodriver.data.responses.pickUpResponse.PickUpResponse
 import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Response
 
@@ -26,6 +27,10 @@ class CurrentTripsLocalDataSource : CurrentTripsDataSource {
     }
 
     override fun completeTrip(tripId: Int): Single<Response<CompleteTripResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun cancelTrip(tripId: Int): Completable {
         TODO("Not yet implemented")
     }
 }

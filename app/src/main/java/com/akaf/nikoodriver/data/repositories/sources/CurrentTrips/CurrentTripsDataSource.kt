@@ -5,6 +5,7 @@ import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsResp
 import com.akaf.nikoodriver.data.responses.dropOfResponse.DropOfResponse
 import com.akaf.nikoodriver.data.responses.pickUpResponse.PickUpResponse
 import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Response
 
@@ -14,4 +15,6 @@ interface CurrentTripsDataSource {
     fun pickUp(tripId: Int,sourceId:Int):Single<Response<PickUpResponse>>
     fun dropOf(tripId: Int,sourceId:Int):Single<Response<DropOfResponse>>
     fun completeTrip(tripId: Int):Single<Response<CompleteTripResponse>>
+    fun cancelTrip(tripId: Int): Completable
+
 }

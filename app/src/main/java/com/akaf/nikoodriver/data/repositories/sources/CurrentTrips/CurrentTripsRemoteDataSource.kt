@@ -6,6 +6,7 @@ import com.akaf.nikoodriver.data.responses.dropOfResponse.DropOfResponse
 import com.akaf.nikoodriver.data.responses.pickUpResponse.PickUpResponse
 import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
 import com.akaf.nikoodriver.services.ApiService
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Response
 
@@ -28,5 +29,9 @@ class CurrentTripsRemoteDataSource(val apiService: ApiService) : CurrentTripsDat
 
     override fun completeTrip(tripId: Int): Single<Response<CompleteTripResponse>> {
         return apiService.completeTrip(tripId)
+    }
+
+    override fun cancelTrip(tripId: Int): Completable {
+        return apiService.cancelTrip(tripId)
     }
 }

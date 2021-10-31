@@ -29,6 +29,7 @@ class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTrip
         val iRodeBtn=itemView.findViewById<MaterialButton>(R.id.iRodeBtn)
         val endTripBtn=itemView.findViewById<MaterialButton>(R.id.endTripBtn)
         val startTripBtn=itemView.findViewById<MaterialButton>(R.id.startTripBtn)
+        val cancelTripBtn=itemView.findViewById<MaterialButton>(R.id.cancelTripBtn)
 
         fun bind(currentTrip:CurrentTripsData){
             tripCodeTv.text=currentTrip.id.toString()
@@ -53,6 +54,10 @@ class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTrip
                 currentTripCallback?.onEndTripClicked(currentTrip)
                 removeTripFromList(currentTrip)
             }
+            itemView.cancelTripBtn.setOnClickListener {
+                removeTripFromList(currentTrip)
+                currentTripCallback?.onCancelBtnClicked(currentTrip)
+            }
         }
 
     }
@@ -76,6 +81,7 @@ class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTrip
         fun onStartTripClicked(currentTrip: CurrentTripsData)
         fun onIRodeClicked(currentTrip: CurrentTripsData)
         fun onEndTripClicked(currentTrip: CurrentTripsData)
+        fun onCancelBtnClicked(currentTrip: CurrentTripsData)
 
     }
 
