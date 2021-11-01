@@ -41,11 +41,6 @@ class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSo
         sharedPreferences.edit().clear().apply()
     }
 
-//    override fun saveTokenStatus(isExpired: Boolean) {
-//        sharedPreferences.edit().apply {
-//            putBoolean("expired", isExpired)
-//        }.apply()    }
-
     override fun setEmptySeats(emptySeats: Int,isReady:Boolean): Single<Response<EmptySeatsResponse>> {
         TODO("Not yet implemented")
     }

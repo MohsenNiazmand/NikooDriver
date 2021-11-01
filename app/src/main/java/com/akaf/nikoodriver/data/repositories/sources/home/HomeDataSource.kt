@@ -17,7 +17,6 @@ interface HomeDataSource {
     fun saveToken(token: String, refreshToken: String)
     fun refreshToken(token: String, refreshToken: String):Single<Response<RefreshTokenResponse>>
     fun clearSharedPreference()
-//    fun saveTokenStatus(isExpired:Boolean)
     fun setEmptySeats(emptySeats:Int,isReady:Boolean):Single<Response<EmptySeatsResponse>>
     fun acceptTrip(tripId:Int,cost:Int):Single<Response<AcceptOfferResponse>>
     fun rejectTrip(tripId:Int):Single<Response<RejectOfferResponse>>

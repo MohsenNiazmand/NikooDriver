@@ -46,12 +46,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     }
 
 
-
-
-
-
-
-
     private fun subscribeMqttState() {
         compositeDisposable.add(
             HiveMqttManager.mqttConnectionState.observeOn(AndroidSchedulers.mainThread())
@@ -126,26 +120,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
                 }
 
             })
-    }
-
-
-    fun getProfile(){
-        progressBarLiveData.value=true
-        homeRepository.getProfile()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object :NikoSingleObserver<Response<ProfileResponse>>(compositeDisposable){
-                @SuppressLint("BinaryOperationInTimber")
-                override fun onSuccess(t: Response<ProfileResponse>) {
-                    profileLiveData.postValue(t.body()?.data)
-                    progressBarLiveData.postValue(false)
-                }
-
-            })
-    }
-
-    fun decreaseSeatsCount(emptySeats: Int){
-        sharedPreferences.edit().putInt("seatsCount",emptySeats-1).apply()
     }
 
     fun acceptTrip(tripId:Int,cost:Int){
@@ -226,9 +200,20 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
 
     }
 
-    fun saveToken(token: String,refreshToken: String){
-        homeRepository.saveToken(token,refreshToken)
-    }
 
+    fun getProfile(){
+        progressBarLiveData.value=true
+        homeRepository.getProfile()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :NikoSingleObserver<Response<ProfileResponse>>(compositeDisposable){
+                @SuppressLint("BinaryOperationInTimber")
+                override fun onSuccess(t: Response<ProfileResponse>) {
+                    profileLiveData.postValue(t.body()?.data)
+                    progressBarLiveData.postValue(false)
+                }
+
+            })
+    }
 
 }

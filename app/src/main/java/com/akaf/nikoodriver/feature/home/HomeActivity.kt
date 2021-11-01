@@ -11,6 +11,8 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.view.View
 import android.widget.Toast
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.akaf.nikoodriver.R
@@ -29,6 +31,7 @@ import androidx.recyclerview.widget.SnapHelper
 import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.services.DriverForegroundService
 import timber.log.Timber
+import kotlin.concurrent.thread
 
 
 class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
@@ -41,16 +44,6 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
     val token=sharedPreferences.getString("token", null)
     val refreshToken=sharedPreferences.getString("refresh_token", null)
 
-    override fun onStart() {
-        super.onStart()
-
-        if (token!=null && refreshToken!=null){
-            homeViewModel.sendRefreshToken(token,refreshToken)
-
-        }
-
-
-    }
 
 
     @SuppressLint("CutPasteId", "BinaryOperationInTimber", "SetTextI18n")
@@ -100,17 +93,6 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
         //checks token expire
         else if (token!=null&& refreshToken!=null){
             homeViewModel.refreshTokenLiveData.observe(this){
-                if (it.code()==200){
-
-                        TokenContainer.update(it.body()?.data?.token, it.body()?.data?.refreshToken)
-                    it.body()?.data?.token?.let { it1 -> it.body()?.data?.refreshToken?.let { it2 ->
-                        homeViewModel.saveToken(it1,
-                            it2
-                        )
-                    } }
-
-
-                }
                 if (it.code()==403){
                     homeViewModel.clearSharedPreference()
                     applicationContext.cacheDir.deleteRecursively()
@@ -173,27 +155,32 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
     }
 
     override fun onRejectBtnClicked(tripData: TripData) {
-        handleTrips(tripData)
         homeViewModel.rejectTrip(tripData.id)
+        handleTrips(tripData)
+
     }
 
     override fun onAcceptBtnClicked(tripData: TripData) {
-        handleTrips(tripData)
         homeViewModel.acceptTrip(tripData.id,-1)
-        val count=sharedPreferences.getInt("seatsCount",0)
-        homeViewModel.decreaseSeatsCount(count)
+        handleTrips(tripData)
+
     }
 
     override fun timerFinished(tripData: TripData) {
         handleTrips(tripData)
+
     }
 
     @SuppressLint("CommitPrefEdits")
     private fun handleTrips(tripData: TripData){
 
+
         if (tripsList.size==0){
             tripView.visibility=View.GONE
             tripsList.remove(tripData)
+            val navController = findNavController(R.id.fragmentContainerView)
+            navController.navigate(R.id.homeFragment)
+
 
         }else if (tripsList.size>0){
             tripsAdapter.removeTripFromList(tripData)
@@ -201,6 +188,9 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
             tripsList.remove(tripData)
 
         }
+
+
+
     }
 
 

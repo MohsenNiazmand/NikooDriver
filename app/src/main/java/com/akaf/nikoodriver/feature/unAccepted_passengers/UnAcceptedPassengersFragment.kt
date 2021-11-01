@@ -62,8 +62,8 @@ class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.
 
     override fun onAcceptBtnClicked(passenger: UnAcceptedPassengersData) {
         homeViewModel.acceptTrip(passenger.id,-1)
-        val count=sharedPreferences.getInt("seatsCount",0)
-        homeViewModel.decreaseSeatsCount(count)
+//        val count=sharedPreferences.getInt("seatsCount",0)
+//        homeViewModel.decreaseSeatsCount(count)
     }
 
     @SuppressLint("BinaryOperationInTimber")

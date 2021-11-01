@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.repositories.*
 import com.akaf.nikoodriver.data.repositories.sources.CurrentTrips.CurrentTripsLocalDataSource
 import com.akaf.nikoodriver.data.repositories.sources.CurrentTrips.CurrentTripsRemoteDataSource
@@ -28,9 +29,11 @@ import com.akaf.nikoodriver.feature.auth.verification.VerificationViewModel
 import com.akaf.nikoodriver.feature.current_trips.CurrentTripsViewModel
 import com.akaf.nikoodriver.feature.unAccepted_passengers.UnAcceptedPassengersViewModel
 import com.akaf.nikoodriver.feature.home.HomeViewModel
+import com.akaf.nikoodriver.services.ApiService
 import com.akaf.nikoodriver.services.createApiServiceInstance
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.facebook.drawee.backends.pipeline.Fresco
+import com.google.gson.JsonObject
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
@@ -39,8 +42,9 @@ import org.koin.dsl.module
 import timber.log.Timber
 
 class App : MultiDexApplication() {
-    val homeViewModel:HomeViewModel by inject()
     override fun onCreate() {
+//        val apiService:ApiService by inject()
+//        val sharedPreferences:SharedPreferences by inject()
         super.onCreate()
         MultiDex.install(baseContext)
         Timber.plant(Timber.DebugTree())
@@ -136,6 +140,14 @@ class App : MultiDexApplication() {
             modules(myModules)
         }
 
+        val homeViewModel:HomeViewModel by inject()
+        val sharedPreferences:SharedPreferences by inject()
+        val token=sharedPreferences.getString("token", null)
+        val refreshToken=sharedPreferences.getString("refresh_token", null)
+
+        if (token!=null && refreshToken!=null){
+            homeViewModel.sendRefreshToken(token,refreshToken)
+        }
 
     }
 

@@ -57,6 +57,7 @@ class HomeFragment : BaseFragment() {
 
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,6 +66,8 @@ class HomeFragment : BaseFragment() {
 
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
+
+
 
     @SuppressLint("SetTextI18n", "BinaryOperationInTimber")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,7 +85,6 @@ class HomeFragment : BaseFragment() {
 
         }else
             deActive()
-
 
         homeViewModel.getProfile()
         homeViewModel.profileLiveData.observe(viewLifecycleOwner){

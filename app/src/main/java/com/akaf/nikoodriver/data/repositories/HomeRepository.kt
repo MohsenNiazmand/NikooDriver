@@ -16,7 +16,6 @@ interface HomeRepository {
     fun sendLocation(sendLocation: SendLocation):Single<Response<DriverLocationResponse>>
     fun refreshToken(token: String, refreshToken: String):Single<Response<RefreshTokenResponse>>
     fun saveToken(token: String, refreshToken: String)
-//    fun saveTokenStatus(isExpired:Boolean)
     fun clearSharedPreference()
     fun setEmptySeats(emptySeats:Int,isReady:Boolean):Single<Response<EmptySeatsResponse>>
     fun acceptTrip(tripId:Int,cost:Int):Single<Response<AcceptOfferResponse>>
