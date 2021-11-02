@@ -3,9 +3,12 @@ package com.akaf.nikoodriver.feature.home
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.location.Location
+import android.os.Build
 import androidx.lifecycle.MutableLiveData
+import com.akaf.nikoodriver.BuildConfig.VERSION_NAME
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
+import com.akaf.nikoodriver.common.SingleLiveEvent
 import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.responses.location.SendLocation
@@ -18,6 +21,8 @@ import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferRespo
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import com.akaf.nikoodriver.data.responses.profileResponse.ProfileData
 import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
+import com.akaf.nikoodriver.data.responses.updateResponse.UpdateData
+import com.akaf.nikoodriver.data.responses.updateResponse.UpdateResponse
 import com.akaf.nikoodriver.services.createApiServiceInstance
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,16 +38,34 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     val newOfferLiveData = MutableLiveData<TripData>()
     val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
     val profileLiveData=MutableLiveData<ProfileData?>()
+    var versionAppLiveData = SingleLiveEvent<UpdateData>()
+
 
 
     val username:String
     get() =sharedPreferences.getString("username","")?:""
 
     init {
+//        update()
         retrieveOnlineStatus()
         subscribeMqttState()
         subscribeToNewOffers()
         subscribeToDisconnectSubject()
+    }
+
+
+    fun update(){
+        progressBarLiveData.value=true
+        homeRepository.update("driver","android",VERSION_NAME)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :NikoSingleObserver<Response<UpdateResponse>>(compositeDisposable){
+                override fun onSuccess(t: Response<UpdateResponse>) {
+                    versionAppLiveData.value=t.body()?.data!!
+                    progressBarLiveData.postValue(false)
+                }
+
+            })
     }
 
 

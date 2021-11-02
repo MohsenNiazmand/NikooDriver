@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,7 @@ class HomeFragment : BaseFragment() {
     val compositeDisposable = CompositeDisposable()
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -77,7 +79,7 @@ class HomeFragment : BaseFragment() {
         userNameTv.text = homeViewModel.username
 
 
-        val onlineStatus=sharedPreferences.getBoolean("isOnline",false)
+        var onlineStatus=sharedPreferences.getBoolean("isOnline",false)
 
         if (onlineStatus){
             active()
@@ -86,7 +88,11 @@ class HomeFragment : BaseFragment() {
         }else
             deActive()
 
-        homeViewModel.getProfile()
+        val handler = Handler()
+        handler.postDelayed({
+            homeViewModel.getProfile()
+        }, 1000)
+
         homeViewModel.profileLiveData.observe(viewLifecycleOwner){
 
             if (it!=null){
@@ -160,7 +166,7 @@ class HomeFragment : BaseFragment() {
 
         deActiveBtn.setOnClickListener {
             deActive()
-
+            homeViewModel.setEmptySeats(0,false)
         }
 
         creditBtn.setOnClickListener {
@@ -254,7 +260,10 @@ class HomeFragment : BaseFragment() {
         stopLocationUpdates()
         if (DriverForegroundService.instance!=null)
             DriverForegroundService.stopService(requireContext())
-        homeViewModel.setEmptySeats(0,false)
+
+
+
+
 
 
     }

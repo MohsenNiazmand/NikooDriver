@@ -12,8 +12,8 @@ import retrofit2.Response
 interface CurrentTripsDataSource {
     fun currentTrips():Single<Response<CurrentTripsResponse>>
     fun startTrip(tripId:Int):Single<Response<StartTripResponse>>
-    fun pickUp(tripId: Int,sourceId:Int):Single<Response<PickUpResponse>>
-    fun dropOf(tripId: Int,sourceId:Int):Single<Response<DropOfResponse>>
+    fun pickUp(tripId: Int,sourceId:Int,location0:Double,location1:Double):Single<Response<PickUpResponse>>
+    fun dropOf(tripId: Int,sourceId:Int,location0:Double,location1:Double):Single<Response<DropOfResponse>>
     fun completeTrip(tripId: Int):Single<Response<CompleteTripResponse>>
     fun cancelTrip(tripId: Int): Completable
 

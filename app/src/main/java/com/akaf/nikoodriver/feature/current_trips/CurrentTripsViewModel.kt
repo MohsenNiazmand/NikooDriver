@@ -1,6 +1,8 @@
 package com.akaf.nikoodriver.feature.current_trips
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.akaf.nikoodriver.App
 import com.akaf.nikoodriver.common.NikoCompletableObserver
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
@@ -10,9 +12,15 @@ import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsResp
 import com.akaf.nikoodriver.data.responses.dropOfResponse.DropOfResponse
 import com.akaf.nikoodriver.data.responses.pickUpResponse.PickUpResponse
 import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
+import com.google.gson.JsonObject
+import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONObject
+import retrofit2.HttpException
 import retrofit2.Response
+import java.lang.Exception
 
 class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) : NikoViewModel() {
 
@@ -51,9 +59,9 @@ class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) 
             })
     }
 
-    fun pickUp(tripId: Int, sourceId: Int){
+    fun pickUp(tripId: Int, sourceId: Int,location0:Double,location1:Double){
         progressBarLiveData.value=true
-        currentTripsRepository.pickUp(tripId,sourceId)
+        currentTripsRepository.pickUp(tripId,sourceId,location0,location1)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object :NikoSingleObserver<Response<PickUpResponse>>(compositeDisposable){
@@ -65,9 +73,9 @@ class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) 
             })
     }
 
-    fun dropOf(tripId: Int, sourceId: Int){
+    fun dropOf(tripId: Int, sourceId: Int,location0:Double,location1:Double){
         progressBarLiveData.value=true
-        currentTripsRepository.dropOf(tripId,sourceId)
+        currentTripsRepository.dropOf(tripId,sourceId,location0,location1)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object :NikoSingleObserver<Response<DropOfResponse>>(compositeDisposable){
@@ -98,10 +106,18 @@ class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) 
         currentTripsRepository.cancelTrip(tripId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : NikoCompletableObserver(compositeDisposable){
+            .subscribe(object : CompletableObserver {
+                override fun onSubscribe(d: Disposable) {
+                    compositeDisposable.add(d)
+                }
+
                 override fun onComplete() {
                     progressBarLiveData.postValue(false)
 
+                }
+
+                override fun onError(e: Throwable) {
+                    progressBarLiveData.postValue(false)
                 }
 
             })

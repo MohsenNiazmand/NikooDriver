@@ -1,9 +1,13 @@
 package com.akaf.nikoodriver
 
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
+import android.widget.Toast
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.akaf.nikoodriver.data.TokenContainer
@@ -23,6 +27,7 @@ import com.akaf.nikoodriver.data.repositories.sources.uploadDocs.UploadDocsRemot
 import com.akaf.nikoodriver.data.repositories.sources.verification.VerificationLocalDataSource
 import com.akaf.nikoodriver.data.repositories.sources.verification.VerificationRemoteDataSource
 import com.akaf.nikoodriver.feature.auth.fillInfo.FillInfoViewModel
+import com.akaf.nikoodriver.feature.auth.login.LoginActivity
 import com.akaf.nikoodriver.feature.auth.login.LoginViewModel
 import com.akaf.nikoodriver.feature.auth.upload_docs.UploadDocsViewModel
 import com.akaf.nikoodriver.feature.auth.verification.VerificationViewModel
@@ -30,6 +35,7 @@ import com.akaf.nikoodriver.feature.current_trips.CurrentTripsViewModel
 import com.akaf.nikoodriver.feature.unAccepted_passengers.UnAcceptedPassengersViewModel
 import com.akaf.nikoodriver.feature.home.HomeViewModel
 import com.akaf.nikoodriver.services.ApiService
+import com.akaf.nikoodriver.services.DriverForegroundService
 import com.akaf.nikoodriver.services.createApiServiceInstance
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -42,13 +48,17 @@ import org.koin.dsl.module
 import timber.log.Timber
 
 class App : MultiDexApplication() {
+    companion object {
+        lateinit var context: Context
+        var activity: Activity? = null
+    }
+
     override fun onCreate() {
-//        val apiService:ApiService by inject()
-//        val sharedPreferences:SharedPreferences by inject()
         super.onCreate()
         MultiDex.install(baseContext)
         Timber.plant(Timber.DebugTree())
         Fresco.initialize(this)
+        context = applicationContext
 
 
 
@@ -147,6 +157,32 @@ class App : MultiDexApplication() {
 
         if (token!=null && refreshToken!=null){
             homeViewModel.sendRefreshToken(token,refreshToken)
+
+            //checks token expire
+            homeViewModel.refreshTokenLiveData.observeForever{
+                if (it.code()==403){
+                    homeViewModel.clearSharedPreference()
+                    applicationContext.cacheDir.deleteRecursively()
+                    activity?.finish()
+                    DriverForegroundService.stopService(applicationContext)
+                    val intent= Intent(this, LoginActivity::class.java).apply {
+                        action = "com.package.ACTION_LOGOUT"
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        addFlags( Intent.FLAG_ACTIVITY_NO_HISTORY)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+
+                    startActivity(intent)
+
+
+                    activity?.overridePendingTransition(0, 0);
+                    Toast.makeText(applicationContext,"لطفا مجددا به حساب خود وارد شوید", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            homeViewModel.update()
+
+
         }
 
     }

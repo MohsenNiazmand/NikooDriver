@@ -18,11 +18,11 @@ class CurrentTripsLocalDataSource : CurrentTripsDataSource {
         TODO("Not yet implemented")
     }
 
-    override fun pickUp(tripId: Int, sourceId: Int): Single<Response<PickUpResponse>> {
+    override fun pickUp(tripId: Int, sourceId: Int,location0:Double,location1:Double): Single<Response<PickUpResponse>> {
         TODO("Not yet implemented")
     }
 
-    override fun dropOf(tripId: Int, sourceId: Int): Single<Response<DropOfResponse>> {
+    override fun dropOf(tripId: Int, sourceId: Int,location0:Double,location1:Double): Single<Response<DropOfResponse>> {
         TODO("Not yet implemented")
     }
 

@@ -10,6 +10,7 @@ import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
+import com.akaf.nikoodriver.data.responses.updateResponse.UpdateResponse
 import io.reactivex.Single
 import retrofit2.Response
 
@@ -38,10 +39,11 @@ class HomeRepositoryImpl(
                     homeLocalDataSource.saveToken(it1, it2)
 
                 } }
-            }.doOnError {
-                homeLocalDataSource.clearSharedPreference()
-
             }
+//            .doOnError {
+//                homeLocalDataSource.clearSharedPreference()
+//
+//            }
 
     }
 
@@ -76,6 +78,14 @@ class HomeRepositoryImpl(
             homeLocalDataSource.saveUsername(it.body()?.data?.fname+" "+it.body()?.data?.lname)
 
     }
+    }
+
+    override fun update(
+        type: String,
+        platform: String,
+        version: String
+    ): Single<Response<UpdateResponse>> {
+        return homeRemoteDataSource.update(type,platform,version)
     }
 
 }

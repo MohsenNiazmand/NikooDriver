@@ -273,6 +273,7 @@ interface NikoView{
                     loadingView =
                         LayoutInflater.from(context).inflate(R.layout.view_loading, it, false)
                     it.addView(loadingView)
+
                 }
 
                 loadingView?.visibility = if (mustShow) View.VISIBLE else View.GONE

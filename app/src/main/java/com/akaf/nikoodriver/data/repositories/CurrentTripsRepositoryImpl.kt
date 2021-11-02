@@ -24,12 +24,12 @@ class CurrentTripsRepositoryImpl(
         return currentTripsRemoteDataSource.startTrip(tripId)
     }
 
-    override fun pickUp(tripId: Int, sourceId: Int): Single<Response<PickUpResponse>> {
-        return currentTripsRemoteDataSource.pickUp(tripId,sourceId)
+    override fun pickUp(tripId: Int, sourceId: Int,location0:Double,location1:Double): Single<Response<PickUpResponse>> {
+        return currentTripsRemoteDataSource.pickUp(tripId,sourceId,location0,location1)
     }
 
-    override fun dropOf(tripId: Int, sourceId: Int): Single<Response<DropOfResponse>> {
-        return currentTripsRemoteDataSource.dropOf(tripId,sourceId)
+    override fun dropOf(tripId: Int, sourceId: Int,location0:Double,location1:Double): Single<Response<DropOfResponse>> {
+        return currentTripsRemoteDataSource.dropOf(tripId,sourceId,location0,location1)
     }
 
     override fun completeTrip(tripId: Int): Single<Response<CompleteTripResponse>> {

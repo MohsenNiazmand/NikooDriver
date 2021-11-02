@@ -9,6 +9,7 @@ import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferRespo
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
+import com.akaf.nikoodriver.data.responses.updateResponse.UpdateResponse
 import com.akaf.nikoodriver.services.ApiService
 import com.google.gson.JsonObject
 import io.reactivex.Single
@@ -61,6 +62,14 @@ class HomeRemoteDataSource(val apiService: ApiService,val sharedPreferences: Sha
 
     override fun saveUsername(userName: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun update(
+        type: String,
+        platform: String,
+        version: String
+    ): Single<Response<UpdateResponse>> {
+        return apiService.update(type,platform,version)
     }
 
 

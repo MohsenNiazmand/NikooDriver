@@ -9,6 +9,7 @@ import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferRespo
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
+import com.akaf.nikoodriver.data.responses.updateResponse.UpdateResponse
 import io.reactivex.Single
 import retrofit2.Response
 
@@ -66,6 +67,14 @@ class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSo
         sharedPreferences.edit().apply{
             putString("username",userName)
         }.apply()
+    }
+
+    override fun update(
+        type: String,
+        platform: String,
+        version: String
+    ): Single<Response<UpdateResponse>> {
+        TODO("Not yet implemented")
     }
 
 }

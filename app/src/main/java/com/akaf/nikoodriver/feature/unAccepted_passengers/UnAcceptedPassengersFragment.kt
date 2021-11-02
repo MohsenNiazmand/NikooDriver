@@ -16,6 +16,7 @@ import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassen
 import com.akaf.nikoodriver.feature.home.HomeViewModel
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_home.rvTrips
+import kotlinx.android.synthetic.main.fragment_current_travel.*
 import kotlinx.android.synthetic.main.fragment_declined_passengers.*
 import org.koin.android.ext.android.inject
 import timber.log.Timber
@@ -43,11 +44,15 @@ class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.
         rvUnAcceptedPassengers.layoutManager= LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
         rvUnAcceptedPassengers.adapter=unAcceptedPassengersAdapter
         unAcceptedPassengersViewModel.unAcceptedPassengersResponse.observe(viewLifecycleOwner){
-            if (it!=null)
-            unAcceptedPassengersAdapter.unAcceptedPassengersCallBacks=this
-            Timber.i("unAcceptedPassengersResponse"+" "+it.toString())
-            unAcceptedPassengersAdapter.passengers= it.data as ArrayList<UnAcceptedPassengersData>
-
+            if (it.data?.isEmpty() == true){
+                ivEmpty.visibility=View.VISIBLE
+            }else {
+                ivEmpty.visibility=View.GONE
+                unAcceptedPassengersAdapter.unAcceptedPassengersCallBacks = this
+                Timber.i("unAcceptedPassengersResponse" + " " + it.toString())
+                unAcceptedPassengersAdapter.passengers =
+                    it.data as ArrayList<UnAcceptedPassengersData>
+            }
         }
 
         unAcceptedPassengersViewModel.progressBarLiveData.observe(viewLifecycleOwner) {

@@ -20,6 +20,7 @@ import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
 import com.akaf.nikoodriver.data.responses.submitDocsResponse.SubmitDocsResponse
+import com.akaf.nikoodriver.data.responses.updateResponse.UpdateResponse
 import com.akaf.nikoodriver.data.responses.uploadDocResponse.UploadDocResponse
 import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
 import com.google.gson.JsonObject
@@ -95,10 +96,10 @@ interface ApiService {
     fun startTrip(@Path("trip_id") tripId:Int):Single<Response<StartTripResponse>>
 
     @PUT("driver/trips/{trip_id}/{source_id}")
-    fun pickUp(@Path("trip_id") tripId: Int,@Path("source_id") sourceId:Int):Single<Response<PickUpResponse>>
+    fun pickUp(@Path("trip_id") tripId: Int,@Path("source_id") sourceId:Int,@Query("location[0]") location0:Double,@Query("location[1]") location1:Double):Single<Response<PickUpResponse>>
 
     @DELETE("driver/trips/{trip_id}/{source_id}")
-    fun dropOf(@Path("trip_id") tripId: Int,@Path("source_id") sourceId:Int):Single<Response<DropOfResponse>>
+    fun dropOf(@Path("trip_id") tripId: Int,@Path("source_id") sourceId:Int,@Query("location[0]") location0:Double,@Query("location[1]") location1:Double):Single<Response<DropOfResponse>>
 
     @PUT("driver/trips/{trip_id}/complete")
     fun completeTrip(@Path("trip_id") tripId: Int):Single<Response<CompleteTripResponse>>
@@ -108,6 +109,14 @@ interface ApiService {
 
     @DELETE("driver//trips/{trip_id}")
     fun cancelTrip(@Path("trip_id") tripId: Int):Completable
+
+    @POST("app-version")
+    @FormUrlEncoded
+    fun update(
+        @Field("type") type: String,
+        @Field("platform") platform: String,
+        @Field("version") version: String
+    ): Single<Response<UpdateResponse>>
 
 }
 

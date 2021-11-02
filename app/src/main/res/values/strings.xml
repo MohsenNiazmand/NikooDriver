@@ -118,6 +118,10 @@
     <string name="no">خیر</string>
     <string name="listIsEmpty">لیست خالی میباشد!!</string>
     <string name="cancelRequest">لغو درخواست</string>
+    <string name="updateApp">آپدیت برنامه</string>
+    <string name="description_update_app">برای استفاده از اپلیکیشن لطفا نسخه جدید را دریافت و نصب کنید</string>
+    <string name="description_force_update_app">برای استفاده از اپلیکیشن و خدمات نیکو همراه نسبت به دریافت و نصب نسخه جدید اقدام فرمایید</string>
+
 
 
 

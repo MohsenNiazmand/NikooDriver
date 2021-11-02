@@ -9,9 +9,6 @@ abstract class NikoCompletableObserver(val compositeDisposable: CompositeDisposa
     CompletableObserver {
 
     override fun onError(e: Throwable) {
-
-
-
         Timber.e(e)
     }
 

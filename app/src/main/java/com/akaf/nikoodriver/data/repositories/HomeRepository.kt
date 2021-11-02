@@ -8,6 +8,7 @@ import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferRespo
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
 import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
+import com.akaf.nikoodriver.data.responses.updateResponse.UpdateResponse
 import io.reactivex.Single
 import retrofit2.Response
 
@@ -22,5 +23,6 @@ interface HomeRepository {
     fun rejectTrip(tripId:Int):Single<Response<RejectOfferResponse>>
     fun unAcceptedPassengersCount():Single<Response<UnAcceptedPassengersResponse>>
     fun getProfile():Single<Response<ProfileResponse>>
+    fun update(type:String,platform:String,version:String):Single<Response<UpdateResponse>>
 
 }

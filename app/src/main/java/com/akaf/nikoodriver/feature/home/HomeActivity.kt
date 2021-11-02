@@ -3,13 +3,20 @@
 package com.akaf.nikoodriver.feature.home
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.ActivityNotFoundException
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
 import android.view.View
+import android.view.Window
+import android.widget.Button
 import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
@@ -29,6 +36,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 
 import androidx.recyclerview.widget.SnapHelper
 import com.akaf.nikoodriver.data.TokenContainer
+import com.akaf.nikoodriver.data.responses.updateResponse.UpdateData
 import com.akaf.nikoodriver.services.DriverForegroundService
 import timber.log.Timber
 import kotlin.concurrent.thread
@@ -45,6 +53,18 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
     val refreshToken=sharedPreferences.getString("refresh_token", null)
 
 
+    override fun onStart() {
+        super.onStart()
+        homeViewModel.versionAppLiveData.observe(this){
+            if (it.outDated){
+                if (it.forceUpdate){
+                    initForceUpdate(it)
+                }else{
+                    initUpdate(it)
+                }
+            }
+        }
+    }
 
     @SuppressLint("CutPasteId", "BinaryOperationInTimber", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,36 +104,13 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
 
         //checks tokenExistence ,if it exist user goes to home
 
-        if (token==null){
+        if (token==null && refreshToken==null){
             finish()
             startActivity(Intent(this@HomeActivity, LoginActivity::class.java))
             overridePendingTransition(0, 0);
         }
 
-        //checks token expire
-        else if (token!=null&& refreshToken!=null){
-            homeViewModel.refreshTokenLiveData.observe(this){
-                if (it.code()==403){
-                    homeViewModel.clearSharedPreference()
-                    applicationContext.cacheDir.deleteRecursively()
-                    finish()
-                    DriverForegroundService.stopService(applicationContext)
-                    val intent=Intent(this@HomeActivity, LoginActivity::class.java).apply {
-                        action = "com.package.ACTION_LOGOUT"
-                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        addFlags( Intent.FLAG_ACTIVITY_NO_HISTORY)
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
 
-                    startActivity(intent)
-
-
-                    overridePendingTransition(0, 0);
-                    Toast.makeText(applicationContext,"لطفا مجددا به حساب خود وارد شوید",Toast.LENGTH_SHORT).show()
-                }
-            }
-
-        }
         val snapHelper: SnapHelper = PagerSnapHelper()
         rvTrips.layoutManager=LinearLayoutManager(this,RecyclerView.HORIZONTAL,false)
         snapHelper.attachToRecyclerView(rvTrips)
@@ -194,7 +191,76 @@ class HomeActivity : BaseActivity(),TripsAdapter.CartItemViewCallBacks {
     }
 
 
+    private fun initForceUpdate(updateData: UpdateData) {
+        showForceUpdateDialog(updateData)
+    }
 
+    private fun initUpdate(updateData: UpdateData) {
+        showUpdateDialog(updateData)
+    }
+
+
+    private fun showUpdateDialog(updateData: UpdateData) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE) // before
+        dialog.setContentView(R.layout.dialog_update)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        (dialog.findViewById<View>(R.id.yesBtnUpdate) as Button).setOnClickListener {
+            dialog.dismiss()
+            update(updateData.downloadURI)
+            finishAffinity()
+        }
+        (dialog.findViewById<View>(R.id.noBtnUpdate) as Button).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun showForceUpdateDialog(updateData: UpdateData) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE) // before
+        dialog.setContentView(R.layout.dialog_force_update)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        (dialog.findViewById<View>(R.id.yesBtnForceUpdate) as Button).setOnClickListener {
+            dialog.dismiss()
+            update(updateData.downloadURI)
+            finishAffinity()
+        }
+        (dialog.findViewById<View>(R.id.noBtnForceUpdate) as Button).setOnClickListener {
+            dialog.dismiss()
+            finishAffinity()
+        }
+        dialog.show()
+    }
+
+    private fun update(url: String) {
+        try {
+            initUpdateUri(url)
+        } catch (ange: ActivityNotFoundException) {
+            initUpdateGooglePlay()
+        }
+    }
+
+    private fun initUpdateUri(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
+    }
+
+    private fun initUpdateGooglePlay() {
+        try {
+            val appPackageName: String =packageName
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                )
+            )
+        } catch (e: java.lang.Exception) {
+
+        }
+    }
 
 
 
