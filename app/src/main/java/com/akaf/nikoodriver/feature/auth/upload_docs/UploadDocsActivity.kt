@@ -21,6 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_upload_docs.*
+import kotlinx.android.synthetic.main.activity_verification.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -164,6 +165,10 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
 
         viewModel.progressBarLiveData.observe(this) {
             setProgressIndicator(it)
+            when {
+                it-> proceedDocsBtn.visibility=View.INVISIBLE
+                else-> proceedDocsBtn.visibility=View.VISIBLE
+            }
         }
 
     }

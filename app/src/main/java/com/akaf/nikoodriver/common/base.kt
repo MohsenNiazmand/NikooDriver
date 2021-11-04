@@ -35,10 +35,19 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import android.content.ClipData
+import android.location.Location
 
 import android.os.Build
-
-
+import android.os.Bundle
+import android.os.Looper
+import com.akaf.nikoodriver.data.responses.location.SendLocation
+import com.google.android.gms.location.*
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import timber.log.Timber
 
 
 //this class is the base of our project and other classes extend this
@@ -207,6 +216,16 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
 
 abstract class BaseFragment:Fragment(),NikoView{
 
+    var fusedLocation: Location? = null
+    var isFastLocation = false
+    lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+    }
+
     override val rootView: CoordinatorLayout?
         get() = view as CoordinatorLayout
     override val viewContext: Context?
@@ -257,6 +276,68 @@ abstract class BaseFragment:Fragment(),NikoView{
         return status
 
     }
+
+
+    fun checkPermStartLocationUpdate() {
+        Dexter.withContext(context)
+            .withPermissions(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            .withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
+                    if (p0?.areAllPermissionsGranted() == true) {
+                        startLocationUpdates()
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    p0: MutableList<PermissionRequest>?,
+                    p1: PermissionToken?
+                ) {
+                    p1?.continuePermissionRequest()
+                }
+
+            }).check()
+    }
+
+    fun stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+    @SuppressLint("MissingPermission")
+    fun startLocationUpdates() {
+
+        if (!CheckGps()) {
+            return
+        }
+        else if (CheckGps()){
+            fusedLocationClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
+        }
+
+    }
+
+    var locationRequest: LocationRequest = LocationRequest.create().apply {
+        interval = 60 * 30 * 1000
+        smallestDisplacement = 100f
+        this.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+    }
+
+    open var locationCallback = object : LocationCallback() {
+        @SuppressLint("BinaryOperationInTimber")
+        override fun onLocationResult(p0: LocationResult?) {
+
+        }
+
+        override fun onLocationAvailability(p0: LocationAvailability?) {
+        }
+
+    }
+
 
 
 }

@@ -25,6 +25,9 @@ import java.lang.Exception
 class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) : NikoViewModel() {
 
     var currentTripsLiveData=MutableLiveData<CurrentTripsResponse>()
+    val dropOfLiveData= MutableLiveData<Response<DropOfResponse>>()
+    val startTripLiveData=MutableLiveData<Response<StartTripResponse>>()
+    val pickupTripLiveData=MutableLiveData<Response<PickUpResponse>>()
 
     init {
         currentTrips()
@@ -53,6 +56,7 @@ class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) 
             .subscribe(object :NikoSingleObserver<Response<StartTripResponse>>(compositeDisposable){
                 override fun onSuccess(t: Response<StartTripResponse>) {
                     progressBarLiveData.postValue(false)
+                    startTripLiveData.value=t
 
                 }
 
@@ -67,6 +71,7 @@ class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) 
             .subscribe(object :NikoSingleObserver<Response<PickUpResponse>>(compositeDisposable){
                 override fun onSuccess(t: Response<PickUpResponse>) {
                     progressBarLiveData.postValue(false)
+                    pickupTripLiveData.value=t
 
                 }
 
@@ -81,6 +86,7 @@ class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) 
             .subscribe(object :NikoSingleObserver<Response<DropOfResponse>>(compositeDisposable){
                 override fun onSuccess(t: Response<DropOfResponse>) {
                     progressBarLiveData.postValue(false)
+                    dropOfLiveData.value=t
 
                 }
 
@@ -113,6 +119,7 @@ class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) 
 
                 override fun onComplete() {
                     progressBarLiveData.postValue(false)
+                    currentTrips()
 
                 }
 

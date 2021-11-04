@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.
     val homeViewModel:HomeViewModel by inject()
     val sharedPreferences:SharedPreferences by inject()
     val unAcceptedPassengersAdapter=UnAcceptedPassengersAdapter()
+    val handler = Handler()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,19 +43,23 @@ class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.
         super.onViewCreated(view, savedInstanceState)
 
 
-        rvUnAcceptedPassengers.layoutManager= LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
-        rvUnAcceptedPassengers.adapter=unAcceptedPassengersAdapter
+
         unAcceptedPassengersViewModel.unAcceptedPassengersResponse.observe(viewLifecycleOwner){
-            if (it.data?.isEmpty() == true){
-                ivEmpty.visibility=View.VISIBLE
-            }else {
-                ivEmpty.visibility=View.GONE
+            rvUnAcceptedPassengers.layoutManager= LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
+            rvUnAcceptedPassengers.adapter=unAcceptedPassengersAdapter
                 unAcceptedPassengersAdapter.unAcceptedPassengersCallBacks = this
-                Timber.i("unAcceptedPassengersResponse" + " " + it.toString())
                 unAcceptedPassengersAdapter.passengers =
                     it.data as ArrayList<UnAcceptedPassengersData>
+
+            when(it.data.size){
+                0->ivEmpty.visibility=View.VISIBLE
+                else->ivEmpty.visibility=View.GONE
+
             }
+
         }
+
+
 
         unAcceptedPassengersViewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
@@ -63,12 +69,20 @@ class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.
 
     override fun onRejectBtnClicked(passenger: UnAcceptedPassengersData) {
         homeViewModel.rejectTrip(passenger.id)
+        homeViewModel.rejectTripLiveData.observe(viewLifecycleOwner){
+            if (it.isSuccessful){
+                handler.postDelayed({unAcceptedPassengersViewModel.unAcceptedPassengers()},1000)
+            }
+        }
     }
 
     override fun onAcceptBtnClicked(passenger: UnAcceptedPassengersData) {
         homeViewModel.acceptTrip(passenger.id,-1)
-//        val count=sharedPreferences.getInt("seatsCount",0)
-//        homeViewModel.decreaseSeatsCount(count)
+        homeViewModel.acceptTripLiveData.observe(viewLifecycleOwner){
+            if (it.isSuccessful){
+                handler.postDelayed({unAcceptedPassengersViewModel.unAcceptedPassengers()},1000)
+            }
+        }
     }
 
     @SuppressLint("BinaryOperationInTimber")

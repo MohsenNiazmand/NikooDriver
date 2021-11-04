@@ -30,6 +30,7 @@ import ir.hamsaa.persiandatepicker.api.PersianPickerDate
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener
 import kotlinx.android.synthetic.main.activity_fill_info.*
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_upload_docs.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -178,6 +179,10 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
         viewModel.progressBarLiveData.observe(this) {
             setProgressIndicator(it)
+            when {
+                it-> registerBtn.visibility=View.INVISIBLE
+                else-> registerBtn.visibility=View.VISIBLE
+            }
         }
 
     }

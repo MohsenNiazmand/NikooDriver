@@ -22,6 +22,7 @@ import com.akaf.nikoodriver.common.BaseActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Response
 import org.json.JSONObject
 import java.lang.Exception
@@ -105,6 +106,10 @@ class VerificationActivity : BaseActivity() {
 
         viewModel.progressBarLiveData.observe(this) {
             setProgressIndicator(it)
+            when {
+                it-> nextBtn.visibility=View.INVISIBLE
+                else-> nextBtn.visibility=View.VISIBLE
+            }
         }
 
     }

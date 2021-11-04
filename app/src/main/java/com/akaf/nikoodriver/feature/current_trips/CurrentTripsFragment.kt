@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isEmpty
 import androidx.core.view.size
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +28,13 @@ import timber.log.Timber
 class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallback {
     val currentTripsViewModel:CurrentTripsViewModel by inject()
     val currentTripsAdapter=CurrentTripsAdapter()
+    val latitude: Double?
+        get()=fusedLocation?.latitude
+    val longitude :Double?
+    get() = fusedLocation?.longitude
+    val handler = Handler()
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,25 +47,20 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
         super.onViewCreated(view, savedInstanceState)
 
 
+        checkPermStartLocationUpdate()
         rvCurrentTrips.layoutManager= LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
         rvCurrentTrips.adapter=currentTripsAdapter
-
         currentTripsViewModel.currentTripsLiveData.observe(viewLifecycleOwner){
-
-            if (it.data?.isEmpty() == true){
-                ivEmptyC.visibility=View.VISIBLE
-            }else{
-                ivEmptyC.visibility=View.GONE
-                currentTripsAdapter.currentTripCallback=this
-                if (it.data!=null)
-                    currentTripsAdapter.currentTrips= it.data as ArrayList<CurrentTripsData>
+        currentTripsAdapter.currentTripCallback=this
+            if (it.data!=null)
+                currentTripsAdapter.currentTrips= it.data as ArrayList<CurrentTripsData>
+            when(it.data?.size){
+                0->ivEmptyC.visibility=View.VISIBLE
+                else->ivEmptyC.visibility=View.GONE
             }
 
 
         }
-
-
-
 
         currentTripsViewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
@@ -64,12 +68,19 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
 
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        if (currentTripsAdapter.itemCount==0){
-//            ivEmptyC.visibility=View.VISIBLE
-//        }
-//    }
+
+    override var locationCallback = object : LocationCallback() {
+        @SuppressLint("BinaryOperationInTimber")
+        override fun onLocationResult(p0: LocationResult?) {
+            if (p0 != null) {
+                fusedLocation = p0.lastLocation
+            }
+        }
+
+        override fun onLocationAvailability(p0: LocationAvailability?) {
+        }
+
+    }
 
 
 
@@ -90,16 +101,42 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
 
     override fun onIRodeClicked(currentTrip: CurrentTripsData) {
 
-            currentTripsViewModel.pickUp(currentTrip.id,currentTrip.Source.id,30.54687,57.26498)
+        latitude?.let {
+            longitude?.let { it1 ->
+                currentTripsViewModel.pickUp(currentTrip.id,currentTrip.Source.id,
+                    it, it1
+                )
+            }
+        }
 
     }
 
     override fun onEndTripClicked(currentTrip: CurrentTripsData) {
-        currentTripsViewModel.dropOf(currentTrip.id,currentTrip.Source.id,30.54687,57.26498)
-        currentTripsViewModel.completeTrip(currentTrip.id)
+        latitude?.let {
+            longitude?.let { it1 ->
+                currentTripsViewModel.dropOf(currentTrip.id,currentTrip.Source.id,
+                    it, it1
+                )
+            }
+        }
+
+        currentTripsViewModel.dropOfLiveData.observe(viewLifecycleOwner){
+            if (it.isSuccessful){
+                currentTripsViewModel.completeTrip(currentTrip.id)
+            }
+        }
+
+
+
+        handler.postDelayed({
+            currentTripsViewModel.currentTrips()
+        }, 1000)
+
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCancelBtnClicked(currentTrip: CurrentTripsData) {
         currentTripsViewModel.cancelTrip(currentTrip.id)
-    }
+
+            }
 }

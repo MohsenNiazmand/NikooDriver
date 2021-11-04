@@ -31,6 +31,7 @@ class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTrip
         val startTripBtn=itemView.findViewById<MaterialButton>(R.id.startTripBtn)
         val cancelTripBtn=itemView.findViewById<MaterialButton>(R.id.cancelTripBtn)
 
+        @SuppressLint("NotifyDataSetChanged")
         fun bind(currentTrip:CurrentTripsData){
             tripCodeTv.text=currentTrip.id.toString()
             passengersCountTv.text=currentTrip.TotalPassangers.toString()

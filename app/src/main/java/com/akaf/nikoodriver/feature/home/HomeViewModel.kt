@@ -39,6 +39,8 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
     val profileLiveData=MutableLiveData<ProfileData?>()
     var versionAppLiveData = SingleLiveEvent<UpdateData>()
+    val rejectTripLiveData=MutableLiveData<Response<RejectOfferResponse>>()
+    val acceptTripLiveData=MutableLiveData<Response<AcceptOfferResponse>>()
 
 
 
@@ -153,6 +155,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
             .subscribe(object : NikoSingleObserver<Response<AcceptOfferResponse>>(compositeDisposable){
                 override fun onSuccess(t: Response<AcceptOfferResponse>) {
                     progressBarLiveData.postValue(false)
+                    acceptTripLiveData.value=t
                 }
 
             })
@@ -166,6 +169,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
             .subscribe(object : NikoSingleObserver<Response<RejectOfferResponse>>(compositeDisposable){
                 override fun onSuccess(t: Response<RejectOfferResponse>) {
                     progressBarLiveData.postValue(false)
+                    rejectTripLiveData.value=t
                 }
 
             })

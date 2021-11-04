@@ -95,6 +95,10 @@ class LoginActivity : BaseActivity() {
 
         viewModel.progressBarLiveData.observe(this) {
             setProgressIndicator(it)
+            when {
+                it-> loginBtn.visibility=View.INVISIBLE
+                else-> loginBtn.visibility=View.VISIBLE
+            }
         }
 
 
