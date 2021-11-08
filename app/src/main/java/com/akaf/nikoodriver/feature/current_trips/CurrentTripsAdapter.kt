@@ -7,12 +7,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.akaf.nikoodriver.R
+import com.akaf.nikoodriver.data.repositories.CurrentTripsRepository
 import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsData
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.item_current_trips.view.*
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import timber.log.Timber
 
-class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTripsViewHolder>() {
+@KoinApiExtension
+class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTripsViewHolder>(),KoinComponent {
     var currentTripCallback:CurrentTripsAdapter.CurrentTripCallback?=null
+
     var currentTrips=ArrayList<CurrentTripsData>()
         @SuppressLint("NotifyDataSetChanged")
         set(value) {

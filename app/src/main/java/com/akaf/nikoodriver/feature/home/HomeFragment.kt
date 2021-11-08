@@ -78,12 +78,14 @@ class HomeFragment : BaseFragment() {
         val handler = Handler()
         handler.postDelayed({
             homeViewModel.getProfile()
+            if (getView()!=null)
             homeViewModel.profileLiveData.observe(viewLifecycleOwner){
                 if (it?.capacity==0)
                     deActive()
             }
         }, 1000)
 
+        if (getView()!=null)
         homeViewModel.profileLiveData.observe(viewLifecycleOwner){
 
             if (it!=null){
@@ -126,7 +128,7 @@ class HomeFragment : BaseFragment() {
 
 
 
-
+        if (getView()!=null)
             homeViewModel.mqttState.observe(viewLifecycleOwner) {
             if (it) {
                 checkPermStartLocationUpdate()

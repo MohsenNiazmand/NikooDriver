@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
                 android:textStyle="normal"
-                android:text="@string/toman"/>
+                android:text="@string/rials"/>
 
 
         </LinearLayout>

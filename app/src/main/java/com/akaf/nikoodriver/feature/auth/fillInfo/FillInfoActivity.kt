@@ -125,8 +125,9 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                 firstPlaqueEtReg.text.isNotEmpty() && thirdPlaqueNumEtReg.text.isNotEmpty() && irPlaqueEtReg.text.isNotEmpty() &&
                 vehicleType.isNotEmpty() &&
                 vehicleColorEtReg.text.isNotEmpty() &&
-                insuranceExpireEt.text.isNotEmpty() &&
-                        driverProfileUrl.value!=null) {
+                insuranceExpireEt.text.isNotEmpty()
+
+            ) {
 
                 if (token != null) {
                     viewModel.register(token,firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),certificateCodeEtReg.text.toString(),driverProfileUrl.value.toString(),plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString())

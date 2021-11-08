@@ -133,7 +133,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/toman"
+                                android:text="@string/rials"
                                 android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />
 
 

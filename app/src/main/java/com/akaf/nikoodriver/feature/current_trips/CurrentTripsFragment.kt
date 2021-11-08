@@ -23,6 +23,7 @@ import com.google.android.gms.location.LocationResult
 import kotlinx.android.synthetic.main.fragment_current_travel.*
 import kotlinx.android.synthetic.main.fragment_declined_passengers.*
 import org.koin.android.ext.android.inject
+import org.koin.core.component.KoinApiExtension
 import timber.log.Timber
 
 class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallback {
@@ -111,6 +112,7 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
 
     }
 
+    @KoinApiExtension
     override fun onEndTripClicked(currentTrip: CurrentTripsData) {
         latitude?.let {
             longitude?.let { it1 ->

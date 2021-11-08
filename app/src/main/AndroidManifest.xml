@@ -43,7 +43,9 @@
 
         <activity
             android:name=".feature.auth.finishReg.FinishRegisterActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -57,25 +59,37 @@
 
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" /> <!-- optional (needed if default theme has no action bar) -->
+            android:theme="@style/Base.Theme.AppCompat"
+            android:screenOrientation="portrait"
+            /> <!-- optional (needed if default theme has no action bar) -->
         <activity
             android:name=".feature.auth.upload_docs.UploadDocsActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".feature.auth.login.LoginActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".feature.auth.fillInfo.FillInfoActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".feature.auth.verification.VerificationActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".feature.home.HomeActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

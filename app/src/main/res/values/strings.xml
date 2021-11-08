@@ -25,8 +25,8 @@
     <string name="all">همه: </string>
     <string name="car">سواری </string>
     <string name="bus">اتوبوس </string>
-    <string name="vehicleColor">رنگ خودرو: </string>
-    <string name="white">  سفید</string>
+    <string name="vehicleColor">مدل و رنگ خودرو: </string>
+    <string name="white"> سمند سفید</string>
     <string name="insuranceDate">انقضا بیمه: </string>
     <string name="choose">انتخاب</string>
     <string name="insertYourName">نام خود را وارد نمایید</string>
@@ -54,7 +54,7 @@
     <string name="year">سال</string>
     <string name="beActiveForGetTravels">برای دریافت سفر فعال شوید</string>
     <string name="yourIncome">درآمد شما</string>
-    <string name="toman">تومان</string>
+    <string name="rials">ریال</string>
     <string name="travelsCount">تعداد سفرها: </string>
     <string name="travelsDistance">مسافت سفرها: </string>
     <string name="kilometers">کیلومتر</string>
