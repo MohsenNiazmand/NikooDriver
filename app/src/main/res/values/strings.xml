@@ -54,7 +54,7 @@
     <string name="year">سال</string>
     <string name="beActiveForGetTravels">برای دریافت سفر فعال شوید</string>
     <string name="yourIncome">درآمد شما</string>
-    <string name="rials">ریال</string>
+    <string name="tooman">تومان</string>
     <string name="travelsCount">تعداد سفرها: </string>
     <string name="travelsDistance">مسافت سفرها: </string>
     <string name="kilometers">کیلومتر</string>

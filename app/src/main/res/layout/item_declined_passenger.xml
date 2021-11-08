@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
-            android:text="@string/rials"
+            android:text="@string/tooman"
             />
 
 
