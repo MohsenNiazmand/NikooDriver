@@ -1,13 +1,11 @@
 package com.akaf.nikoodriver.feature.home
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
-import android.location.Location
+import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,26 +15,16 @@ import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
-import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.data.responses.location.SendLocation
-import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.feature.auth.login.LoginActivity
 import com.akaf.nikoodriver.feature.home.credit.CreditDialog
 import com.akaf.nikoodriver.services.DriverForegroundService
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
 import com.google.android.material.button.MaterialButton
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
-import retrofit2.Response
 import timber.log.Timber
 
 class HomeFragment : BaseFragment() {
@@ -116,7 +104,9 @@ class HomeFragment : BaseFragment() {
                 val rate=it.rate
                     rateTv.text=rate.toString()
                 val credit=it.credit
-                    creditTv.text=credit
+                    creditTv.text=credit+" "+resources.getString(R.string.tooman)
+
+
 
             }
 

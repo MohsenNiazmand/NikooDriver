@@ -22,8 +22,11 @@ data class ProfileData(
     val openTripsCount: Int,
     val phoneNumber: String,
     val photoUrl: String,
-    val rate: Int,
+    val rate: String,
     val rateCount: Int,
     val sex: String,
-    val status: String
+    val status: String,
+    val totalDistance: String?,
+    val totalTime: String?,
+    val totalTrips: String?
 )

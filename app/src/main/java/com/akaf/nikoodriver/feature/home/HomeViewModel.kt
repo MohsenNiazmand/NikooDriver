@@ -3,19 +3,16 @@ package com.akaf.nikoodriver.feature.home
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.location.Location
-import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.BuildConfig.VERSION_NAME
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
 import com.akaf.nikoodriver.common.SingleLiveEvent
-import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.data.repositories.HomeRepository
-import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassengersResponse
 import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
@@ -23,7 +20,6 @@ import com.akaf.nikoodriver.data.responses.profileResponse.ProfileData
 import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.data.responses.updateResponse.UpdateData
 import com.akaf.nikoodriver.data.responses.updateResponse.UpdateResponse
-import com.akaf.nikoodriver.services.createApiServiceInstance
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -46,6 +42,14 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
 
     val username:String
     get() =sharedPreferences.getString("username","")?:""
+    val totalTrips:String
+    get()= sharedPreferences.getString("totalTrips","")?:""
+    val totalDistance:String
+    get()= sharedPreferences.getString("totalDistance","")?:""
+    val totalTime:String
+    get()=sharedPreferences.getString("totalTime","")?:""
+    val rate:String
+    get()=sharedPreferences.getString("rate","")?:""
 
     init {
 //        update()
@@ -238,6 +242,16 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
                 override fun onSuccess(t: Response<ProfileResponse>) {
                     profileLiveData.postValue(t.body()?.data)
                     progressBarLiveData.postValue(false)
+                    val totalTrips=t.body()?.data?.totalTrips
+                    val totalDistance=t.body()?.data?.totalDistance
+                    val totalTime=t.body()?.data?.totalTime
+                    val rate=t.body()?.data?.rate
+                    sharedPreferences.edit().apply {
+                        putString("totalTrips",totalTrips)
+                        putString("totalDistance",totalDistance)
+                        putString("totalTime",totalTime)
+                        putString("rate",rate.toString())
+                    }.apply()
                 }
 
             })

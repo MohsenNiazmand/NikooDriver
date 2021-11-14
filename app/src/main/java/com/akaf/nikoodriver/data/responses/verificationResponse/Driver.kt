@@ -17,7 +17,7 @@ data class Driver(
     val onDuty: Boolean,
     val phoneNumber: String,
     val photo_id: Any,
-    val rate: Int,
+    val rate: String,
     val rateCount: Int,
     val sex: String,
     val status: String,

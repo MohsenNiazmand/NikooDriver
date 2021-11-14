@@ -82,11 +82,12 @@
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable-v24/ic_undraw_empty_cart.xml" value="0.16944444444444445" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable/background_white.xml" value="0.14322916666666666" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable/ic_close.xml" value="0.26205128205128203" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/activity_fill_info.xml" value="0.25" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/activity_home.xml" value="0.1598731884057971" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/activity_upload_docs.xml" value="0.20878623188405798" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/activity_verification.xml" value="0.25" />
-        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_credit.xml" value="0.25" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_credit.xml" value="0.72" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_force_update.xml" value="0.264" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_logout.xml" value="0.20878623188405798" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_update.xml" value="0.4542124542124542" />
@@ -104,7 +105,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

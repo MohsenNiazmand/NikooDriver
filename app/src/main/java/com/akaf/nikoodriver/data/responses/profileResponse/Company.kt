@@ -4,6 +4,6 @@ data class Company(
     val email: String,
     val name: String,
     val phoneNumber: String,
-    val photoUrl: Any,
+    val photoUrl: String,
     val tripTypes: List<String>
 )
