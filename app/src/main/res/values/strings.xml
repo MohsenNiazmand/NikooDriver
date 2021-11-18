@@ -24,11 +24,15 @@
     <string name="vehicleType">نوع خودرو: </string>
     <string name="all">همه: </string>
     <string name="car">سواری </string>
+    <string name="van">ون </string>
+    <string name="miniBus">مینی بوس </string>
     <string name="bus">اتوبوس </string>
     <string name="vehicleColor">مدل و رنگ خودرو: </string>
     <string name="white"> سمند سفید</string>
     <string name="insuranceDate">انقضا بیمه: </string>
-    <string name="choose">انتخاب</string>
+    <string name="choosing">انتخاب</string>
+    <string name="choose">انتخاب کنید</string>
+    <string name="chooseOptional">انتخاب(اختیاری)</string>
     <string name="insertYourName">نام خود را وارد نمایید</string>
     <string name="insertYourFamily">نام خانوادگی خود را وارد نمایید</string>
     <string name="insertYourNationalCode">کد ملی خود را وارد نمایید</string>
@@ -85,8 +89,8 @@
     <string name="paid">پرداخت شده</string>
     <string name="unPaid">پرداخت نشده: </string>
     <string name="person">نفر</string>
-    <string name="iRode">سوار کردم</string>
-    <string name="endTrip">پایان سفر</string>
+    <string name="iRode">مسافر سوار شد</string>
+    <string name="endTrip">مسافر پیاده شد</string>
     <string name="startTrip">شروع سفر</string>
     <string name="line">-</string>
     <string name="MohsenNiazmand">محسن نیازمند</string>
@@ -121,7 +125,14 @@
     <string name="updateApp">آپدیت برنامه</string>
     <string name="description_update_app">برای استفاده از اپلیکیشن لطفا نسخه جدید را دریافت و نصب کنید</string>
     <string name="description_force_update_app">برای استفاده از اپلیکیشن و خدمات نیکو همراه نسبت به دریافت و نصب نسخه جدید اقدام فرمایید</string>
-
+    <string name="navigationMistake">اشتباه در مسیریابی</string>
+    <string name="timingMistake">اشتباه در زمانبندی</string>
+    <string name="declinePassengerLocation">رد نمودن محل مسافر</string>
+    <string name="passengerWasNotInPlace">مسافر در محل نبود</string>
+    <string name="other">سایر</string>
+    <string name="capacity">ظرفیت : </string>
+    <string name="facility">امکانات : </string>
+    <string name="serviceType">نوع سرویس : </string>
 
 
 

@@ -1,5 +1,6 @@
 package com.akaf.nikoodriver.feature.auth.fillInfo
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -17,6 +18,7 @@ import com.akaf.nikoodriver.common.BaseActivity
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoResponse.UploadPhotoDriverResponse
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.FillInfoResponse
+import com.akaf.nikoodriver.data.responses.serviceTypeResponse.Doc
 import com.akaf.nikoodriver.feature.auth.chooseDialog.ChoosePictureDialog
 import com.akaf.nikoodriver.feature.auth.login.LoginActivity
 import com.akaf.nikoodriver.feature.auth.upload_docs.UploadDocsActivity
@@ -42,7 +44,7 @@ import java.io.File
 import java.net.URLEncoder
 
 
-class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallback {
+class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallback,ServiceTypesDialog.PassData {
 
 
 
@@ -52,14 +54,13 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
     val compositeDisposable = CompositeDisposable()
     lateinit var vehicleType:String
     val driverProfileUrl = MutableLiveData<String>()
-
+    lateinit var service_id:String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fill_info)
         val token=intent!!.getStringExtra("token")
-
 
 
 
@@ -73,16 +74,14 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
 
         toggleBtnVehicleType.addOnButtonCheckedListener { group, checkedId, isChecked ->
-            if (carTypeBtn.isChecked){
-                vehicleType="car"
-            }else{
-                vehicleType="bus"
+            when{
+                carTypeBtn.isChecked->vehicleType="car"
+                busTypeBtn.isChecked->vehicleType="bus"
+                vanTypeBtn.isChecked->vehicleType="van"
+                miniBusTypeBtn.isChecked->vehicleType="minibus"
+                otherTypeBtn.isChecked->vehicleType="all"
             }
         }
-
-
-
-
 
         //for auto focusing next edittext
         firstPlaqueEtReg.addTextChangedListener(object : TextWatcher {
@@ -110,6 +109,14 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
         })
 
 
+        serviceTypeTv.setOnClickListener {
+            val serviceTypesDialog=ServiceTypesDialog()
+            serviceTypesDialog.show(supportFragmentManager,null)
+            serviceTypesDialog.passData=this
+
+        }
+
+
 
         registerBtn.setOnClickListener {
 
@@ -125,12 +132,12 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                 firstPlaqueEtReg.text.isNotEmpty() && thirdPlaqueNumEtReg.text.isNotEmpty() && irPlaqueEtReg.text.isNotEmpty() &&
                 vehicleType.isNotEmpty() &&
                 vehicleColorEtReg.text.isNotEmpty() &&
-                insuranceExpireEt.text.isNotEmpty()
+                       service_id.isNotEmpty()
 
             ) {
 
                 if (token != null) {
-                    viewModel.register(token,firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),certificateCodeEtReg.text.toString(),driverProfileUrl.value.toString(),plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString())
+                    viewModel.register(token,firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),certificateCodeEtReg.text.toString(),driverProfileUrl.value.toString(),plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString(),service_id)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(object : NikoSingleObserver<Response<FillInfoResponse>>(compositeDisposable){
@@ -330,4 +337,12 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
 
         picker.show()
     }
+
+    @SuppressLint("SetTextI18n")
+    override fun selectedItem(doc: Doc) {
+        serviceTypeTv.text=doc.name+" "+doc.description
+        service_id=doc.id.toString()
+    }
+
+
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.icu.number.IntegerWidth
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -102,9 +103,9 @@ class HomeFragment : BaseFragment() {
 
                     }
                 val rate=it.rate
-                    rateTv.text=rate.toString()
-                val credit=it.credit
-                    creditTv.text=credit+" "+resources.getString(R.string.tooman)
+                    rateTv.text=rate
+                val credit=it.credit.toDouble().toInt()/10
+                    creditTv.text=credit.toString()+" "+resources.getString(R.string.tooman)
 
 
 

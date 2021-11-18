@@ -43,6 +43,7 @@ class CreditDialog:DialogFragment() {
         view.totalDistanceTv.text=homeViewModel.totalDistance
         view.totalTimeTv.text=homeViewModel.totalTime
         view.rateTTv.text=homeViewModel.rate
+        view.incomeTv.text=homeViewModel.income
 
 
         return view

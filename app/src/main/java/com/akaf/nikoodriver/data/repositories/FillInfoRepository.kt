@@ -2,6 +2,7 @@ package com.akaf.nikoodriver.data.repositories
 
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoResponse.UploadPhotoDriverResponse
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.FillInfoResponse
+import com.akaf.nikoodriver.data.responses.serviceTypeResponse.ServiceTypeResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -17,10 +18,12 @@ interface FillInfoRepository {
                  carPlaque:String,
                  carType:String,
                  carColor:String,
-                 carInsuranceExpiration:String
+                 carInsuranceExpiration:String,
+                 serviceId:String
     ) : Single<Response<FillInfoResponse>>
 
     fun uploadDriverPhoto(title:String,driverPhoto:MultipartBody.Part) : Single<Response<UploadPhotoDriverResponse>>
+    fun getServiceTypes():Single<Response<ServiceTypeResponse>>
 
 
 }

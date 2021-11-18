@@ -26,6 +26,7 @@ data class ProfileData(
     val rateCount: Int,
     val sex: String,
     val status: String,
+    val totalSalary: String?,
     val totalDistance: String?,
     val totalTime: String?,
     val totalTrips: String?

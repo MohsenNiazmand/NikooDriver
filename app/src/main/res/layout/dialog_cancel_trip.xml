@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/dialog_inset"
+    android:padding="25dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/wrongNavigatingBt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="56dp"
+                android:layout_marginVertical="2.5dp"
+                android:layout_marginHorizontal="2.5dp"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:text="@string/navigationMistake"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:textColor="@color/gray"
+                app:cornerRadius="10dp"
+                />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/wrongTimingBt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="56dp"
+                android:layout_marginVertical="2.5dp"
+                android:layout_marginHorizontal="2.5dp"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:text="@string/timingMistake"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:textColor="@color/gray"
+                app:cornerRadius="10dp"
+                />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/passengerWasNotAtLocBt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="56dp"
+                android:layout_marginVertical="2.5dp"
+                android:layout_marginHorizontal="2.5dp"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:text="@string/passengerWasNotInPlace"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:textColor="@color/gray"
+                app:cornerRadius="10dp"                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/declinePassengerLocBt"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="56dp"
+                android:layout_marginVertical="2.5dp"
+                android:layout_marginHorizontal="2.55dp"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:text="@string/declinePassengerLocation"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:textColor="@color/gray"
+                app:cornerRadius="10dp"                />
+
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/otherReasonBt"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="56dp"
+            android:layout_marginVertical="2.5dp"
+            android:layout_marginHorizontal="5dp"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="@string/other"
+            app:cornerRadius="10dp" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

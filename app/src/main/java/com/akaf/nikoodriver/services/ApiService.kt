@@ -18,6 +18,7 @@ import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferRespo
 import com.akaf.nikoodriver.data.responses.pickUpResponse.PickUpResponse
 import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
+import com.akaf.nikoodriver.data.responses.serviceTypeResponse.ServiceTypeResponse
 import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
 import com.akaf.nikoodriver.data.responses.submitDocsResponse.SubmitDocsResponse
 import com.akaf.nikoodriver.data.responses.updateResponse.UpdateResponse
@@ -107,8 +108,9 @@ interface ApiService {
     @GET("driver/profile")
     fun getProfile():Single<Response<ProfileResponse>>
 
-    @DELETE("driver//trips/{trip_id}")
-    fun cancelTrip(@Path("trip_id") tripId: Int):Completable
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "driver//trips/{trip_id}", hasBody = true)
+    fun cancelTrip(@Path("trip_id") tripId: Int, @Field("reason") reason:String, @Field("location") sendLocation: ArrayList<Double>):Completable
 
     @POST("app-version")
     @FormUrlEncoded
@@ -117,6 +119,9 @@ interface ApiService {
         @Field("platform") platform: String,
         @Field("version") version: String
     ): Single<Response<UpdateResponse>>
+
+    @GET("services?page=1")
+    fun getServiceTypes():Single<Response<ServiceTypeResponse>>
 
 }
 

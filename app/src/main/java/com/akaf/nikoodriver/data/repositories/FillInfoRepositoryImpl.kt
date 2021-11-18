@@ -3,6 +3,7 @@ package com.akaf.nikoodriver.data.repositories
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoResponse.UploadPhotoDriverResponse
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.FillInfoResponse
 import com.akaf.nikoodriver.data.repositories.sources.fillInfo.FillInfoDataSource
+import com.akaf.nikoodriver.data.responses.serviceTypeResponse.ServiceTypeResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -21,7 +22,8 @@ class FillInfoRepositoryImpl(
         carPlaque: String,
         carType: String,
         carColor: String,
-        carInsuranceExpiration: String
+        carInsuranceExpiration: String,
+        serviceId:String
     ): Single<Response<FillInfoResponse>> {
         return fillInfoRemoteDataSource.fillInfo(
             token,
@@ -33,7 +35,8 @@ class FillInfoRepositoryImpl(
             carPlaque,
             carType,
             carColor,
-            carInsuranceExpiration
+            carInsuranceExpiration,
+            serviceId
         )
     }
 
@@ -42,6 +45,10 @@ class FillInfoRepositoryImpl(
         driverPhoto: MultipartBody.Part
     ): Single<Response<UploadPhotoDriverResponse>> {
         return fillInfoRemoteDataSource.uploadDriverPhoto(title,driverPhoto)
+    }
+
+    override fun getServiceTypes(): Single<Response<ServiceTypeResponse>> {
+        return fillInfoRemoteDataSource.getServiceTypes()
     }
 
 

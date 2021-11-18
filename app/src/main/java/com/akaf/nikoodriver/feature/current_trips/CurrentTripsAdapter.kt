@@ -32,6 +32,7 @@ class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTrip
         val tripCodeTv=itemView.findViewById<TextView>(R.id.tripCodeTv)
         val passengersCountTv=itemView.findViewById<TextView>(R.id.passengersCountTv)
         val firstPassengerName=itemView.findViewById<TextView>(R.id.firstPassengerName)
+        val currentServiceDateTv=itemView.findViewById<TextView>(R.id.currentServiceDateTv)
         val callToPassengerCurrentBtn=itemView.findViewById<MaterialButton>(R.id.callToPassengerCurrentBtn)
         val iRodeBtn=itemView.findViewById<MaterialButton>(R.id.iRodeBtn)
         val endTripBtn=itemView.findViewById<MaterialButton>(R.id.endTripBtn)
@@ -43,6 +44,7 @@ class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTrip
             tripCodeTv.text=currentTrip.id.toString()
             passengersCountTv.text=currentTrip.TotalPassangers.toString()
             firstPassengerName.text=currentTrip.User.fullName
+            currentServiceDateTv.text=currentTrip.createdAt
             itemView.callToPassengerCurrentBtn.setOnClickListener {
                 currentTripCallback?.onCallToPassengerClicked(currentTrip)
             }
@@ -63,7 +65,7 @@ class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTrip
                 removeTripFromList(currentTrip)
             }
             itemView.cancelTripBtn.setOnClickListener {
-                removeTripFromList(currentTrip)
+//                removeTripFromList(currentTrip)
                 currentTripCallback?.onCancelBtnClicked(currentTrip)
             }
         }

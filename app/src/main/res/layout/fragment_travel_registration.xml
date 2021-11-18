@@ -164,7 +164,7 @@
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.datePicker"
                             android:gravity="center_vertical"
-                            android:hint="@string/choose"
+                            android:hint="@string/choosing"
                             android:paddingEnd="10dp"
                             android:layout_marginVertical="10dp"
                             app:drawableEndCompat="@drawable/calendar"

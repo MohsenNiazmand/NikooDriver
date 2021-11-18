@@ -1,26 +1,20 @@
 package com.akaf.nikoodriver.feature.current_trips
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.akaf.nikoodriver.App
-import com.akaf.nikoodriver.common.NikoCompletableObserver
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
 import com.akaf.nikoodriver.data.repositories.CurrentTripsRepository
 import com.akaf.nikoodriver.data.responses.completeTripResponse.CompleteTripResponse
 import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsResponse
 import com.akaf.nikoodriver.data.responses.dropOfResponse.DropOfResponse
+import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.pickUpResponse.PickUpResponse
 import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
-import com.google.gson.JsonObject
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import org.json.JSONObject
-import retrofit2.HttpException
 import retrofit2.Response
-import java.lang.Exception
 
 class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) : NikoViewModel() {
 
@@ -107,9 +101,9 @@ class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) 
             })
     }
 
-    fun cancelTrip(tripId: Int){
+    fun cancelTrip(tripId: Int, reason:String, sendLocation: ArrayList<Double>){
         progressBarLiveData.value=true
-        currentTripsRepository.cancelTrip(tripId)
+        currentTripsRepository.cancelTrip(tripId,reason,sendLocation)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {

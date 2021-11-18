@@ -50,6 +50,8 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     get()=sharedPreferences.getString("totalTime","")?:""
     val rate:String
     get()=sharedPreferences.getString("rate","")?:""
+    val income:String
+    get()=sharedPreferences.getString("income","")?:""
 
     init {
 //        update()
@@ -243,14 +245,16 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
                     profileLiveData.postValue(t.body()?.data)
                     progressBarLiveData.postValue(false)
                     val totalTrips=t.body()?.data?.totalTrips
-                    val totalDistance=t.body()?.data?.totalDistance
+                    val totalDistance=t.body()?.data?.totalDistance?.toDouble()?.toInt()
                     val totalTime=t.body()?.data?.totalTime
                     val rate=t.body()?.data?.rate
+                    val income=t.body()?.data?.totalSalary?.toDouble()?.toInt()
                     sharedPreferences.edit().apply {
                         putString("totalTrips",totalTrips)
-                        putString("totalDistance",totalDistance)
+                        putString("totalDistance",totalDistance.toString())
                         putString("totalTime",totalTime)
                         putString("rate",rate.toString())
+                        putString("income",income.toString())
                     }.apply()
                 }
 

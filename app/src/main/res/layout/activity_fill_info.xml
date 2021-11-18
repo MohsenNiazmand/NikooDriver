@@ -376,41 +376,83 @@
                             android:orientation="horizontal"
                             >
 
-                            <com.google.android.material.button.MaterialButtonToggleGroup
-                                android:id="@+id/toggleBtnVehicleType"
+
+                            <HorizontalScrollView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                app:singleSelection="true"
-                                app:selectionRequired="true"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                >
+                                android:scrollbars="none"
+                                android:paddingHorizontal="10dp"
+                                android:clipToPadding="true"
+                                tools:ignore="UselessParent">
 
-
-                                <com.google.android.material.button.MaterialButton
-                                    android:id="@+id/carTypeBtn"
-                                    style="?attr/materialButtonOutlinedStyle"
-                                    app:iconSize="40dp"
-                                    app:backgroundTint="@color/white"
+                                <com.google.android.material.button.MaterialButtonToggleGroup
+                                    android:id="@+id/toggleBtnVehicleType"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    app:icon="@drawable/ic__car"
-                                    app:iconGravity="top"
-                                    android:text="@string/car"/>
-
-                                <com.google.android.material.button.MaterialButton
-                                    android:id="@+id/busTypeBtn"
-                                    style="?attr/materialButtonOutlinedStyle"
-                                    app:iconSize="40dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    app:icon="@drawable/ic_bus"
-                                    app:iconGravity="top"
-                                    android:text="@string/bus"/>
+                                    app:singleSelection="true"
+                                    app:selectionRequired="true"
+                                    >
 
 
 
-                            </com.google.android.material.button.MaterialButtonToggleGroup>
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/carTypeBtn"
+                                        style="?attr/materialButtonOutlinedStyle"
+                                        app:iconSize="40dp"
+                                        app:backgroundTint="@color/white"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:icon="@drawable/ic__car"
+                                        app:iconGravity="top"
+                                        android:text="@string/car"/>
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/vanTypeBtn"
+                                        style="?attr/materialButtonOutlinedStyle"
+                                        app:iconSize="40dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:icon="@drawable/van"
+                                        app:iconGravity="top"
+                                        android:text="@string/van"/>
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/miniBusTypeBtn"
+                                        style="?attr/materialButtonOutlinedStyle"
+                                        app:iconSize="40dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:icon="@drawable/mini_bus"
+                                        app:iconGravity="top"
+                                        android:text="@string/miniBus"/>
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/busTypeBtn"
+                                        style="?attr/materialButtonOutlinedStyle"
+                                        app:iconSize="40dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:icon="@drawable/ic_bus"
+                                        app:iconGravity="top"
+                                        android:text="@string/bus"/>
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/otherTypeBtn"
+                                        style="?attr/materialButtonOutlinedStyle"
+                                        app:iconSize="40dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:icon="@drawable/other_vehicles"
+                                        app:iconGravity="top"
+                                        android:text="@string/other"/>
+
+
+
+
+
+
+
+                                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+                            </HorizontalScrollView>
+
 
 
                         </LinearLayout>
@@ -418,6 +460,38 @@
 
 
                     </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/serviceType"/>
+
+                        <TextView
+                            android:id="@+id/serviceTypeTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            style="@style/Theme.Niko.register.datePicker"
+                            android:hint="@string/choose"
+                            android:gravity="center_vertical"
+                            />
+
+
+
+                    </LinearLayout>
+
 
                     <View
                         android:layout_marginVertical="2dp"
@@ -478,7 +552,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Theme.Niko.register.datePicker"
-                            android:hint="@string/choose"
+                            android:hint="@string/chooseOptional"
                             tools:ignore="UsingOnClickInXml" />
 
 

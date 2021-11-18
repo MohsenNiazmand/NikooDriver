@@ -17,6 +17,7 @@ import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
 import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsData
 import com.akaf.nikoodriver.data.responses.location.SendLocation
+import com.akaf.nikoodriver.feature.home.credit.CreditDialog
 import com.google.android.gms.location.LocationAvailability
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
@@ -44,6 +45,7 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
         return inflater.inflate(R.layout.fragment_current_travel, container, false)
     }
 
+    @KoinApiExtension
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -86,20 +88,24 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
 
 
 
+    @SuppressLint("QueryPermissionsNeeded")
+    @KoinApiExtension
     override fun onCallToPassengerClicked(currentTrip: CurrentTripsData) {
-        Toast.makeText(context,currentTrip.phoneNumber.toString(),Toast.LENGTH_SHORT).show()
         val intent = Intent(Intent.ACTION_DIAL).apply {
             data = Uri.parse("tel:${currentTrip.phoneNumber}")
         }
         if (context?.let { intent.resolveActivity(it.packageManager) } != null) {
             startActivity(intent)
+
         }
     }
 
+    @KoinApiExtension
     override fun onStartTripClicked(currentTrip: CurrentTripsData) {
         currentTripsViewModel.startTrip(currentTrip.id)
     }
 
+    @KoinApiExtension
     override fun onIRodeClicked(currentTrip: CurrentTripsData) {
 
         latitude?.let {
@@ -138,7 +144,13 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCancelBtnClicked(currentTrip: CurrentTripsData) {
-        currentTripsViewModel.cancelTrip(currentTrip.id)
-
+//        currentTripsViewModel.cancelTrip(currentTrip.id)
+        val cancelTripDialog = CancelTripDialog()
+        val bundle=Bundle()
+        bundle.putInt("serviceId",currentTrip.id)
+        latitude?.let { bundle.putDouble("loc0", it) }
+        longitude?.let { bundle.putDouble("loc1", it) }
+        cancelTripDialog.arguments=bundle
+        cancelTripDialog.show(childFragmentManager, null)
             }
 }

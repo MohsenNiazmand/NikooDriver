@@ -3,6 +3,7 @@ package com.akaf.nikoodriver.data.repositories.sources.CurrentTrips
 import com.akaf.nikoodriver.data.responses.completeTripResponse.CompleteTripResponse
 import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsResponse
 import com.akaf.nikoodriver.data.responses.dropOfResponse.DropOfResponse
+import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.pickUpResponse.PickUpResponse
 import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
 import io.reactivex.Completable
@@ -30,7 +31,7 @@ class CurrentTripsLocalDataSource : CurrentTripsDataSource {
         TODO("Not yet implemented")
     }
 
-    override fun cancelTrip(tripId: Int): Completable {
+    override fun cancelTrip(tripId: Int,reason:String,sendLocation: ArrayList<Double>): Completable {
         TODO("Not yet implemented")
     }
 }

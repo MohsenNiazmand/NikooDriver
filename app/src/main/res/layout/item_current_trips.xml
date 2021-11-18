@@ -26,8 +26,10 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="3dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -107,6 +109,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
                         tools:text="@string/MohsenNiazmand"
+                        android:textAlignment="textEnd"
                         android:layout_marginStart="10dp"/>
 
                     <TextView
@@ -156,8 +159,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:paddingHorizontal="3dp"
                 android:gravity="end"
-                android:paddingEnd="10dp"
                 tools:ignore="RtlSymmetry">
 
 
@@ -166,11 +169,10 @@
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/progressTrip"
                     android:visibility="gone"
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginVertical="2.5dp"
                     android:gravity="center"
-                    android:layout_marginEnd="10dp"
                     app:lottie_rawRes="@raw/progress_dots_blue"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
@@ -179,7 +181,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/iRodeBtn"
                     android:visibility="gone"
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginVertical="2.5dp"
                     android:gravity="center"
@@ -187,12 +189,12 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     app:strokeWidth="1dp"
                     app:strokeColor="@color/orange"
+                    android:textSize="12sp"
                     android:text="@string/iRode"
-                    android:layout_marginEnd="10dp"
                     app:cornerRadius="20dp" />
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/startTripBtn"
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginVertical="2.5dp"
                     android:gravity="center"
@@ -201,12 +203,13 @@
                     app:strokeWidth="1dp"
                     app:strokeColor="@color/orange"
                     android:text="@string/startTrip"
-                    android:layout_marginEnd="10dp"
+                    android:textSize="12sp"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
                     app:cornerRadius="20dp" />
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/endTripBtn"
                     android:visibility="gone"
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginVertical="2.55dp"
                     android:gravity="center"
@@ -214,34 +217,38 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     app:strokeWidth="1dp"
                     app:strokeColor="@color/orange"
+                    android:textSize="12sp"
                     android:text="@string/endTrip"
-                    android:layout_marginEnd="10dp"
                     app:cornerRadius="20dp" />
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/callToPassengerCurrentBtn"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginVertical="2.5dp"
-                    android:layout_marginEnd="10dp"
                     android:gravity="center"
                     android:minHeight="48dp"
                     android:text="@string/callToPassenger"
                     app:cornerRadius="20dp"
                     app:drawableEndCompat="@drawable/ic_cal"
                     app:strokeColor="@color/orange"
+                    android:singleLine="true"
+                    android:textSize="12sp"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
                     app:strokeWidth="1dp" />
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/cancelTripBtn"
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginVertical="2.5dp"
-                    android:layout_marginEnd="10dp"
                     android:gravity="center"
                     android:minHeight="48dp"
                     android:text="@string/cancelRequest"
                     app:drawableEndCompat="@drawable/ic_close_white"
+                    android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
                     android:backgroundTint="#D50000"
+                    android:textSize="12sp"
+                    android:singleLine="true"
                     app:cornerRadius="20dp" />
 
 
