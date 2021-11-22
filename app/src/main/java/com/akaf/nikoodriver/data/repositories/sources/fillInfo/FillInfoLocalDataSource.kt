@@ -20,7 +20,7 @@ class FillInfoLocalDataSource : FillInfoDataSource {
         carType: String,
         carColor: String,
         carInsuranceExpiration: String,
-        serviceId:String
+        serviceId:Int
     ): Single<Response<FillInfoResponse>> {
         TODO("Not yet implemented")
     }

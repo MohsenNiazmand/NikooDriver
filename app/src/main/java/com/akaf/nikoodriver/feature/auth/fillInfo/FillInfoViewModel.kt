@@ -36,7 +36,7 @@ class FillInfoViewModel(val fillInfoRepository: FillInfoRepository) : NikoViewMo
                  carType:String,
                  carColor:String,
                  carInsuranceExpiration:String,
-                 serviceId:String
+                 serviceId:Int
     ) : Single<Response<FillInfoResponse>> {
         progressBarLiveData.value = true
         return fillInfoRepository.fillInfo(

@@ -23,7 +23,7 @@ class FillInfoRepositoryImpl(
         carType: String,
         carColor: String,
         carInsuranceExpiration: String,
-        serviceId:String
+        serviceId:Int
     ): Single<Response<FillInfoResponse>> {
         return fillInfoRemoteDataSource.fillInfo(
             token,

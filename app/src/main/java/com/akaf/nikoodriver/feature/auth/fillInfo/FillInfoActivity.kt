@@ -55,7 +55,7 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
     lateinit var vehicleType:String
     val driverProfileUrl = MutableLiveData<String>()
     lateinit var service_id:String
-
+    lateinit var gregorian:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,7 +137,7 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
             ) {
 
                 if (token != null) {
-                    viewModel.register(token,firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),certificateCodeEtReg.text.toString(),driverProfileUrl.value.toString(),plaque,vehicleType,vehicleColorEtReg.text.toString(),insuranceExpireEt.text.toString(),service_id)
+                    viewModel.register(token,firstNameEtReg.text.toString(),lastNameEtReg.text.toString(),nationalCodeEtReg.text.toString(),certificateCodeEtReg.text.toString(),driverProfileUrl.value.toString(),plaque,vehicleType,vehicleColorEtReg.text.toString(),gregorian,service_id.toInt())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(object : NikoSingleObserver<Response<FillInfoResponse>>(compositeDisposable){
@@ -327,6 +327,7 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
                 override fun onDateSelected(persianPickerDate: PersianPickerDate) {
                     val issueDateTxt =
                         persianPickerDate.persianYear.toString() + "/" + persianPickerDate.persianMonth + "/" + persianPickerDate.persianDay
+                    gregorian=persianPickerDate.gregorianDate.toString()
                     insuranceExpireEt.setText(issueDateTxt)
                 }
 

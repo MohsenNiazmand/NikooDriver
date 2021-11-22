@@ -54,22 +54,27 @@ class CancelTripDialog: DialogFragment() {
         view.wrongTimingBt.setOnClickListener {
             dismiss()
             currentTripsViewModel.cancelTrip(serviceId,wrongTimingBt.text.toString(),location)
+            currentTripsViewModel.currentTrips()
         }
         view.wrongNavigatingBt.setOnClickListener {
             dismiss()
             currentTripsViewModel.cancelTrip(serviceId,wrongNavigatingBt.text.toString(),location)
+            currentTripsViewModel.currentTrips()
         }
         view.declinePassengerLocBt.setOnClickListener {
             dismiss()
             currentTripsViewModel.cancelTrip(serviceId,declinePassengerLocBt.text.toString(),location)
+            currentTripsViewModel.currentTrips()
         }
         view.passengerWasNotAtLocBt.setOnClickListener {
             dismiss()
             currentTripsViewModel.cancelTrip(serviceId,passengerWasNotAtLocBt.text.toString(),location)
+            currentTripsViewModel.currentTrips()
         }
         view.otherReasonBt.setOnClickListener {
             dismiss()
             currentTripsViewModel.cancelTrip(serviceId,otherReasonBt.text.toString(),location)
+            currentTripsViewModel.currentTrips()
         }
 
         return view

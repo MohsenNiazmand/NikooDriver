@@ -18,7 +18,7 @@ interface FillInfoDataSource {
                  carType:String,
                  carColor:String,
                  carInsuranceExpiration:String,
-                 serviceId:String
+                 serviceId:Int
     ) : Single<Response<FillInfoResponse>>
 
     fun uploadDriverPhoto(title:String,driverPhoto:MultipartBody.Part) : Single<Response<UploadPhotoDriverResponse>>
