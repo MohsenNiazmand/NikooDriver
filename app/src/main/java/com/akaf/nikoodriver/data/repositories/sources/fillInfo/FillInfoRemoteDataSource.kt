@@ -22,7 +22,7 @@ class FillInfoRemoteDataSource(private val apiService: ApiService) : FillInfoDat
         carPlaque: String,
         carType: String,
         carColor: String,
-        carInsuranceExpiration: String,
+        carInsuranceExpiration: String?,
         serviceId:Int
     ): Single<Response<FillInfoResponse>> {
         return apiService.fillInfo(token,JsonObject().apply {

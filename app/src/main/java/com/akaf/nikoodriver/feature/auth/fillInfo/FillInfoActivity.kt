@@ -55,7 +55,7 @@ class FillInfoActivity: BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallbac
     lateinit var vehicleType:String
     val driverProfileUrl = MutableLiveData<String>()
     lateinit var service_id:String
-    lateinit var gregorian:String
+    var gregorian:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
