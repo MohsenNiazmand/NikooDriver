@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_auth"
+    app:startDestination="@id/fillInfoFragment">
+
+    <fragment
+        android:id="@+id/fillInfoFragment"
+        android:name="com.akaf.nikoodriver.feature.auth.registering.fillInfo.FillInfoFragment"
+        android:label="fragment_fill_info"
+        tools:layout="@layout/fragment_fill_info" >
+        <action
+            android:id="@+id/action_fillInfoFragment_to_uploadDocsFragment"
+            app:destination="@id/uploadDocsFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/uploadDocsFragment"
+        android:name="com.akaf.nikoodriver.feature.auth.registering.upload_docs.UploadDocsFragment"
+        android:label="fragment_upload_docs"
+        tools:layout="@layout/fragment_upload_docs" >
+        <action
+            android:id="@+id/action_uploadDocsFragment_to_finishRegisterFragment"
+            app:destination="@id/finishRegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finishRegisterFragment"
+        android:name="com.akaf.nikoodriver.feature.auth.registering.finishReg.FinishRegisterFragment"
+        android:label="FinishRegisterFragment"
+        tools:layout="@layout/fragment_finish_register"
+        />
+</navigation>

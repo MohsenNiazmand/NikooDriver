@@ -1,4 +1,4 @@
-package com.akaf.nikoodriver.feature.auth.fillInfo
+package com.akaf.nikoodriver.feature.auth.registering.fillInfo
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -15,7 +15,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class ServiceTypesDialog() :DialogFragment(), ServiceTypeAdapter.ServiceTypeCallback {
     val viewModel: FillInfoViewModel by viewModel()
-    val serviceTypeAdapter=ServiceTypeAdapter()
+    val serviceTypeAdapter= ServiceTypeAdapter()
     var passData: PassData?=null
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {

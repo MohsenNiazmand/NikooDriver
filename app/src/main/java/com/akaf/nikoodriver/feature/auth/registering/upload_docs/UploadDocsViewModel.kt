@@ -1,4 +1,4 @@
-package com.akaf.nikoodriver.feature.auth.upload_docs
+package com.akaf.nikoodriver.feature.auth.registering.upload_docs
 
 import com.akaf.nikoodriver.common.NikoViewModel
 import com.akaf.nikoodriver.data.repositories.UploadDocsRepository

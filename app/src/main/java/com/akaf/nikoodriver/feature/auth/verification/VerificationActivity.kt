@@ -3,15 +3,13 @@
 package com.akaf.nikoodriver.feature.auth.verification
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
-import com.akaf.nikoodriver.feature.auth.fillInfo.FillInfoActivity
-import com.akaf.nikoodriver.feature.auth.upload_docs.UploadDocsActivity
 import com.akaf.nikoodriver.feature.home.HomeActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -19,6 +17,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_verification.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.akaf.nikoodriver.common.BaseActivity
+import com.akaf.nikoodriver.feature.auth.registering.AuthActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
@@ -26,6 +25,9 @@ import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Response
 import org.json.JSONObject
 import java.lang.Exception
+
+
+import com.akaf.nikoodriver.R
 
 
 class VerificationActivity : BaseActivity() {
@@ -76,8 +78,16 @@ class VerificationActivity : BaseActivity() {
                                             sendFireBaseToken()
                                             finishAffinity()
                                             startActivity(Intent(this@VerificationActivity, HomeActivity::class.java)) }
-                                        "fillInfo" ->{ startActivity(Intent(this@VerificationActivity, FillInfoActivity::class.java).apply { putExtra("token",token) }) }
-                                        "insufficient_docs" ->{ startActivity(Intent(this@VerificationActivity, UploadDocsActivity::class.java).apply { putExtra("token",token) }) }
+                                        "fillInfo" ->{ startActivity(Intent(this@VerificationActivity, AuthActivity::class.java).apply {
+                                            putExtra("token",token)
+                                        })
+                                        }
+                                        "insufficient_docs" ->{
+                                            startActivity(Intent(this@VerificationActivity, AuthActivity::class.java).apply {
+                                            putExtra("token",token)
+
+                                        })
+                                        }
                                         "blocked" ->
                                             runOnUiThread { kotlin.run { Toast.makeText(applicationContext, "اکانت شما مسدود شده است", Toast.LENGTH_SHORT).show() } }
                                         "company_deactivated" ->

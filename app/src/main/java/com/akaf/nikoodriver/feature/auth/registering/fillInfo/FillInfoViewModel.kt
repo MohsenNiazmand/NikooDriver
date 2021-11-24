@@ -1,4 +1,4 @@
-package com.akaf.nikoodriver.feature.auth.fillInfo
+package com.akaf.nikoodriver.feature.auth.registering.fillInfo
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
@@ -8,13 +8,11 @@ import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoRes
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.FillInfoResponse
 import com.akaf.nikoodriver.data.repositories.FillInfoRepository
 import com.akaf.nikoodriver.data.responses.serviceTypeResponse.ServiceTypeResponse
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MultipartBody
 import retrofit2.Response
-import timber.log.Timber
 
 
 class FillInfoViewModel(val fillInfoRepository: FillInfoRepository) : NikoViewModel() {
@@ -64,14 +62,12 @@ class FillInfoViewModel(val fillInfoRepository: FillInfoRepository) : NikoViewMo
 
 
     private fun getServiceTypes(){
-        progressBarLiveData.value = true
         fillInfoRepository.getServiceTypes()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object :NikoSingleObserver<Response<ServiceTypeResponse>>(compositeDisposable){
                 @SuppressLint("BinaryOperationInTimber")
                 override fun onSuccess(t: Response<ServiceTypeResponse>) {
-                    progressBarLiveData.postValue(false)
                     serviceTypes.value=t
                 }
             })

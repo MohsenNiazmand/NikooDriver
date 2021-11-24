@@ -1,21 +1,17 @@
-package com.akaf.nikoodriver.feature.auth.fillInfo
+package com.akaf.nikoodriver.feature.auth.registering.fillInfo
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.akaf.nikoodriver.R
-import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassengersData
 import com.akaf.nikoodriver.data.responses.serviceTypeResponse.Doc
-import com.akaf.nikoodriver.data.responses.serviceTypeResponse.ServiceTypeData
 import com.facebook.drawee.view.SimpleDraweeView
 
 class ServiceTypeAdapter() :RecyclerView.Adapter<ServiceTypeAdapter.ServiceTypeViewHolder>() {
-    var serviceTypeCallback:ServiceTypeAdapter.ServiceTypeCallback?=null
+    var serviceTypeCallback: ServiceTypeCallback?=null
 
     var serviceTypes=ArrayList<Doc>()
         @SuppressLint("NotifyDataSetChanged")

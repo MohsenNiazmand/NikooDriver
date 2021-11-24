@@ -1,4 +1,4 @@
-package com.akaf.nikoodriver.feature.auth.chooseDialog
+package com.akaf.nikoodriver.feature.auth.registering.chooseDialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_choose_picture.view.*
 //a test dialog for choosing picture
 class ChoosePictureDialog() : BottomSheetDialogFragment() {
 
-    var chooseOpinionsCallback :ChooseOpinionsCallback? = null
+    var chooseOpinionsCallback : ChooseOpinionsCallback? = null
 
 
 

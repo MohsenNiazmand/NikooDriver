@@ -19,8 +19,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.FileProvider
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -70,97 +68,6 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
         get() = this
 
 
-    val REQUEST_IMAGE_CAPTURE = 1
-    val REQ_CODE_CHOOSE_IMAGE_FROM_GALLERY = 2
-    val RESULT_OK = 10
-    var currentPhotoPath: String? = null
-    var image: File? = null
-    var photoURI: Uri? = null
-
-    open fun openCropActivity(uri: Uri?) {
-       CropImage.activity(uri)
-            .setOutputCompressQuality(70)
-            .setFixAspectRatio(false)
-            .setAllowRotation(true)
-            .setAllowFlipping(true)
-            .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
-            .setMaxZoom(2)
-            .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
-            .start(this)
-
-
-    }
-
-
-    @SuppressLint("QueryPermissionsNeeded")
-    open fun CaptureImageFromCamera() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            // Create the File where the photo should go
-            var photoFile: File? = null
-            try {
-                photoFile = createImageFile()
-            } catch (ex: IOException) {
-                // Error occurred while creating the File
-                Toast.makeText(applicationContext, "error happend", Toast.LENGTH_SHORT).show()
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                photoURI = FileProvider.getUriForFile(
-                    this,
-                    "com.akaf.nikoodriver.common.fileprovider",
-                    photoFile
-                )
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
-                    takePictureIntent.clipData = ClipData.newRawUri("", photoURI)
-                    takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                }
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        }
-    }
-
-
-    @SuppressLint("SimpleDateFormat")
-    @Throws(IOException::class)
-    open fun createImageFile(): File? {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "JPEG_" + timeStamp + "_"
-        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
-        val image = File.createTempFile(
-            imageFileName,  /* prefix */
-            ".jpg",  /* suffix */
-            storageDir /* directory */
-        )
-
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath()
-        return image
-    }
-
-    open fun ChoosePictureFromGallery() {
-        val galleryIntent = Intent(Intent.ACTION_PICK)
-        galleryIntent.type = "image/*"
-        startActivityForResult(
-            Intent.createChooser(
-                galleryIntent,
-                "انتخاب گالری"
-            ), REQ_CODE_CHOOSE_IMAGE_FROM_GALLERY
-        )
-    }
-
-
-    open fun uriToFile(uri: Uri?): File? {
-        val items = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor: Cursor? =
-            uri?.let { applicationContext.contentResolver.query(it, items, null, null, null) }
-        if (cursor != null) {
-            cursor.moveToFirst()
-            val picturePath = cursor.getString(cursor.getColumnIndexOrThrow(items[0]))
-            cursor.close()
-            return File(picturePath)
-        }
-        return null
-    }
 
 
     open fun CheckInternet(): Boolean {
@@ -216,6 +123,14 @@ abstract class BaseActivity:AppCompatActivity(),NikoView{
 
 abstract class BaseFragment:Fragment(),NikoView{
 
+
+    val REQUEST_IMAGE_CAPTURE = 1
+    val REQ_CODE_CHOOSE_IMAGE_FROM_GALLERY = 2
+    val RESULT_OK = 10
+    var currentPhotoPath: String? = null
+    var image: File? = null
+    var photoURI: Uri? = null
+
     var fusedLocation: Location? = null
     var isFastLocation = false
     lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -230,6 +145,91 @@ abstract class BaseFragment:Fragment(),NikoView{
         get() = view as CoordinatorLayout
     override val viewContext: Context?
         get() = context
+
+
+
+    open fun openCropActivity(uri: Uri?) {
+        CropImage.activity(uri)
+            .setOutputCompressQuality(70)
+            .setFixAspectRatio(false)
+            .setAllowRotation(true)
+            .setAllowFlipping(true)
+            .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
+            .setMaxZoom(2)
+            .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
+            .start(requireActivity(),this)
+    }
+
+
+    @SuppressLint("QueryPermissionsNeeded")
+    open fun CaptureImageFromCamera() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        // Create the File where the photo should go
+        var photoFile: File? = null
+        try {
+            photoFile = createImageFile()
+        } catch (ex: IOException) {
+            // Error occurred while creating the File
+            Toast.makeText(requireContext(), "error happend", Toast.LENGTH_SHORT).show()
+        }
+        // Continue only if the File was successfully created
+        if (photoFile != null) {
+            photoURI = FileProvider.getUriForFile(
+                requireContext(),
+                "com.akaf.nikoodriver.common.fileprovider",
+                photoFile
+            )
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+                takePictureIntent.clipData = ClipData.newRawUri("", photoURI)
+                takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        }
+    }
+
+
+    @SuppressLint("SimpleDateFormat")
+    @Throws(IOException::class)
+    open fun createImageFile(): File? {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName = "JPEG_" + timeStamp + "_"
+        val storageDir: File = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+        val image = File.createTempFile(
+            imageFileName,  /* prefix */
+            ".jpg",  /* suffix */
+            storageDir /* directory */
+        )
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath()
+        return image
+    }
+
+    open fun ChoosePictureFromGallery() {
+        val galleryIntent = Intent(Intent.ACTION_PICK)
+        galleryIntent.type = "image/*"
+        startActivityForResult(
+            Intent.createChooser(
+                galleryIntent,
+                "انتخاب گالری"
+            ), REQ_CODE_CHOOSE_IMAGE_FROM_GALLERY
+        )
+    }
+
+
+    open fun uriToFile(uri: Uri?): File? {
+        val items = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor? =
+            uri?.let { requireContext().contentResolver.query(it, items, null, null, null) }
+        if (cursor != null) {
+            cursor.moveToFirst()
+            val picturePath = cursor.getString(cursor.getColumnIndexOrThrow(items[0]))
+            cursor.close()
+            return File(picturePath)
+        }
+        return null
+    }
 
     open fun CheckInternet(): Boolean {
         val wifiConnected: Boolean

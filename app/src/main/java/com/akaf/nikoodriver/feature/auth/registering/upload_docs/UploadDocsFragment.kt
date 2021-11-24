@@ -1,27 +1,33 @@
-package com.akaf.nikoodriver.feature.auth.upload_docs
+package com.akaf.nikoodriver.feature.auth.registering.upload_docs
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.akaf.nikoodriver.R
-import com.akaf.nikoodriver.common.BaseActivity
+import com.akaf.nikoodriver.common.BaseFragment
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.data.responses.submitDocsResponse.SubmitDocsResponse
 import com.akaf.nikoodriver.data.responses.uploadDocResponse.UploadDocResponse
-import com.akaf.nikoodriver.feature.auth.chooseDialog.ChoosePictureDialog
-import com.akaf.nikoodriver.feature.auth.fillInfo.FillInfoActivity
-import com.akaf.nikoodriver.feature.auth.finishReg.FinishRegisterActivity
+import com.akaf.nikoodriver.feature.auth.registering.AuthViewModel
+import com.akaf.nikoodriver.feature.auth.registering.chooseDialog.ChoosePictureDialog
+import com.akaf.nikoodriver.feature.auth.registering.fillInfo.FillInfoFragment
+import com.akaf.nikoodriver.feature.auth.registering.finishReg.FinishRegisterFragment
 import com.google.android.material.button.MaterialButton
 import com.theartofdev.edmodo.cropper.CropImage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_upload_docs.*
 import kotlinx.android.synthetic.main.activity_verification.*
+import kotlinx.android.synthetic.main.fragment_upload_docs.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -31,7 +37,7 @@ import timber.log.Timber
 import java.io.File
 import java.net.URLEncoder
 
-class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCallback  {
+class UploadDocsFragment() : BaseFragment(), ChoosePictureDialog.ChooseOpinionsCallback  {
 
     val picNum = MutableLiveData<Int>()
     val nationalCardId = MutableLiveData<String>()
@@ -41,15 +47,28 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
     val technicalDiagnosisId = MutableLiveData<String>()
     val workBookId = MutableLiveData<String>()
     val compositeDisposable= CompositeDisposable()
-    val viewModel:UploadDocsViewModel by viewModel()
+    val viewModel: UploadDocsViewModel by viewModel()
     var token:String? = ""
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_upload_docs)
-        token=intent!!.getStringExtra("token")
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return layoutInflater.inflate(R.layout.fragment_upload_docs,container,false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val authViewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
+        token=authViewModel.token
 
 
-
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                showBackDialog()
+            }
+        })
 
         uploadNationalCardGalleryBtn.setOnClickListener {
             ChoosePictureFromGallery()
@@ -118,52 +137,42 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
 
             if (token != null && carCardId.value!=null && badRecordsId.value!=null&&certificateCardId.value!=null&&nationalCardId.value!=null&&technicalDiagnosisId.value!=null&&workBookId.value!=null){
 
-                    viewModel.submitDocs(token!!,carCardId.value.toString(),badRecordsId.value.toString(),certificateCardId.value.toString(),nationalCardId.value.toString(),technicalDiagnosisId.value.toString(),workBookId.value.toString())
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(object : NikoSingleObserver<Response<SubmitDocsResponse>>(compositeDisposable){
-                            override fun onSuccess(t: Response<SubmitDocsResponse>) {
-                                val responseCode=t.code()
-                                if (responseCode==200){
-                                    startActivity(Intent(this@UploadDocsActivity, FinishRegisterActivity::class.java))
+                viewModel.submitDocs(token!!,carCardId.value.toString(),badRecordsId.value.toString(),certificateCardId.value.toString(),nationalCardId.value.toString(),technicalDiagnosisId.value.toString(),workBookId.value.toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : NikoSingleObserver<Response<SubmitDocsResponse>>(compositeDisposable){
+                        override fun onSuccess(t: Response<SubmitDocsResponse>) {
+                            val responseCode=t.code()
+                            if (responseCode==200){
+                                Navigation.findNavController(view)
+                                    .navigate(R.id.action_uploadDocsFragment_to_finishRegisterFragment)
 
 
-                                }else{
-                                    runOnUiThread {
-                                        kotlin.run {
-                                            Toast.makeText(
-                                                applicationContext,
-                                                t.message().toString(),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-
-                                        }
+                            }else{
+                                requireActivity().runOnUiThread {
+                                    kotlin.run { Toast.makeText(requireContext(), t.message().toString(), Toast.LENGTH_SHORT).show()
 
                                     }
-                                }
 
+                                }
                             }
 
-                        })
+                        }
+
+                    })
 
 
             }else {
 
 
-                runOnUiThread {
-                    kotlin.run {
-                        Toast.makeText(
-                            applicationContext,
-                            "لطفا تمامی مدارک را بارگزاری کنید",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
+               requireActivity().runOnUiThread {
+                    kotlin.run { Toast.makeText(requireContext(), "لطفا تمامی مدارک را بارگزاری کنید", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
 
-        viewModel.progressBarLiveData.observe(this) {
+        viewModel.progressBarLiveData.observe(viewLifecycleOwner) {
             setProgressIndicator(it)
             when {
                 it-> proceedDocsBtn.visibility=View.INVISIBLE
@@ -171,19 +180,20 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
             }
         }
 
+
     }
+
 
 
     private fun showBackDialog() {
         val backDialogView = layoutInflater.inflate(R.layout.dialog_back, null, false)
-        val backDialog: AlertDialog = AlertDialog.Builder(this).create()
+        val backDialog: AlertDialog = AlertDialog.Builder(requireContext()).create()
         backDialog.setView(backDialogView)
         backDialog.setCancelable(false)
         backDialogView.findViewById<MaterialButton>(R.id.backBtnYes).setOnClickListener {
             backDialog.dismiss()
-            startActivity(Intent(this@UploadDocsActivity,FillInfoActivity::class.java).apply {
-                putExtra("token",token)
-            })
+            view?.let { it1 -> Navigation.findNavController(it1).navigateUp() }
+
 
         }
 
@@ -371,10 +381,6 @@ class UploadDocsActivity() : BaseActivity(),ChoosePictureDialog.ChooseOpinionsCa
 
     override fun onGalleryClick() {
         ChoosePictureFromGallery()
-    }
-
-    override fun onBackPressed() {
-        showBackDialog()
     }
 
 }
