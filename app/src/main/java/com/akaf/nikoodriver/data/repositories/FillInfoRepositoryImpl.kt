@@ -47,8 +47,8 @@ class FillInfoRepositoryImpl(
         return fillInfoRemoteDataSource.uploadDriverPhoto(title,driverPhoto)
     }
 
-    override fun getServiceTypes(): Single<Response<ServiceTypeResponse>> {
-        return fillInfoRemoteDataSource.getServiceTypes()
+    override fun getServiceTypes(vehicleType:String): Single<Response<ServiceTypeResponse>> {
+        return fillInfoRemoteDataSource.getServiceTypes(vehicleType)
     }
 
 

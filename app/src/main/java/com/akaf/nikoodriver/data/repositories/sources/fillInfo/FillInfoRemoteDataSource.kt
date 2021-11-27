@@ -46,8 +46,8 @@ class FillInfoRemoteDataSource(private val apiService: ApiService) : FillInfoDat
         return apiService.uploadDriverPhoto(title,driverPhoto)
     }
 
-    override fun getServiceTypes(): Single<Response<ServiceTypeResponse>> {
-        return apiService.getServiceTypes()
+    override fun getServiceTypes(vehicleType:String): Single<Response<ServiceTypeResponse>> {
+        return apiService.getServiceTypes(vehicleType)
     }
 
 

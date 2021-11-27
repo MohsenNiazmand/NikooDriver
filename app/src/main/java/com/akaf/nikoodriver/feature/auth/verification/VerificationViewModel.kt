@@ -9,6 +9,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
+import timber.log.Timber
 
 
 class VerificationViewModel(private val verificationRepository: VerificationRepository) : NikoViewModel(){
@@ -31,6 +32,12 @@ class VerificationViewModel(private val verificationRepository: VerificationRepo
                 .subscribe(object : NikoSingleObserver<Response<FcmResponse>>(compositeDisposable){
                     override fun onSuccess(t: Response<FcmResponse>) {
                         progressBarLiveData.postValue(false)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Timber.e(e)
+                        progressBarLiveData.postValue(false)
+
                     }
 
                 })

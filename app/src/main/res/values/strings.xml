@@ -21,7 +21,7 @@
     <string name="mobile">موبایل: </string>
     <string name="certificateCode">کد گواهینامه: </string>
     <string name="plaque">پلاک :</string>
-    <string name="vehicleType">نوع خودرو: </string>
+    <string name="vehicleType">نوع وسیله نقلیه: </string>
     <string name="all">همه: </string>
     <string name="car">سواری </string>
     <string name="van">ون </string>
@@ -133,6 +133,13 @@
     <string name="capacity">ظرفیت : </string>
     <string name="facility">امکانات : </string>
     <string name="serviceType">نوع سرویس : </string>
+    <string name="transactions">تراکنش ها</string>
+    <string name="amount">مبلغ : </string>
+    <string name="dateOfTransaction">تاریخ تراکنش : </string>
+    <string name="transactionCode">کد تراکنش : </string>
+    <string name="transactionType">نوع تراکنش : </string>
+    <string name="transactionReason">شرح تراکنش : </string>
+    <string name="tripCode">کد سفر : </string>
 
 
     <string-array name="Alphabet">

@@ -7,21 +7,21 @@
 
     <fragment
         android:id="@+id/currentTravelFragment"
-        android:name="com.akaf.nikoodriver.feature.current_trips.CurrentTripsFragment"
+        android:name="com.akaf.nikoodriver.feature.main.current_trips.CurrentTripsFragment"
         android:label="CurrentTravelFragment" />
     <fragment
         android:id="@+id/declinedPassengersFragment"
-        android:name="com.akaf.nikoodriver.feature.unAccepted_passengers.UnAcceptedPassengersFragment"
+        android:name="com.akaf.nikoodriver.feature.main.unAccepted_passengers.UnAcceptedPassengersFragment"
         android:label="fragment_current_travel"
         tools:layout="@layout/fragment_current_travel" />
     <fragment
         android:id="@+id/travelRegistrationFragment"
-        android:name="com.akaf.nikoodriver.feature.travel_registeration.TravelRegistrationFragment"
+        android:name="com.akaf.nikoodriver.feature.main.travel_registeration.TravelRegistrationFragment"
         android:label="fragment_travel_registration"
         tools:layout="@layout/fragment_travel_registration" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.akaf.nikoodriver.feature.home.HomeFragment"
+        android:name="com.akaf.nikoodriver.feature.main.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -44,5 +44,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
 
             />
+        <action
+            android:id="@+id/action_homeFragment_to_transactionsFragment"
+            app:destination="@id/transactionsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="com.akaf.nikoodriver.feature.main.transactions.TransactionsFragment"
+        android:label="fragment_transactions"
+        tools:layout="@layout/fragment_transactions" />
 </navigation>

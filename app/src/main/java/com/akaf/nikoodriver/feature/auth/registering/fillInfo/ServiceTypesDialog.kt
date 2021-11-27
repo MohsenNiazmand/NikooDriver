@@ -17,10 +17,12 @@ class ServiceTypesDialog() :DialogFragment(), ServiceTypeAdapter.ServiceTypeCall
     val viewModel: FillInfoViewModel by viewModel()
     val serviceTypeAdapter= ServiceTypeAdapter()
     var passData: PassData?=null
+    var vehicleType:String?=""
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.DialogStyle)
+        vehicleType=arguments?.getString("vehicleType")
 
     }
 
@@ -41,7 +43,7 @@ class ServiceTypesDialog() :DialogFragment(), ServiceTypeAdapter.ServiceTypeCall
         savedInstanceState: Bundle?
     ): View? {
         val view: View = LayoutInflater.from(context).inflate(R.layout.dialog_service_types, container, false)
-
+        vehicleType?.let { viewModel.getServiceTypes(it) }
         viewModel.serviceTypes.observe(viewLifecycleOwner){
             view.rvServiceTypes.layoutManager= LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
             view.rvServiceTypes.adapter=serviceTypeAdapter

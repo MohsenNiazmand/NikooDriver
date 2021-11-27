@@ -7,7 +7,7 @@
     android:id="@+id/homeRoot"
     android:background="@drawable/app_background"
     android:layoutDirection="rtl"
-    tools:context=".feature.home.HomeActivity">
+    tools:context=".feature.main.home.HomeActivity">
 
 
 

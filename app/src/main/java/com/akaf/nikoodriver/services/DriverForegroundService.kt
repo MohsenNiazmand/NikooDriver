@@ -2,8 +2,6 @@ package com.akaf.nikoodriver.services
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.ComponentName
@@ -11,25 +9,20 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
-import android.os.Build
 import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
-import android.util.Log
-import androidx.appcompat.widget.AppCompatDrawableManager
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.data.responses.location.SendLocation
-import com.akaf.nikoodriver.feature.home.HomeActivity
+import com.akaf.nikoodriver.feature.main.home.HomeActivity
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.google.android.gms.location.*
 import org.koin.android.ext.android.inject
-import timber.log.Timber
+import org.koin.core.component.KoinApiExtension
 
 class DriverForegroundService : Service() {
     val CHANNEL_ID="NikooDriver"
@@ -122,13 +115,6 @@ class DriverForegroundService : Service() {
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-//        val notificationIntent = Intent(this, HomeActivity::class.java)
-//        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY)
-//        val pendingIntent = PendingIntent.getActivity(
-//            this,
-//            0, notificationIntent, 0
-//        )
-
 
         // Create an Intent for the activity you want to start
         val resultIntent = Intent(this, HomeActivity::class.java)

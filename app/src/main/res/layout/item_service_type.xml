@@ -1,86 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="?selectableItemBackground"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="5dp"
     android:layoutDirection="ltr">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/serviceTypeImg"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:roundedCornerRadius="30dp"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/typeName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:text="@string/miniBus"
-        android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/serviceTypeImg"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="35dp"
-        android:text="@string/capacity"
-        android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
-        app:layout_constraintBottom_toBottomOf="@+id/typeName"
-        app:layout_constraintEnd_toStartOf="@+id/typeName"
-        app:layout_constraintTop_toTopOf="@+id/typeName" />
-
-    <TextView
-        android:id="@+id/capacityTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
-        android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView"
-        tools:text="@string/fiveHundred" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="15dp"
-        android:text="@string/facility"
-        android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/serviceTypeImg"
-        app:layout_constraintTop_toBottomOf="@+id/typeName" />
-
-    <TextView
-        android:id="@+id/facilityTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="3dp"
-        android:layout_marginTop="5dp"
-        tools:text="@string/facility"
-        android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/typeName" />
-
-    <View
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/serviceTypeImg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:roundedCornerRadius="30dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/typeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="@string/miniBus"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintEnd_toStartOf="@+id/serviceTypeImg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="35dp"
+            android:text="@string/capacity"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            app:layout_constraintBottom_toBottomOf="@+id/typeName"
+            app:layout_constraintEnd_toStartOf="@+id/typeName"
+            app:layout_constraintTop_toTopOf="@+id/typeName" />
+
+        <TextView
+            android:id="@+id/capacityTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            tools:text="@string/fiveHundred" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:text="@string/facility"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/serviceTypeImg"
+            app:layout_constraintTop_toBottomOf="@+id/typeName" />
+
+        <TextView
+            android:id="@+id/facilityTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:layout_marginTop="5dp"
+            tools:text="@string/facility"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/typeName" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

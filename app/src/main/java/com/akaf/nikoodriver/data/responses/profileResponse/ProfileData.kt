@@ -15,7 +15,7 @@ data class ProfileData(
     val id: Int,
     val isOnline: Boolean,
     val isReady: Boolean,
-    val lastLocation: LastLocation,
+    val lastLocation: LastLocation?=null,
     val lastLoginAt: String,
     val lname: String,
     val onDuty: Boolean,

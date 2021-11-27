@@ -159,6 +159,11 @@ class UploadDocsFragment() : BaseFragment(), ChoosePictureDialog.ChooseOpinionsC
 
                         }
 
+                        override fun onError(e: Throwable) {
+                            Timber.e(e)
+
+                        }
+
                     })
 
 
@@ -246,6 +251,12 @@ class UploadDocsFragment() : BaseFragment(), ChoosePictureDialog.ChooseOpinionsC
 
                                     }
 
+                                    override fun onError(e: Throwable) {
+                                        Timber.e(e)
+                                        pbNationalCard.visibility=View.GONE
+                                        uploadVectorNationalCard.visibility=View.VISIBLE
+                                    }
+
 
                                 })
                         }
@@ -265,6 +276,12 @@ class UploadDocsFragment() : BaseFragment(), ChoosePictureDialog.ChooseOpinionsC
                                             icCheckCarCardUpload.visibility=View.VISIBLE
                                         }
 
+                                    }
+
+                                    override fun onError(e: Throwable) {
+                                        Timber.e(e)
+                                        pbNationalCard.visibility=View.GONE
+                                        uploadVectorNationalCard.visibility=View.VISIBLE
                                     }
 
 
@@ -287,6 +304,11 @@ class UploadDocsFragment() : BaseFragment(), ChoosePictureDialog.ChooseOpinionsC
                                             icCheckCertificateUpload.visibility=View.VISIBLE
                                         }
 
+                                    }
+                                    override fun onError(e: Throwable) {
+                                        Timber.e(e)
+                                        pbNationalCard.visibility=View.GONE
+                                        uploadVectorNationalCard.visibility=View.VISIBLE
                                     }
 
 
@@ -311,6 +333,11 @@ class UploadDocsFragment() : BaseFragment(), ChoosePictureDialog.ChooseOpinionsC
                                         }
 
                                     }
+                                    override fun onError(e: Throwable) {
+                                        Timber.e(e)
+                                        pbNationalCard.visibility=View.GONE
+                                        uploadVectorNationalCard.visibility=View.VISIBLE
+                                    }
 
 
                                 })
@@ -333,6 +360,12 @@ class UploadDocsFragment() : BaseFragment(), ChoosePictureDialog.ChooseOpinionsC
 
                                     }
 
+                                    override fun onError(e: Throwable) {
+                                        Timber.e(e)
+                                        pbNationalCard.visibility=View.GONE
+                                        uploadVectorNationalCard.visibility=View.VISIBLE
+                                    }
+
 
                                 })
 
@@ -352,6 +385,12 @@ class UploadDocsFragment() : BaseFragment(), ChoosePictureDialog.ChooseOpinionsC
                                             icCheckWorkbookUpload.visibility=View.VISIBLE
                                         }
 
+                                    }
+
+                                    override fun onError(e: Throwable) {
+                                        Timber.e(e)
+                                        pbNationalCard.visibility=View.GONE
+                                        uploadVectorNationalCard.visibility=View.VISIBLE
                                     }
 
 

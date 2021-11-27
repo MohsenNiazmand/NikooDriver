@@ -13,15 +13,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MultipartBody
 import retrofit2.Response
+import timber.log.Timber
 
 
 class FillInfoViewModel(val fillInfoRepository: FillInfoRepository) : NikoViewModel() {
 
     val serviceTypes=MutableLiveData<Response<ServiceTypeResponse>>()
 
-    init {
-        getServiceTypes()
-    }
+
 
 
     fun register(token:String,
@@ -61,15 +60,25 @@ class FillInfoViewModel(val fillInfoRepository: FillInfoRepository) : NikoViewMo
     }
 
 
-    private fun getServiceTypes(){
-        fillInfoRepository.getServiceTypes()
+    fun getServiceTypes(vehicleType:String){
+        progressBarLiveData.value = true
+        fillInfoRepository.getServiceTypes(vehicleType)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object :NikoSingleObserver<Response<ServiceTypeResponse>>(compositeDisposable){
                 @SuppressLint("BinaryOperationInTimber")
                 override fun onSuccess(t: Response<ServiceTypeResponse>) {
                     serviceTypes.value=t
+                    progressBarLiveData.postValue(false)
+
                 }
+
+                override fun onError(e: Throwable) {
+                    Timber.e(e)
+                    progressBarLiveData.postValue(false)
+
+                }
+
             })
     }
 

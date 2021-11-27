@@ -11,7 +11,4 @@ abstract class NikoSingleObserver<T>(val compositeDisposable: CompositeDisposabl
         compositeDisposable.add(d)
     }
 
-    override fun onError(e: Throwable) {
-        Timber.e(e)
-    }
 }

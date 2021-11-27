@@ -7,10 +7,8 @@ import androidx.core.app.NotificationCompat
 import android.media.RingtoneManager
 import android.app.PendingIntent
 import android.content.Intent
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.akaf.nikoodriver.R
-import com.akaf.nikoodriver.feature.home.HomeActivity
+import com.akaf.nikoodriver.feature.main.home.HomeActivity
 import com.google.firebase.messaging.RemoteMessage
 
 

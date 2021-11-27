@@ -22,7 +22,7 @@ interface FillInfoDataSource {
     ) : Single<Response<FillInfoResponse>>
 
     fun uploadDriverPhoto(title:String,driverPhoto:MultipartBody.Part) : Single<Response<UploadPhotoDriverResponse>>
-    fun getServiceTypes():Single<Response<ServiceTypeResponse>>
+    fun getServiceTypes(vehicleType:String):Single<Response<ServiceTypeResponse>>
 
 
 }

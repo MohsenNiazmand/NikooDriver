@@ -1,8 +1,7 @@
 package com.akaf.nikoodriver.data.repositories
 
 import com.akaf.nikoodriver.data.repositories.sources.UnAcceptedPassengers.UnAcceptedPassengersDataSource
-import com.akaf.nikoodriver.data.repositories.sources.UnAcceptedPassengers.UnAcceptedPassengersLocalDataSource
-import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassengersResponse
+import com.akaf.nikoodriver.data.responses.unAcceptedPassengers.UnAcceptedPassengersResponse
 import io.reactivex.Single
 import retrofit2.Response
 

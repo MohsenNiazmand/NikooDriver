@@ -1,8 +1,7 @@
 package com.akaf.nikoodriver.services
 
 import android.content.SharedPreferences
-import com.akaf.nikoodriver.data.TokenContainer
-import com.akaf.nikoodriver.data.responses.UnAcceptedPassengers.UnAcceptedPassengersResponse
+import com.akaf.nikoodriver.data.responses.unAcceptedPassengers.UnAcceptedPassengersResponse
 import com.akaf.nikoodriver.data.responses.completeTripResponse.CompleteTripResponse
 import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsResponse
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
@@ -21,6 +20,7 @@ import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResp
 import com.akaf.nikoodriver.data.responses.serviceTypeResponse.ServiceTypeResponse
 import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
 import com.akaf.nikoodriver.data.responses.submitDocsResponse.SubmitDocsResponse
+import com.akaf.nikoodriver.data.responses.transactionsResponse.TransactionsResponse
 import com.akaf.nikoodriver.data.responses.updateResponse.UpdateResponse
 import com.akaf.nikoodriver.data.responses.uploadDocResponse.UploadDocResponse
 import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
@@ -35,7 +35,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 interface ApiService {
@@ -121,7 +120,10 @@ interface ApiService {
     ): Single<Response<UpdateResponse>>
 
     @GET("services?page=1")
-    fun getServiceTypes():Single<Response<ServiceTypeResponse>>
+    fun getServiceTypes(@Query("filter[where][name]") vehicleType:String):Single<Response<ServiceTypeResponse>>
+
+    @GET("driver/transactions")
+    fun transactions():Single<Response<TransactionsResponse>>
 
 }
 
@@ -140,7 +142,6 @@ fun createApiServiceInstance(sharedPreferences: SharedPreferences):ApiService{
             val token=sharedPreferences.getString("token", null)
             if (token != null)
                 newRequestBuilder.addHeader("Authorization", "Bearer ${token}")
-                Timber.i("TOKENI apiService: "+TokenContainer.token.toString())
             newRequestBuilder.addHeader("Accept", "application/json")
             newRequestBuilder.method(oldRequest.method(),oldRequest.body())
             return@addInterceptor it.proceed(newRequestBuilder.build())

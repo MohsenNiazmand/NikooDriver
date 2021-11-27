@@ -9,6 +9,23 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PICK" />
+        </intent>
+    </queries>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.CALL" />
+        </intent>
+    </queries>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -27,7 +44,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NikoDriver"
-        android:hardwareAccelerated="false"
         android:largeHeap="true"
         android:usesCleartextTraffic="true">
         <activity
@@ -36,6 +52,8 @@
             android:screenOrientation="portrait"
 
             />
+
+
 
         <service
             android:name=".services.DriverForegroundService"
@@ -78,7 +96,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".feature.home.HomeActivity"
+            android:name=".feature.main.home.HomeActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

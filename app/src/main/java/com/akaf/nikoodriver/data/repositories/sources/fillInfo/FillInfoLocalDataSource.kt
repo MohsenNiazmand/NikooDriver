@@ -32,7 +32,7 @@ class FillInfoLocalDataSource : FillInfoDataSource {
         TODO("Not yet implemented")
     }
 
-    override fun getServiceTypes(): Single<Response<ServiceTypeResponse>> {
+    override fun getServiceTypes(vehicleType:String): Single<Response<ServiceTypeResponse>> {
         TODO("Not yet implemented")
     }
 

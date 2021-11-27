@@ -1,5 +1,6 @@
 package com.akaf.nikoodriver
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -21,6 +22,8 @@ import com.akaf.nikoodriver.data.repositories.sources.home.HomeLocalDataSource
 import com.akaf.nikoodriver.data.repositories.sources.home.HomeRemoteDataSource
 import com.akaf.nikoodriver.data.repositories.sources.login.LoginLocalDataSource
 import com.akaf.nikoodriver.data.repositories.sources.login.LoginRemoteDataSource
+import com.akaf.nikoodriver.data.repositories.sources.transactions.TransactionsLocalDataSource
+import com.akaf.nikoodriver.data.repositories.sources.transactions.TransactionsRemoteDataSource
 import com.akaf.nikoodriver.data.repositories.sources.uploadDocs.UploadDocsLocalDataSource
 import com.akaf.nikoodriver.data.repositories.sources.uploadDocs.UploadDocsRemoteDataSource
 import com.akaf.nikoodriver.data.repositories.sources.verification.VerificationLocalDataSource
@@ -31,9 +34,10 @@ import com.akaf.nikoodriver.feature.auth.login.LoginViewModel
 import com.akaf.nikoodriver.feature.auth.registering.AuthViewModel
 import com.akaf.nikoodriver.feature.auth.registering.upload_docs.UploadDocsViewModel
 import com.akaf.nikoodriver.feature.auth.verification.VerificationViewModel
-import com.akaf.nikoodriver.feature.current_trips.CurrentTripsViewModel
-import com.akaf.nikoodriver.feature.unAccepted_passengers.UnAcceptedPassengersViewModel
-import com.akaf.nikoodriver.feature.home.HomeViewModel
+import com.akaf.nikoodriver.feature.main.current_trips.CurrentTripsViewModel
+import com.akaf.nikoodriver.feature.main.unAccepted_passengers.UnAcceptedPassengersViewModel
+import com.akaf.nikoodriver.feature.main.home.HomeViewModel
+import com.akaf.nikoodriver.feature.main.transactions.TransactionsViewModel
 import com.akaf.nikoodriver.services.DriverForegroundService
 import com.akaf.nikoodriver.services.createApiServiceInstance
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
@@ -41,16 +45,20 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.core.component.KoinApiExtension
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import timber.log.Timber
 
 class App : MultiDexApplication() {
     companion object {
+        @SuppressLint("StaticFieldLeak")
         lateinit var context: Context
+        @SuppressLint("StaticFieldLeak")
         var activity: Activity? = null
     }
 
+    @KoinApiExtension
     override fun onCreate() {
         super.onCreate()
         MultiDex.install(baseContext)
@@ -131,6 +139,13 @@ class App : MultiDexApplication() {
                 )
             }
 
+            single<TransactionsRepository> {
+                TransactionsRepositoryImpl(
+                    TransactionsRemoteDataSource(get()),
+                    TransactionsLocalDataSource()
+                )
+            }
+
 
             viewModel { LoginViewModel(get()) }
             viewModel { VerificationViewModel(get()) }
@@ -140,6 +155,7 @@ class App : MultiDexApplication() {
             viewModel { UnAcceptedPassengersViewModel(get()) }
             viewModel { CurrentTripsViewModel(get()) }
             viewModel { AuthViewModel() }
+            viewModel { TransactionsViewModel(get()) }
 
         }
 
@@ -149,7 +165,7 @@ class App : MultiDexApplication() {
             modules(myModules)
         }
 
-        val homeViewModel:HomeViewModel by inject()
+        val homeViewModel: HomeViewModel by inject()
         val sharedPreferences:SharedPreferences by inject()
         val token=sharedPreferences.getString("token", null)
         val refreshToken=sharedPreferences.getString("refresh_token", null)
@@ -174,7 +190,7 @@ class App : MultiDexApplication() {
                     startActivity(intent)
 
 
-                    activity?.overridePendingTransition(0, 0);
+                    activity?.overridePendingTransition(0, 0)
                     Toast.makeText(applicationContext,"لطفا مجددا به حساب خود وارد شوید", Toast.LENGTH_SHORT).show()
                 }
             }

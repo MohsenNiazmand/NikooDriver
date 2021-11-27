@@ -107,11 +107,31 @@ class FillInfoFragment: BaseFragment(), ChoosePictureDialog.ChooseOpinionsCallba
 
         toggleBtnVehicleType.addOnButtonCheckedListener { group, checkedId, isChecked ->
             when{
-                carTypeBtn.isChecked->vehicleType="car"
-                busTypeBtn.isChecked->vehicleType="bus"
-                vanTypeBtn.isChecked->vehicleType="van"
-                miniBusTypeBtn.isChecked->vehicleType="minibus"
-                otherTypeBtn.isChecked->vehicleType="all"
+                carTypeBtn.isChecked->{
+                    service_id=""
+                    serviceTypeTv.text=getString(R.string.choose)
+                    vehicleType="سواری"
+                }
+                busTypeBtn.isChecked->{
+                    service_id=""
+                    serviceTypeTv.text=getString(R.string.choose)
+                    vehicleType="اتوبوس"
+                }
+                vanTypeBtn.isChecked->{
+                    service_id=""
+                    serviceTypeTv.text=getString(R.string.choose)
+                    vehicleType="ون"
+                }
+                miniBusTypeBtn.isChecked->{
+                    service_id=""
+                    serviceTypeTv.text=getString(R.string.choose)
+                    vehicleType="مینی بوس"
+                }
+                otherTypeBtn.isChecked->{
+                    service_id=""
+                    serviceTypeTv.text=getString(R.string.choose)
+                    vehicleType="دیگر"
+                }
             }
         }
 
@@ -142,11 +162,18 @@ class FillInfoFragment: BaseFragment(), ChoosePictureDialog.ChooseOpinionsCallba
 
 
         serviceTypeTv.setOnClickListener {
-            val serviceTypesDialog= ServiceTypesDialog()
-            serviceTypesDialog.show(childFragmentManager,null)
-            serviceTypesDialog.passData=this
+            if (vehicleType.isNotEmpty()){
+                val serviceTypesDialog= ServiceTypesDialog()
+                val bundle=Bundle()
+                bundle.putString("vehicleType",vehicleType)
+                serviceTypesDialog.arguments=bundle
+                serviceTypesDialog.show(childFragmentManager,null)
+                serviceTypesDialog.passData=this
+            }else
+            Toast.makeText(requireContext(),"ابتدا نوع وسیله نقلیه را انتخاب نمایید",Toast.LENGTH_SHORT).show()
 
-        }
+
+    }
 
 
 
@@ -185,6 +212,10 @@ class FillInfoFragment: BaseFragment(), ChoosePictureDialog.ChooseOpinionsCallba
                                         .navigate(R.id.action_fillInfoFragment_to_uploadDocsFragment)
                                 }else{
                                     requireActivity().runOnUiThread { kotlin.run { Toast.makeText(requireContext(), t.message(), Toast.LENGTH_SHORT).show() } } }
+                            }
+
+                            override fun onError(e: Throwable) {
+                                Timber.e(e)
                             }
                         } )
             }else{
@@ -254,6 +285,14 @@ class FillInfoFragment: BaseFragment(), ChoosePictureDialog.ChooseOpinionsCallba
                                     }
                                 }
 
+
+
+                            }
+
+                            override fun onError(e: Throwable) {
+                                Timber.e(e)
+                                pbProfile.visibility=View.GONE
+                                chooseDriverPicPart.visibility=View.VISIBLE
 
 
                             }

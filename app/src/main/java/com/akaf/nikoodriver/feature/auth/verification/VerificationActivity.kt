@@ -3,14 +3,13 @@
 package com.akaf.nikoodriver.feature.auth.verification
 
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationResponse
-import com.akaf.nikoodriver.feature.home.HomeActivity
+import com.akaf.nikoodriver.feature.main.home.HomeActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -28,6 +27,7 @@ import java.lang.Exception
 
 
 import com.akaf.nikoodriver.R
+import timber.log.Timber
 
 
 class VerificationActivity : BaseActivity() {
@@ -105,6 +105,10 @@ class VerificationActivity : BaseActivity() {
                                 }
                             }
 
+                        }
+
+                        override fun onError(e: Throwable) {
+                            Timber.e(e)
                         }
 
                     })
