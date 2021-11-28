@@ -25,6 +25,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
 import timber.log.Timber
+import java.text.DecimalFormat
 
 class HomeFragment : BaseFragment() {
     private val hiveMqttManager: HiveMqttManager by inject()
@@ -101,8 +102,9 @@ class HomeFragment : BaseFragment() {
 
                     }
                 if (it.rate!=null){
-                    val rate=it.rate
-                    rateTv.text=rate
+                    val rate=it.rate.toDouble()
+                    val dec = DecimalFormat("#0.00")
+                    rateTv.text=dec.format(rate)
                 }
 
                 if (it.credit!=null){

@@ -8,7 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.data.responses.unAcceptedPassengers.UnAcceptedPassengersData
+import com.akaf.nikoodriver.feature.main.transactions.UTC_TIME_FORMATT
+import com.github.eloyzone.jalalicalendar.DateConverter
+import com.github.eloyzone.jalalicalendar.JalaliDateFormatter
 import kotlinx.android.synthetic.main.item_declined_passenger.view.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class UnAcceptedPassengersAdapter :
     RecyclerView.Adapter<UnAcceptedPassengersAdapter.UnAcceptedPassengersViewHolder>() {
@@ -31,11 +37,23 @@ class UnAcceptedPassengersAdapter :
         val serviceDateTv=itemView.findViewById<TextView>(R.id.serviceDateTv)
 
 
+        @SuppressLint("SimpleDateFormat", "SetTextI18n")
         fun bind(passenger:UnAcceptedPassengersData){
             originTv.text=passenger.sourceCity
             destinationTv.text=passenger.destinationCity
             fareTv.text=passenger.cost
-            serviceDateTv.text=passenger.startAt
+//            serviceDateTv.text=passenger.startAt
+            val date=passenger.startAt
+            val dateConverter =  DateConverter();
+            val readDate = SimpleDateFormat(UTC_TIME_FORMATT)
+            readDate.timeZone= TimeZone.getTimeZone("UTC")
+            val correctDate =readDate.parse(date)
+            val ourTimeFormat = SimpleDateFormat("MM/dd/yyyy'T'HH:mm")
+            val correctDateFormatted=ourTimeFormat.format(correctDate!!)
+            // Convert Gregorian date to Jalali
+            val result = correctDateFormatted.format( JalaliDateFormatter("yyyy/mm/dd", JalaliDateFormatter.FORMAT_IN_PERSIAN))
+            val jalaliDate=dateConverter.gregorianToJalali(result.substring(6,10).toInt(),result.substring(0,2).toInt(),result.substring(3,5).toInt())
+            serviceDateTv.text= jalaliDate.toString()
             itemView.acceptRequestBtn.setOnClickListener {
                 if (passengers.size==1){
                     removePassengerFromList(passenger)

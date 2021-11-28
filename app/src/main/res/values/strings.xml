@@ -135,7 +135,7 @@
     <string name="serviceType">نوع سرویس : </string>
     <string name="transactions">تراکنش ها</string>
     <string name="amount">مبلغ : </string>
-    <string name="dateOfTransaction">تاریخ تراکنش : </string>
+    <string name="TimeOfTransaction">زمان تراکنش : </string>
     <string name="transactionCode">کد تراکنش : </string>
     <string name="transactionType">نوع تراکنش : </string>
     <string name="transactionReason">شرح تراکنش : </string>

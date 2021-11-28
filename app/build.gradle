@@ -124,4 +124,6 @@ dependencies {
     //animation library
     implementation "com.airbnb.android:lottie:3.4.0"
 
+    implementation 'com.github.eloyzone:jalali-calendar:1.0.0'
+
 }
