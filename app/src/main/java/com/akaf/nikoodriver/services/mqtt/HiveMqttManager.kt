@@ -33,7 +33,6 @@ import kotlin.collections.ArrayList
 
 class HiveMqttManager(val context: Context) : KoinComponent {
     val sharedPreferences: SharedPreferences by inject()
-
     private var mqttClient: Mqtt3RxClient? = null
     private var token = ""
     private var driverId = 0
@@ -43,7 +42,6 @@ class HiveMqttManager(val context: Context) : KoinComponent {
     var disconnectSubject = PublishSubject.create<Boolean>()
     var canceledTripSubject = PublishSubject.create<Any>()
     var payedTripSubject = PublishSubject.create<Any>()
-
     // TAG
     companion object {
         const val TAG = "mqttDriver"
@@ -64,6 +62,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
     fun initMqtt() {
         try {
             this.token =sharedPreferences.getString("token",null).toString()
+            Timber.i("TOKENI MQTT : "+token)
             this.driverId=sharedPreferences.getString("driverId",null)!!.toInt()
             if (token.isNotEmpty()) {
                 mqttClient = Mqtt3Client.builder()

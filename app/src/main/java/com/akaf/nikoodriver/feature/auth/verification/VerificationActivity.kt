@@ -70,6 +70,8 @@ class VerificationActivity : BaseActivity() {
 
                             val response = t.body()?.data
                             val token="Bearer "+t.body()?.data?.token
+                            Timber.i("TOKENI Login :"+t.body()?.data?.token)
+
                             if (t.code()==200 && response != null){
 
                                 //for checking the driver position in registering

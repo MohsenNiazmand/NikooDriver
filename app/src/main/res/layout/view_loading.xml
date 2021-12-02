@@ -11,13 +11,13 @@
 
 
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_gravity="center"
-            android:padding="28dp"
+            android:padding="30dp"
             app:cardCornerRadius="20dp"
             android:background="@color/white"
             app:cardElevation="3dp"
@@ -31,7 +31,7 @@
                 app:lottie_loop="true"
                 app:lottie_autoPlay="true"/>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
 
 

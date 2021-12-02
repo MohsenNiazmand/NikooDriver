@@ -33,6 +33,7 @@ class HomeFragment : BaseFragment() {
     val sharedPreferences:SharedPreferences by inject()
     var mqttState:Boolean=true
     val compositeDisposable = CompositeDisposable()
+    val handler = Handler()
 
 
 
@@ -63,7 +64,6 @@ class HomeFragment : BaseFragment() {
         }else
             deActive()
 
-        val handler = Handler()
         handler.postDelayed({
             homeViewModel.getProfile()
             if (getView()!=null)

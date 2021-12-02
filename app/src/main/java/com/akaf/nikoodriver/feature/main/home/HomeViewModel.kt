@@ -27,11 +27,11 @@ import retrofit2.Response
 import timber.log.Timber
 
 class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRepository,val sharedPreferences: SharedPreferences):NikoViewModel() {
+    val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
     val mqttState = MutableLiveData<Boolean>()
     val tripCanceledLiveData = MutableLiveData<Boolean>()
     val tripPayedLiveData = MutableLiveData<Boolean>()
     val newOfferLiveData = MutableLiveData<TripData>()
-    val refreshTokenLiveData = MutableLiveData<Response<RefreshTokenResponse>>()
     val profileLiveData=MutableLiveData<ProfileData?>()
     var versionAppLiveData = SingleLiveEvent<UpdateData>()
     val rejectTripLiveData=MutableLiveData<Response<RejectOfferResponse>>()
@@ -58,6 +58,26 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
         subscribeMqttState()
         subscribeToNewOffers()
         subscribeToDisconnectSubject()
+    }
+
+
+    fun sendRefreshToken(token:String, refreshToken:String){
+        homeRepository.refreshToken(token,refreshToken)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :NikoSingleObserver<Response<RefreshTokenResponse>>(compositeDisposable){
+                override fun onSuccess(t: Response<RefreshTokenResponse>) {
+                    refreshTokenLiveData.value=t
+                    Timber.i("TOKENI REFRESH : "+t.body()?.data?.token)
+                }
+                override fun onError(e: Throwable) {
+                    Timber.e(e)
+                    progressBarLiveData.postValue(false)
+                }
+
+            })
+
+
     }
 
 
@@ -232,25 +252,7 @@ class HomeViewModel(var mqttManager: HiveMqttManager,val homeRepository: HomeRep
     }
 
 
-     fun sendRefreshToken(token:String, refreshToken:String){
-         progressBarLiveData.value=true
-            homeRepository.refreshToken(token,refreshToken)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object :NikoSingleObserver<Response<RefreshTokenResponse>>(compositeDisposable){
-                    override fun onSuccess(t: Response<RefreshTokenResponse>) {
-                        refreshTokenLiveData.value=t
-                         progressBarLiveData.postValue(false)
-                        }
-                    override fun onError(e: Throwable) {
-                        Timber.e(e)
-                        progressBarLiveData.postValue(false)
-                    }
 
-                })
-
-
-    }
 
 
     fun getProfile(){

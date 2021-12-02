@@ -22,3 +22,6 @@
 -keep class androidx.appcompat.widget.** { *; }
 -keepclassmembernames class io.netty.** { *; }
 -keepclassmembers class org.jctools.** { *; }
+-keep class androidx.appcompat.widget.** { *; }
+-keepclassmembernames class io.netty.** { *; }
+-keepclassmembernames class org.jctools.** { *; }

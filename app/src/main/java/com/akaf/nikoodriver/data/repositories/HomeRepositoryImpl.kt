@@ -35,8 +35,8 @@ class HomeRepositoryImpl(
 
             .doOnSuccess {
                 it.body()?.data?.token?.let { it1 -> it.body()?.data?.refreshToken?.let { it2 ->
-                    TokenContainer.update(it1, it2)
                     homeLocalDataSource.saveToken(it1, it2)
+                    TokenContainer.update(it1, it2)
 
                 } }
             }

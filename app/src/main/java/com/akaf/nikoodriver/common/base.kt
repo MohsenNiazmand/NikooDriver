@@ -149,15 +149,17 @@ abstract class BaseFragment:Fragment(),NikoView{
 
 
     open fun openCropActivity(uri: Uri?) {
-        CropImage.activity(uri)
-            .setOutputCompressQuality(70)
-            .setFixAspectRatio(false)
-            .setAllowRotation(true)
-            .setAllowFlipping(true)
-            .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
-            .setMaxZoom(2)
-            .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
-            .start(requireActivity(),this)
+        viewContext?.let {
+            CropImage.activity(uri)
+                .setOutputCompressQuality(70)
+                .setFixAspectRatio(false)
+                .setAllowRotation(true)
+                .setAllowFlipping(true)
+                .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)
+                .setMaxZoom(2)
+                .setGuidelines(CropImageView.Guidelines.ON_TOUCH)
+                .start(it,this)
+        }
     }
 
 

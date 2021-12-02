@@ -67,7 +67,6 @@ class App : MultiDexApplication() {
         context = applicationContext
 
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager=getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             val notificationChannel=NotificationChannel("NikooDriver","نیکو همراه",NotificationManager.IMPORTANCE_HIGH)
@@ -167,12 +166,12 @@ class App : MultiDexApplication() {
 
         val homeViewModel: HomeViewModel by inject()
         val sharedPreferences:SharedPreferences by inject()
+        val hiveMqttManager:HiveMqttManager by inject()
         val token=sharedPreferences.getString("token", null)
         val refreshToken=sharedPreferences.getString("refresh_token", null)
 
         if (token!=null && refreshToken!=null){
             homeViewModel.sendRefreshToken(token,refreshToken)
-
             //checks token expire
             homeViewModel.refreshTokenLiveData.observeForever{
                 if (it.code()==403){
