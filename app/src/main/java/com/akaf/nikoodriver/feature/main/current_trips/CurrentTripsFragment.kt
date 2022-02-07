@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_current_travel.*
 import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinApiExtension
 
-class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallback {
+class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallback,CancelTripDialog.TripCanceled {
     val currentTripsViewModel:CurrentTripsViewModel by inject()
     val currentTripsAdapter=CurrentTripsAdapter()
     val latitude: Double?
@@ -44,13 +44,13 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
 
 
         checkPermStartLocationUpdate()
-        rvCurrentTrips.layoutManager= LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
+        rvCurrentTrips.layoutManager= LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,true)
         rvCurrentTrips.adapter=currentTripsAdapter
         currentTripsViewModel.currentTripsLiveData.observe(viewLifecycleOwner){
         currentTripsAdapter.currentTripCallback=this
-            if (it.data!=null)
+            if (it?.data!=null)
                 currentTripsAdapter.currentTrips= it.data as ArrayList<CurrentTripsData>
-            when(it.data?.size){
+            when(it?.data?.size){
                 0->ivEmptyC.visibility=View.VISIBLE
                 else->ivEmptyC.visibility=View.GONE
             }
@@ -99,7 +99,7 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
     }
 
     @KoinApiExtension
-    override fun onIRodeClicked(currentTrip: CurrentTripsData) {
+    override fun onpassengerPickedUpClicked(currentTrip: CurrentTripsData) {
 
         latitude?.let {
             longitude?.let { it1 ->
@@ -137,7 +137,6 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCancelBtnClicked(currentTrip: CurrentTripsData) {
-//        currentTripsViewModel.cancelTrip(currentTrip.id)
         val cancelTripDialog = CancelTripDialog()
         val bundle=Bundle()
         bundle.putInt("serviceId",currentTrip.id)
@@ -145,5 +144,12 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
         longitude?.let { bundle.putDouble("loc1", it) }
         cancelTripDialog.arguments=bundle
         cancelTripDialog.show(childFragmentManager, null)
+        cancelTripDialog.tripCanceled=this
             }
+
+    override fun tripCanceled() {
+        handler.postDelayed({
+            currentTripsViewModel.currentTrips()
+        }, 1000)
+    }
 }

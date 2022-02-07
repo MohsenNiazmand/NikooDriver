@@ -2,8 +2,8 @@ package com.akaf.nikoodriver.data.responses.currentTripsResponse
 
 data class Source(
     val count: Int,
-    val description: String,
+    val description: Any,
     val id: Int,
-    val location: LocationX,
+    val location: LocationXX,
     val status: String
 )

@@ -14,6 +14,6 @@ data class UnAcceptedPassengersData(
     val phoneNumber: String,
     val returnAt: String,
     val sourceCity: String,
-    val startAt: String,
+    val startAt: String?,
     val status: String
 )

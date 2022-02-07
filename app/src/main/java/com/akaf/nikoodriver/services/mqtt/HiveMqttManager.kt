@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.location.Location
 import android.util.Log
-import com.akaf.nikoodriver.data.responses.mqttTripResponse.Trip
+import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.google.gson.Gson
 import com.hivemq.client.mqtt.MqttGlobalPublishFilter
@@ -16,7 +16,6 @@ import com.hivemq.client.mqtt.mqtt3.message.subscribe.Mqtt3Subscribe
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.ReplaySubject
 import org.json.JSONObject
@@ -28,9 +27,9 @@ import timber.log.Timber
 
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 
+@KoinApiExtension
 class HiveMqttManager(val context: Context) : KoinComponent {
     val sharedPreferences: SharedPreferences by inject()
     private var mqttClient: Mqtt3RxClient? = null
@@ -61,8 +60,11 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
     fun initMqtt() {
         try {
-            this.token =sharedPreferences.getString("token",null).toString()
-            Timber.i("TOKENI MQTT : "+token)
+//            this.token =sharedPreferences.getString("token",null).toString()
+            if (TokenContainer.token!=null)
+                token=TokenContainer.token.toString()
+            Timber.i("MQTT TOOKENI : "+token)
+
             this.driverId=sharedPreferences.getString("driverId",null)!!.toInt()
             if (token.isNotEmpty()) {
                 mqttClient = Mqtt3Client.builder()
@@ -115,7 +117,9 @@ class HiveMqttManager(val context: Context) : KoinComponent {
     }
 
     fun connect() {
-        this.token =sharedPreferences.getString("token",null).toString()
+//        this.token =sharedPreferences.getString("token",null).toString()
+        if (TokenContainer.token!=null)
+            token=TokenContainer.token.toString()
         this.driverId=sharedPreferences.getString("driverId",null)!!.toInt()
 
         if (mqttClient == null) {
@@ -300,6 +304,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({
                     // handleNewMessage(it)
+                            Timber.i("new offerrr : $it ")
                 }, {
                     Log.e(TAG, "subscribeToNewOffer Error -> ${it.localizedMessage ?: ""}")
 

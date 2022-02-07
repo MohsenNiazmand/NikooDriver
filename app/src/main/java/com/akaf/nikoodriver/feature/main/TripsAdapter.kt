@@ -32,7 +32,7 @@ class TripsAdapter() : RecyclerView.Adapter<TripsAdapter.TripsViewHolder>() {
         @SuppressLint("SetTextI18n")
         fun bind(trip: TripData){
 
-            val timer = object: CountDownTimer(120000, 1000) {
+            val timer = object: CountDownTimer(10000, 1000) {
                 @SuppressLint("SetTextI18n")
                 override fun onTick(millisUntilFinished: Long) {
 

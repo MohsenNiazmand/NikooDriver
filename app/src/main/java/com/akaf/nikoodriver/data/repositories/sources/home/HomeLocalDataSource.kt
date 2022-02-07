@@ -1,6 +1,7 @@
 package com.akaf.nikoodriver.data.repositories.sources.home
 
 import android.content.SharedPreferences
+import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.responses.unAcceptedPassengers.UnAcceptedPassengersResponse
 import com.akaf.nikoodriver.data.responses.driverLocationResponse.DriverLocationResponse
 import com.akaf.nikoodriver.data.responses.emptySeatsResponse.EmptySeatsResponse
@@ -12,6 +13,7 @@ import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResp
 import com.akaf.nikoodriver.data.responses.updateResponse.UpdateResponse
 import io.reactivex.Single
 import retrofit2.Response
+import timber.log.Timber
 
 class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSource{
     override fun onlineStatus(isOnline: Boolean) {
@@ -24,19 +26,6 @@ class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSo
         TODO("Not yet implemented")
     }
 
-    override fun saveToken(token: String, refreshToken: String) {
-        sharedPreferences.edit().apply {
-            putString("token", token)
-            putString("refresh_token", refreshToken)
-        }.apply()
-    }
-
-    override fun refreshToken(
-        token: String,
-        refreshToken: String
-    ): Single<Response<RefreshTokenResponse>> {
-        TODO("Not yet implemented")
-    }
 
     override fun clearSharedPreference(){
         sharedPreferences.edit().clear().apply()
@@ -63,11 +52,26 @@ class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSo
         TODO("Not yet implemented")
     }
 
-    override fun saveUsername(userName: String) {
+    override fun saveUserInformation(
+        userName: String,
+        credit: String,
+        rate: String,
+        emptySeats: String,
+        currentTrips: String,
+        unAcceptedPassengers: String,
+        maxCapacity:String
+    ) {
         sharedPreferences.edit().apply{
             putString("username",userName)
+            putString("credit",credit)
+            putString("rate",rate)
+            putString("emptySeats",emptySeats)
+            putString("currentTrips",currentTrips)
+            putString("unAcceptedPassengers",unAcceptedPassengers)
+            putString("maxCapacity",maxCapacity)
         }.apply()
-    }
+        }
+
 
     override fun update(
         type: String,
@@ -75,6 +79,13 @@ class HomeLocalDataSource(val sharedPreferences: SharedPreferences) : HomeDataSo
         version: String
     ): Single<Response<UpdateResponse>> {
         TODO("Not yet implemented")
+    }
+
+    override fun loadToken() {
+        TokenContainer.update(
+            sharedPreferences.getString("token", null),
+            sharedPreferences.getString("refresh_token", null)
+        )
     }
 
 }

@@ -3,7 +3,7 @@ package com.akaf.nikoodriver.data.repositories.sources.fillInfo
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.driverUploadPhotoResponse.UploadPhotoDriverResponse
 import com.akaf.nikoodriver.data.responses.fillInfoResponse.FillInfoResponse
 import com.akaf.nikoodriver.data.responses.serviceTypeResponse.ServiceTypeResponse
-import com.akaf.nikoodriver.services.ApiService
+import com.akaf.nikoodriver.services.http.ApiService
 import com.google.gson.JsonObject
 import io.reactivex.Single
 import okhttp3.MultipartBody

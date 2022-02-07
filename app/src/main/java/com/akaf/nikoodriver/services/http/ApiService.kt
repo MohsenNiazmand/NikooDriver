@@ -1,6 +1,8 @@
-package com.akaf.nikoodriver.services
+package com.akaf.nikoodriver.services.http
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.responses.unAcceptedPassengers.UnAcceptedPassengersResponse
 import com.akaf.nikoodriver.data.responses.completeTripResponse.CompleteTripResponse
 import com.akaf.nikoodriver.data.responses.currentTripsResponse.CurrentTripsResponse
@@ -30,6 +32,7 @@ import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -54,8 +57,9 @@ interface ApiService {
                           @Part driverPhoto:MultipartBody.Part ) : Single<Response<UploadPhotoDriverResponse>>
 
 
+
     @POST("auth/refresh")
-    fun refreshToken(@Body jsonObject: JsonObject): Single<Response<RefreshTokenResponse>>
+    fun refreshToken(@Body jsonObject: JsonObject): Call<RefreshTokenResponse>
 
     @Multipart
     @POST("auth/driver/docs")
@@ -129,8 +133,8 @@ interface ApiService {
 }
 
 
-fun createApiServiceInstance(sharedPreferences: SharedPreferences):ApiService{
-
+@SuppressLint("BinaryOperationInTimber")
+fun createApiServiceInstance(sharedPreferences: SharedPreferences,nikooAuthenticator:NikooAuthenticator):ApiService{
 
 
     val okHttpClient = OkHttpClient.Builder()
@@ -140,17 +144,22 @@ fun createApiServiceInstance(sharedPreferences: SharedPreferences):ApiService{
         .addInterceptor {
             val oldRequest = it.request()
             val newRequestBuilder = oldRequest.newBuilder()
-            val token=sharedPreferences.getString("token", null)
-            Timber.i("TOKENI ApiService :"+token)
-            if (token != null)
-                newRequestBuilder.addHeader("Authorization", "Bearer ${token}")
+
+            if (TokenContainer.token!=null){
+                Timber.i("ApiService TOOKENI :"+TokenContainer.token)
+                newRequestBuilder.addHeader("Authorization", "Bearer ${TokenContainer.token}")
+
+            }
+
             newRequestBuilder.addHeader("Accept", "application/json")
             newRequestBuilder.method(oldRequest.method(),oldRequest.body())
+
             return@addInterceptor it.proceed(newRequestBuilder.build())
         }
         .addInterceptor(HttpLoggingInterceptor().apply {
             setLevel(HttpLoggingInterceptor.Level.BODY)
         })
+        .authenticator(nikooAuthenticator)
         .build()
 
     val retrofit=Retrofit.Builder()

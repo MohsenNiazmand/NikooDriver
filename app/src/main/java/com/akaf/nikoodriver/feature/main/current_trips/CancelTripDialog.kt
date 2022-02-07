@@ -17,6 +17,7 @@ class CancelTripDialog: DialogFragment() {
     var location0:Double=0.0
     var location1:Double=0.0
     var location: ArrayList<Double> = ArrayList()
+    var tripCanceled:TripCanceled?=null
 
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,30 +53,38 @@ class CancelTripDialog: DialogFragment() {
         view.wrongTimingBt.setOnClickListener {
             dismiss()
             currentTripsViewModel.cancelTrip(serviceId,wrongTimingBt.text.toString(),location)
-            currentTripsViewModel.currentTrips()
+            tripCanceled?.tripCanceled()
         }
         view.wrongNavigatingBt.setOnClickListener {
             dismiss()
             currentTripsViewModel.cancelTrip(serviceId,wrongNavigatingBt.text.toString(),location)
-            currentTripsViewModel.currentTrips()
+            tripCanceled?.tripCanceled()
+
         }
         view.declinePassengerLocBt.setOnClickListener {
             dismiss()
             currentTripsViewModel.cancelTrip(serviceId,declinePassengerLocBt.text.toString(),location)
-            currentTripsViewModel.currentTrips()
+            tripCanceled?.tripCanceled()
+
         }
         view.passengerWasNotAtLocBt.setOnClickListener {
             dismiss()
             currentTripsViewModel.cancelTrip(serviceId,passengerWasNotAtLocBt.text.toString(),location)
-            currentTripsViewModel.currentTrips()
+            tripCanceled?.tripCanceled()
+
         }
         view.otherReasonBt.setOnClickListener {
             dismiss()
             currentTripsViewModel.cancelTrip(serviceId,otherReasonBt.text.toString(),location)
-            currentTripsViewModel.currentTrips()
+            tripCanceled?.tripCanceled()
+
         }
 
         return view
+    }
+
+    interface TripCanceled{
+        fun tripCanceled()
     }
 
 }

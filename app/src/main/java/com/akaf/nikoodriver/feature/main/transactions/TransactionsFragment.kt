@@ -11,9 +11,12 @@ import com.akaf.nikoodriver.common.BaseFragment
 import com.akaf.nikoodriver.data.responses.transactionsResponse.TransactionsData
 import kotlinx.android.synthetic.main.fragment_transactions.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinApiExtension
 
+@KoinApiExtension
 class TransactionsFragment : BaseFragment() {
-    private val transactionsViewModel:TransactionsViewModel by inject()
+    private val transactionsViewModel:TransactionsViewModel by viewModel()
     private val transactionsAdapter=TransactionsAdapter()
 
     override fun onCreateView(
@@ -37,6 +40,10 @@ class TransactionsFragment : BaseFragment() {
 
             }
 
+        }
+
+        transactionsViewModel.progressBarLiveData.observe(viewLifecycleOwner){
+            setProgressIndicator(it)
         }
     }
 

@@ -8,12 +8,13 @@
     <fragment
         android:id="@+id/currentTravelFragment"
         android:name="com.akaf.nikoodriver.feature.main.current_trips.CurrentTripsFragment"
-        android:label="CurrentTravelFragment" />
+        android:label="CurrentTravelFragment"
+        tools:layout="@layout/fragment_current_travel"/>
     <fragment
         android:id="@+id/declinedPassengersFragment"
         android:name="com.akaf.nikoodriver.feature.main.unAccepted_passengers.UnAcceptedPassengersFragment"
         android:label="fragment_current_travel"
-        tools:layout="@layout/fragment_current_travel" />
+        tools:layout="@layout/fragment_declined_passengers" />
     <fragment
         android:id="@+id/travelRegistrationFragment"
         android:name="com.akaf.nikoodriver.feature.main.travel_registeration.TravelRegistrationFragment"
@@ -30,23 +31,23 @@
             />
         <action
             android:id="@+id/action_homeFragment_to_declinedPassengersFragment"
-            app:destination="@id/declinedPassengersFragment" />
+            app:destination="@id/declinedPassengersFragment"
+                 />
         <action
             android:id="@+id/action_homeFragment_to_travelRegistrationFragment"
             app:destination="@id/travelRegistrationFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            />
+                />
         <action
             android:id="@+id/action_homeFragment_to_currentTravelFragment2"
             app:destination="@id/currentTravelFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-
-            />
+                />
         <action
             android:id="@+id/action_homeFragment_to_transactionsFragment"
-            app:destination="@id/transactionsFragment" />
+            app:destination="@id/transactionsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/transactionsFragment"

@@ -10,7 +10,9 @@ object TokenContainer {
         private set
 
     fun update(token: String?, refreshToken: String?) {
-        Timber.i("Access TOKENI-> ${token?.substring(0, 10)}, Refresh TOKENI-> $refreshToken")
+//        Timber.i("Access TOOKENI-> ${token?.substring(0, 10)}, Refresh TOOKENI-> $refreshToken")
+        Timber.i("TokenContainer TOOKENI:%s", token)
+
         this.token = token
         this.refreshToken = refreshToken
     }

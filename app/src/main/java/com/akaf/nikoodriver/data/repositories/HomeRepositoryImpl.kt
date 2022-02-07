@@ -27,33 +27,11 @@ class HomeRepositoryImpl(
        return homeRemoteDataSource.sendLocation(sendLocation)
     }
 
-    override fun refreshToken(
-        token: String,
-        refreshToken: String
-    ): Single<Response<RefreshTokenResponse>> {
-        return homeRemoteDataSource.refreshToken(token,refreshToken)
-
-            .doOnSuccess {
-                it.body()?.data?.token?.let { it1 -> it.body()?.data?.refreshToken?.let { it2 ->
-                    homeLocalDataSource.saveToken(it1, it2)
-                    TokenContainer.update(it1, it2)
-
-                } }
-            }
-//            .doOnError {
-//                homeLocalDataSource.clearSharedPreference()
-//
-//            }
-
-    }
-
-    override fun saveToken(token: String, refreshToken: String) {
-        return homeLocalDataSource.saveToken(token,refreshToken)
-    }
-
 
     override fun clearSharedPreference() {
-        return homeLocalDataSource.clearSharedPreference()
+         homeLocalDataSource.clearSharedPreference()
+        TokenContainer.update(null,null)
+
     }
 
     override fun setEmptySeats(emptySeats: Int,isReady:Boolean): Single<Response<EmptySeatsResponse>> {
@@ -75,7 +53,12 @@ class HomeRepositoryImpl(
 
     override fun getProfile(): Single<Response<ProfileResponse>> {
         return homeRemoteDataSource.getProfile().doOnSuccess {
-            homeLocalDataSource.saveUsername(it.body()?.data?.fname+" "+it.body()?.data?.lname)
+            if (it.body()?.data!=null)
+                it.body()?.data?.credit?.let { it1 ->
+                    homeLocalDataSource.saveUserInformation(it.body()?.data?.fname+" "+it.body()?.data?.lname,
+                        it1,it.body()?.data!!.rate,it.body()?.data?.capacity.toString(),it.body()?.data?.currentTripsCount.toString(),it.body()?.data?.openTripsCount.toString(),
+                        it.body()!!.data.CarDriver.Service.capacity.toString())
+                }
 
     }
     }
@@ -86,6 +69,10 @@ class HomeRepositoryImpl(
         version: String
     ): Single<Response<UpdateResponse>> {
         return homeRemoteDataSource.update(type,platform,version)
+    }
+
+    override fun loadToken() {
+        homeLocalDataSource.loadToken()
     }
 
 }

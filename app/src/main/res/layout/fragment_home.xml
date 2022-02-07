@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/homeFragmentRoot"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layoutDirection="rtl"
     tools:context=".feature.main.home.HomeFragment">
@@ -94,13 +95,14 @@
                             android:layout_below="@id/tvConnection"
                             android:layout_centerHorizontal="true"
                             app:srcCompat="@drawable/ic_check" />
+
                         <ImageView
                             android:id="@+id/disconnectSign"
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tvConnection"
                             android:layout_centerHorizontal="true"
+                            android:visibility="gone"
                             app:srcCompat="@drawable/ic_close_red" />
 
 
@@ -139,15 +141,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="5dp"
-                                tools:text="@string/number1000"
+                                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
 
-                                android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />
+                                tools:text="@string/number1000" />
 
-<!--                            <TextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="@string/tooman"-->
-<!--                                android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />-->
+                            <!--                            <TextView-->
+                            <!--                                android:layout_width="wrap_content"-->
+                            <!--                                android:layout_height="wrap_content"-->
+                            <!--                                android:text="@string/tooman"-->
+                            <!--                                android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />-->
 
 
                         </LinearLayout>
@@ -180,8 +182,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/rate"
                             android:layout_centerHorizontal="true"
-                            tools:text="@string/fiveHundred"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3" />
+                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                            tools:text="@string/fiveHundred" />
 
 
                     </RelativeLayout>
@@ -269,9 +271,9 @@
                                 android:layout_gravity="bottom|start"
                                 android:background="@drawable/background_empty_seats_count"
                                 android:gravity="center"
-                                tools:text="1"
                                 android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
-                                android:visibility="gone" />
+                                android:visibility="gone"
+                                tools:text="1" />
 
 
                         </FrameLayout>
@@ -337,7 +339,6 @@
                                 android:visibility="gone" />
 
                         </FrameLayout>
-
 
 
                         <TextView
@@ -420,8 +421,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/buttons"
-                android:backgroundTint="@color/dead_gray"
                 android:layout_marginHorizontal="30dp"
+                android:backgroundTint="@color/dead_gray"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="1dp">
 

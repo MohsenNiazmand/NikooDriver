@@ -1,5 +1,6 @@
 package com.akaf.nikoodriver.feature.main.current_trips
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.akaf.nikoodriver.common.NikoSingleObserver
 import com.akaf.nikoodriver.common.NikoViewModel
@@ -13,9 +14,11 @@ import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.koin.core.component.KoinApiExtension
 import retrofit2.Response
 import timber.log.Timber
 
+@KoinApiExtension
 class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) : NikoViewModel() {
 
     var currentTripsLiveData=MutableLiveData<CurrentTripsResponse>()
@@ -23,19 +26,29 @@ class CurrentTripsViewModel(val currentTripsRepository: CurrentTripsRepository) 
     val startTripLiveData=MutableLiveData<Response<StartTripResponse>>()
     val pickupTripLiveData=MutableLiveData<Response<PickUpResponse>>()
 
+
     init {
         currentTrips()
     }
 
+    @KoinApiExtension
     fun currentTrips(){
         progressBarLiveData.value=true
         currentTripsRepository.currentTrips()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object :NikoSingleObserver<Response<CurrentTripsResponse>>(compositeDisposable){
+                @SuppressLint("CheckResult")
                 override fun onSuccess(t: Response<CurrentTripsResponse>) {
-                    currentTripsLiveData.postValue(t.body())
-                    progressBarLiveData.postValue(false)
+
+                    if (t.isSuccessful){
+                        currentTripsLiveData.postValue(t.body())
+                        progressBarLiveData.postValue(false)
+                    }else
+                        progressBarLiveData.postValue(false)
+
+
+
 
                 }
 

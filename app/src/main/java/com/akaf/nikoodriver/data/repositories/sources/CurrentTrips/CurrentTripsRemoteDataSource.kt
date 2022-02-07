@@ -6,7 +6,7 @@ import com.akaf.nikoodriver.data.responses.dropOfResponse.DropOfResponse
 import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.pickUpResponse.PickUpResponse
 import com.akaf.nikoodriver.data.responses.startTripResponse.StartTripResponse
-import com.akaf.nikoodriver.services.ApiService
+import com.akaf.nikoodriver.services.http.ApiService
 import com.google.gson.JsonObject
 import io.reactivex.Completable
 import io.reactivex.Single

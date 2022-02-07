@@ -1,7 +1,7 @@
 package com.akaf.nikoodriver.data.responses.mqttTripResponse
 
-data class User(
+data class ForOther(
     val fullName: String,
-    val id: Int,
+    val nationalCode: String,
     val phoneNumber: String
 )

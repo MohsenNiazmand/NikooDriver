@@ -24,16 +24,22 @@ import com.google.android.material.button.MaterialButton
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinApiExtension
 import timber.log.Timber
 import java.text.DecimalFormat
 
+@KoinApiExtension
 class HomeFragment : BaseFragment() {
     private val hiveMqttManager: HiveMqttManager by inject()
-    val homeViewModel: HomeViewModel by inject()
+    val homeViewModel: HomeViewModel by viewModel()
     val sharedPreferences:SharedPreferences by inject()
     var mqttState:Boolean=true
     val compositeDisposable = CompositeDisposable()
     val handler = Handler()
+    private val onlineStatus:Boolean
+    get() = sharedPreferences.getBoolean("isOnline",false)
+
 
 
 
@@ -47,98 +53,15 @@ class HomeFragment : BaseFragment() {
 
 
 
+    @KoinApiExtension
     @SuppressLint("SetTextI18n", "BinaryOperationInTimber")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        userNameTv.text = homeViewModel.username
-
-
-        val onlineStatus=sharedPreferences.getBoolean("isOnline",false)
-
-        if (onlineStatus){
-            active()
-
-
-        }else
-            deActive()
-
-        handler.postDelayed({
-            homeViewModel.getProfile()
-            if (getView()!=null)
-            homeViewModel.profileLiveData.observe(viewLifecycleOwner){
-                if (it?.capacity==0)
-                    deActive()
-            }
-        }, 1500)
-
-        if (getView()!=null)
-        homeViewModel.profileLiveData.observe(viewLifecycleOwner){
-
-            if (it!=null){
-
-                val fname=it.fname
-                val lname=it.lname
-                    userNameTv.text= "$fname $lname"
-                val capa=it.capacity
-                    if (capa >0){
-                        emptySeatsTv.visibility=View.VISIBLE
-                        emptySeatsTv.text=it.capacity.toString()
-                    }else if (capa == 0)
-                        emptySeatsTv.visibility=View.GONE
-                val openTrips=it.openTripsCount
-                 if (openTrips>0 ){
-                        unAcceptedPassengersTv.visibility=View.VISIBLE
-                        unAcceptedPassengersTv.text= openTrips.toString()
-                    } else if (openTrips==0)
-                        unAcceptedPassengersTv.visibility=View.GONE
-                val currents=it.currentTripsCount
-                    if (currents>0){
-                        currentTripsCountTv.visibility=View.VISIBLE
-                        currentTripsCountTv.text=currents.toString()
-                    }else if (currents==0){
-                        currentTripsCountTv.visibility=View.GONE
-
-                    }
-                if (it.rate!=null){
-                    val rate=it.rate.toDouble()
-                    val dec = DecimalFormat("#0.00")
-                    rateTv.text=dec.format(rate)
-                }
-
-                if (it.credit!=null){
-                    val credit=it.credit.toDouble().toInt()/10
-                    creditTv.text=credit.toString()+" "+resources.getString(R.string.tooman)
-                }
+        getProfile()
+        checkMqtt()
 
 
 
-
-            }
-
-
-
-
-
-        }
-
-
-
-        if (getView()!=null)
-            homeViewModel.mqttState.observe(viewLifecycleOwner) {
-            if (it) {
-                checkPermStartLocationUpdate()
-                mqttState=it
-                connectedSign.visibility=View.VISIBLE
-                disconnectSign.visibility=View.GONE
-            }
-            else {
-                mqttState=it
-                connectedSign.visibility=View.GONE
-                disconnectSign.visibility=View.VISIBLE
-            }
-        }
 
 
         logoutBtn.setOnClickListener {
@@ -213,6 +136,134 @@ class HomeFragment : BaseFragment() {
     }
 
 
+    @SuppressLint("SetTextI18n")
+    @KoinApiExtension
+    private fun getProfile(){
+
+        if (onlineStatus){
+            active()
+
+
+        }else
+            deActive()
+
+        userNameTv.text = homeViewModel.username
+        if (homeViewModel.credit.isNotEmpty()){
+            val credit =homeViewModel.credit.toDouble().toInt()/10
+            creditTv.text=credit.toString()+" "+resources.getString(R.string.tooman)
+        }
+        if (homeViewModel.rate.isNotEmpty()){
+            val rate=homeViewModel.rate.toDouble()
+            val dec = DecimalFormat("#0.00")
+            rateTv.text=dec.format(rate)
+        }
+        if (onlineStatus)
+            emptySeatsTv.text=homeViewModel.emptySeats
+        currentTripsCountTv.text=homeViewModel.currentTrips
+        unAcceptedPassengersTv.text=homeViewModel.unAcceptedPassengers
+
+
+
+        handler.postDelayed({homeViewModel.getProfile()},1500)
+
+
+        if (getView()!=null)
+            homeViewModel.profileLiveData.observe(viewLifecycleOwner){
+
+                if (it.isSuccessful){
+                    if (it?.body()?.data?.capacity==0)
+                        deActive()
+
+                    if (it!=null){
+
+                        val fname=it.body()?.data?.fname
+                        val lname=it.body()?.data?.lname
+                        userNameTv.text= "$fname $lname"
+                        val capa=it.body()?.data?.capacity
+                        if (capa != null) {
+                            if (capa >0){
+                                if (onlineStatus){
+                                    emptySeatsTv.visibility=View.VISIBLE
+                                    emptySeatsTv.text=it.body()?.data?.capacity.toString()
+                                }
+                            }else if (capa == 0)
+                                emptySeatsTv.visibility=View.GONE
+                        }
+                        val openTrips=it.body()?.data?.openTripsCount
+                        if (openTrips != null) {
+                            if (openTrips>0 ){
+                                unAcceptedPassengersTv.visibility=View.VISIBLE
+                                unAcceptedPassengersTv.text= openTrips.toString()
+                            } else if (openTrips==0)
+                                unAcceptedPassengersTv.visibility=View.GONE
+                        }
+                        val currents=it.body()?.data?.currentTripsCount
+                        if (currents != null) {
+                            if (currents>0){
+                                currentTripsCountTv.visibility=View.VISIBLE
+                                currentTripsCountTv.text=currents.toString()
+                            }else if (currents==0){
+                                currentTripsCountTv.visibility=View.GONE
+
+                            }
+                        }
+                        if (it.body()?.data?.rate!=null){
+                            val rate= it.body()?.data?.rate!!.toDouble()
+                            val dec = DecimalFormat("#0.00")
+                            rateTv.text=dec.format(rate)
+                        }
+
+                        if (it.body()?.data?.credit!=null){
+                            val credit= it.body()?.data?.credit!!.toDouble().toInt()/10
+                            creditTv.text=credit.toString()+" "+resources.getString(R.string.tooman)
+                        }
+                    }
+                }
+//                else {
+//                    val snackbar = activity?.let { it1 ->
+//                        Snackbar
+//                            .make(
+//                                it1.findViewById(R.id.loginRoot),
+//                                "خطای اتصال به سرور",
+//                                Snackbar.LENGTH_INDEFINITE
+//                            )
+//                            .setAction("تلاش مجدد") { view: View? ->
+//                                homeViewModel.getProfile()
+//                            }
+//                    }
+//
+//                        snackbar?.show()
+//
+//                }
+
+
+
+
+
+            }
+
+
+
+    }
+    @KoinApiExtension
+    private fun checkMqtt(){
+        if (getView()!=null)
+            homeViewModel.mqttState.observe(viewLifecycleOwner) {
+                if (it) {
+                    checkPermStartLocationUpdate()
+                    mqttState=it
+                    connectedSign.visibility=View.VISIBLE
+                    disconnectSign.visibility=View.GONE
+                }
+                else {
+                    mqttState=it
+                    connectedSign.visibility=View.GONE
+                    disconnectSign.visibility=View.VISIBLE
+                }
+            }
+    }
+
+    @KoinApiExtension
     private fun showLogoutDialog() {
         val logoutView = layoutInflater.inflate(R.layout.dialog_logout, null, false)
         val logoutDialog: AlertDialog = AlertDialog.Builder(requireContext()).create()
@@ -259,19 +310,23 @@ class HomeFragment : BaseFragment() {
     }
 
 
+    @KoinApiExtension
     private fun showEmptySeatsDialog() {
         val emptySeatsView = layoutInflater.inflate(R.layout.dialog_empty_seats, null, false)
         val emptySeatsDialog: AlertDialog = AlertDialog.Builder(requireContext()).create()
         emptySeatsDialog.setView(emptySeatsView)
         emptySeatsDialog.setCancelable(false)
         val emptySeatsEt= emptySeatsView.findViewById<EditText>(R.id.emptySeatsEt)
+        emptySeatsEt.hint=resources.getString(R.string.maximumTropeCount)+" "+homeViewModel.maxCapacity
         emptySeatsView.findViewById<MaterialButton>(R.id.proceedEmptySeatsBtn).setOnClickListener {
-            if (emptySeatsEt.text.isNotEmpty()){
+            if (emptySeatsEt.text.isNotEmpty()&& emptySeatsEt.text.toString().toInt()<=homeViewModel.maxCapacity.toInt() &&emptySeatsEt.text.toString().toInt()!=0){
                 homeViewModel.setEmptySeats(emptySeatsEt.text.toString().toInt(),true)
+                emptySeatsTv.text=emptySeatsEt.text
                 emptySeatsDialog.dismiss()
-                homeViewModel.getProfile()
+                handler.postDelayed({ homeViewModel.getProfile()},1500)
                 active()
-            }
+            }else
+                Toast.makeText(activity,resources.getString(R.string.pleaseEnterTheRightCount),Toast.LENGTH_SHORT).show()
         }
         emptySeatsView.findViewById<MaterialButton>(R.id.cancelEmptySeatsBtn).setOnClickListener {
             emptySeatsDialog.dismiss()
@@ -284,7 +339,6 @@ class HomeFragment : BaseFragment() {
         @SuppressLint("BinaryOperationInTimber")
         override fun onLocationResult(p0: LocationResult?) {
             if (p0 != null) {
-//                runOnUiThread {
                 fusedLocation = p0.lastLocation
                 val sendLocation = SendLocation()
                 sendLocation.location.add(fusedLocation!!.latitude)
@@ -293,7 +347,6 @@ class HomeFragment : BaseFragment() {
                 homeViewModel.sendDriverLocation(fusedLocation!!)
                 homeViewModel.sendDriverLocationToRest(sendLocation)
 //                    checkFastLocUpdate(homeViewModel.currentTripLiveData.value)
-//                }
 
             }
         }

@@ -17,11 +17,14 @@ import com.akaf.nikoodriver.data.responses.unAcceptedPassengers.UnAcceptedPassen
 import com.akaf.nikoodriver.feature.main.home.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_declined_passengers.*
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinApiExtension
 
 
+@KoinApiExtension
 class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.UnAcceptedPassengersCallBacks {
-    val unAcceptedPassengersViewModel:UnAcceptedPassengersViewModel by inject()
-    val homeViewModel: HomeViewModel by inject()
+    val unAcceptedPassengersViewModel:UnAcceptedPassengersViewModel by viewModel()
+    val homeViewModel: HomeViewModel by viewModel()
     val sharedPreferences:SharedPreferences by inject()
     val unAcceptedPassengersAdapter=UnAcceptedPassengersAdapter()
     val handler = Handler()
@@ -34,6 +37,7 @@ class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.
         return inflater.inflate(R.layout.fragment_declined_passengers, container, false)
     }
 
+    @KoinApiExtension
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -49,7 +53,7 @@ class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.
 
 
 
-            when(it.data?.size){
+            when(it.data.size){
                 0->ivEmpty.visibility=View.VISIBLE
                 else->ivEmpty.visibility=View.GONE
 
@@ -65,6 +69,7 @@ class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.
 
     }
 
+    @KoinApiExtension
     override fun onRejectBtnClicked(passenger: UnAcceptedPassengersData) {
         homeViewModel.rejectTrip(passenger.id)
         homeViewModel.rejectTripLiveData.observe(viewLifecycleOwner){
@@ -74,6 +79,7 @@ class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.
         }
     }
 
+    @KoinApiExtension
     override fun onAcceptBtnClicked(passenger: UnAcceptedPassengersData) {
         homeViewModel.acceptTrip(passenger.id,-1)
         homeViewModel.acceptTripLiveData.observe(viewLifecycleOwner){
@@ -92,12 +98,4 @@ class UnAcceptedPassengersFragment : BaseFragment(),UnAcceptedPassengersAdapter.
         startActivity(mapIntent)
     }
 
-    override fun onCallClicked(passenger: UnAcceptedPassengersData) {
-        val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:${passenger.phoneNumber}")
-        }
-        if (context?.let { intent.resolveActivity(it.packageManager) } != null) {
-            startActivity(intent)
-        }
-    }
 }

@@ -11,9 +11,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Bundle
-import android.os.PowerManager
+import android.os.*
 import android.view.View
 import android.view.Window
 import android.widget.Button
@@ -35,19 +35,24 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import com.akaf.nikoodriver.data.responses.updateResponse.UpdateData
 import com.akaf.nikoodriver.feature.main.TripsAdapter
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinApiExtension
 import timber.log.Timber
 
 
+@KoinApiExtension
 class HomeActivity : BaseActivity(), TripsAdapter.CartItemViewCallBacks {
     var tripsAdapter= TripsAdapter()
     val compositeDisposable=CompositeDisposable()
     val sharedPreferences: SharedPreferences by inject()
-    val homeViewModel: HomeViewModel by inject()
+    val homeViewModel: HomeViewModel by viewModel()
     private lateinit var wakeLock: PowerManager.WakeLock
     val tripsList=ArrayList<TripData>()
     val token=sharedPreferences.getString("token", null)
     val refreshToken=sharedPreferences.getString("refresh_token", null)
-
+    var vibrator: Vibrator? = null
+   lateinit var mediaPlayer:MediaPlayer
+    lateinit var pattern: LongArray
 
     override fun onStart() {
         super.onStart()
@@ -62,13 +67,17 @@ class HomeActivity : BaseActivity(), TripsAdapter.CartItemViewCallBacks {
         }
     }
 
+    @KoinApiExtension
     @SuppressLint("CutPasteId", "BinaryOperationInTimber", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        vibrator = this.getSystemService(VIBRATOR_SERVICE) as Vibrator
+        pattern = longArrayOf(0, 1000, 1000)
         wakeLockSetup()
+        mediaPlayer=MediaPlayer.create(this,R.raw.service_alarm)
 
-        Timber.i("TOKEN11 Main: "+token.toString())
+        Timber.i("TOOKEN Main: "+token.toString())
 
 
         if (!CheckInternet()){
@@ -121,6 +130,8 @@ class HomeActivity : BaseActivity(), TripsAdapter.CartItemViewCallBacks {
             tripsAdapter.trips= tripsList
             val index=tripsAdapter.trips.size-1
             rvTrips.smoothScrollToPosition(index)
+            vibrator!!.vibrate(pattern,0)
+            mediaPlayer.start()
         }
 
 
@@ -146,15 +157,19 @@ class HomeActivity : BaseActivity(), TripsAdapter.CartItemViewCallBacks {
 
     override fun onDestroy() {
         super.onDestroy()
+        vibrator!!.cancel()
+        mediaPlayer.stop()
         destroyWakeLock()
     }
 
+    @KoinApiExtension
     override fun onRejectBtnClicked(tripData: TripData) {
         homeViewModel.rejectTrip(tripData.id)
         handleTrips(tripData)
 
     }
 
+    @KoinApiExtension
     override fun onAcceptBtnClicked(tripData: TripData) {
         homeViewModel.acceptTrip(tripData.id,-1)
         handleTrips(tripData)
@@ -169,22 +184,18 @@ class HomeActivity : BaseActivity(), TripsAdapter.CartItemViewCallBacks {
     @SuppressLint("CommitPrefEdits")
     private fun handleTrips(tripData: TripData){
 
-
         if (tripsList.size==0){
             tripView.visibility=View.GONE
             tripsList.remove(tripData)
+            vibrator!!.cancel()
+            mediaPlayer.stop()
             val navController = findNavController(R.id.fragmentContainerView)
             navController.navigate(R.id.homeFragment)
-
-
         }else if (tripsList.size>0){
             tripsAdapter.removeTripFromList(tripData)
             rvTrips.smoothScrollToPosition(tripsAdapter.trips.size)
             tripsList.remove(tripData)
-
         }
-
-
 
     }
 

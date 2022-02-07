@@ -42,18 +42,17 @@ class UnAcceptedPassengersAdapter :
             originTv.text=passenger.sourceCity
             destinationTv.text=passenger.destinationCity
             fareTv.text=passenger.cost
-//            serviceDateTv.text=passenger.startAt
-            val date=passenger.startAt
-            val dateConverter =  DateConverter();
-            val readDate = SimpleDateFormat(UTC_TIME_FORMATT)
-            readDate.timeZone= TimeZone.getTimeZone("UTC")
-            val correctDate =readDate.parse(date)
-            val ourTimeFormat = SimpleDateFormat("MM/dd/yyyy'T'HH:mm")
-            val correctDateFormatted=ourTimeFormat.format(correctDate!!)
-            // Convert Gregorian date to Jalali
-            val result = correctDateFormatted.format( JalaliDateFormatter("yyyy/mm/dd", JalaliDateFormatter.FORMAT_IN_PERSIAN))
-            val jalaliDate=dateConverter.gregorianToJalali(result.substring(6,10).toInt(),result.substring(0,2).toInt(),result.substring(3,5).toInt())
-            serviceDateTv.text= jalaliDate.toString()
+//            val date=passenger.startAt
+//            val dateConverter =  DateConverter();
+//            val readDate = SimpleDateFormat(UTC_TIME_FORMATT)
+//            readDate.timeZone= TimeZone.getTimeZone("UTC")
+//            val correctDate =readDate.parse(date)
+//            val ourTimeFormat = SimpleDateFormat("MM/dd/yyyy'T'HH:mm")
+//            val correctDateFormatted=ourTimeFormat.format(correctDate!!)
+//            // Convert Gregorian date to Jalali
+//            val result = correctDateFormatted.format( JalaliDateFormatter("yyyy/mm/dd", JalaliDateFormatter.FORMAT_IN_PERSIAN))
+//            val jalaliDate=dateConverter.gregorianToJalali(result.substring(6,10).toInt(),result.substring(0,2).toInt(),result.substring(3,5).toInt())
+//            serviceDateTv.text= jalaliDate.toString()
             itemView.acceptRequestBtn.setOnClickListener {
                 if (passengers.size==1){
                     removePassengerFromList(passenger)
@@ -84,10 +83,10 @@ class UnAcceptedPassengersAdapter :
                 unAcceptedPassengersCallBacks?.onNavigationClicked(passenger)
             }
 
-            itemView.callToPassengerBtn.setOnClickListener {
-                unAcceptedPassengersCallBacks?.onCallClicked(passenger)
-
-            }
+//            itemView.callToPassengerBtn.setOnClickListener {
+//                unAcceptedPassengersCallBacks?.onCallClicked(passenger)
+//
+//            }
 
         }
 
@@ -112,7 +111,7 @@ class UnAcceptedPassengersAdapter :
         fun onRejectBtnClicked(passenger: UnAcceptedPassengersData)
         fun onAcceptBtnClicked(passenger: UnAcceptedPassengersData)
         fun onNavigationClicked(passenger: UnAcceptedPassengersData)
-        fun onCallClicked(passenger: UnAcceptedPassengersData)
+//        fun onCallClicked(passenger: UnAcceptedPassengersData)
     }
 
     fun removePassengerFromList(passenger: UnAcceptedPassengersData){

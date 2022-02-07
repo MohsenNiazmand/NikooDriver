@@ -34,7 +34,7 @@ class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTrip
         val firstPassengerName=itemView.findViewById<TextView>(R.id.firstPassengerName)
         val currentServiceDateTv=itemView.findViewById<TextView>(R.id.currentServiceDateTv)
         val callToPassengerCurrentBtn=itemView.findViewById<MaterialButton>(R.id.callToPassengerCurrentBtn)
-        val iRodeBtn=itemView.findViewById<MaterialButton>(R.id.iRodeBtn)
+        val passengerPickedUpBtn=itemView.findViewById<MaterialButton>(R.id.passengerPickedUpBtn)
         val endTripBtn=itemView.findViewById<MaterialButton>(R.id.endTripBtn)
         val startTripBtn=itemView.findViewById<MaterialButton>(R.id.startTripBtn)
         val cancelTripBtn=itemView.findViewById<MaterialButton>(R.id.cancelTripBtn)
@@ -56,6 +56,29 @@ class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTrip
             val result = correctDateFormatted.format( JalaliDateFormatter("yyyy/mm/dd", JalaliDateFormatter.FORMAT_IN_PERSIAN))
             val jalaliDate=dateConverter.gregorianToJalali(result.substring(6,10).toInt(),result.substring(0,2).toInt(),result.substring(3,5).toInt())
             currentServiceDateTv.text= jalaliDate.toString() + " "+ "ساعت" +" "+ result.substring(11)
+
+            when(currentTrip.status){
+                "driver_selected"-> {
+                    startTripBtn.visibility=View.VISIBLE
+                    passengerPickedUpBtn.visibility=View.GONE
+                    endTripBtn.visibility=View.GONE
+
+                }
+                "trip_start"->{
+                    if (currentTrip.Pickup==null){
+                        startTripBtn.visibility=View.GONE
+                        passengerPickedUpBtn.visibility=View.VISIBLE
+                        endTripBtn.visibility=View.GONE
+                    }else{
+                        startTripBtn.visibility=View.GONE
+                        passengerPickedUpBtn.visibility=View.GONE
+                        endTripBtn.visibility=View.VISIBLE
+                        cancelTripBtn.visibility=View.GONE
+                    }
+
+                }
+            }
+
             itemView.callToPassengerCurrentBtn.setOnClickListener {
                 currentTripCallback?.onCallToPassengerClicked(currentTrip)
             }
@@ -63,13 +86,14 @@ class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTrip
             itemView.startTripBtn.setOnClickListener {
                 currentTripCallback?.onStartTripClicked(currentTrip)
                 startTripBtn.visibility=View.GONE
-                iRodeBtn.visibility=View.VISIBLE
+                passengerPickedUpBtn.visibility=View.VISIBLE
 
             }
-            itemView.iRodeBtn.setOnClickListener {
-                currentTripCallback?.onIRodeClicked(currentTrip)
-                iRodeBtn.visibility=View.GONE
+            itemView.passengerPickedUpBtn.setOnClickListener {
+                currentTripCallback?.onpassengerPickedUpClicked(currentTrip)
+                passengerPickedUpBtn.visibility=View.GONE
                 endTripBtn.visibility=View.VISIBLE
+                cancelTripBtn.visibility=View.GONE
             }
             itemView.endTripBtn.setOnClickListener {
                 currentTripCallback?.onEndTripClicked(currentTrip)
@@ -100,7 +124,7 @@ class CurrentTripsAdapter : RecyclerView.Adapter<CurrentTripsAdapter.CurrentTrip
     interface CurrentTripCallback{
         fun onCallToPassengerClicked(currentTrip: CurrentTripsData)
         fun onStartTripClicked(currentTrip: CurrentTripsData)
-        fun onIRodeClicked(currentTrip: CurrentTripsData)
+        fun onpassengerPickedUpClicked(currentTrip: CurrentTripsData)
         fun onEndTripClicked(currentTrip: CurrentTripsData)
         fun onCancelBtnClicked(currentTrip: CurrentTripsData)
 

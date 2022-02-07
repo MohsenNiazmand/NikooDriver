@@ -34,22 +34,18 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.content.ClipData
 import android.location.Location
-
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
-import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.google.android.gms.location.*
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import timber.log.Timber
 
 
 //this class is the base of our project and other classes extend this
-
 
 abstract class BaseActivity:AppCompatActivity(),NikoView{
         override val rootView: CoordinatorLayout?

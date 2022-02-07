@@ -91,17 +91,27 @@
                     android:text="@string/insertCode"
                     android:textAppearance="@style/TextAppearance.MyTheme.Headline1" />
 
-                <EditText
+
+                <com.chaos.view.PinView
                     android:id="@+id/verificationCodeEt"
-                    style="@style/Theme.Niko.auth.EditText"
-                    android:layout_width="300dp"
+                    style="@style/PinWidget.PinView"
+                    android:layout_marginVertical="10dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="30dp"
-                    android:layout_marginTop="16dp"
-                    android:hint="@string/verificationHint"
-                    android:inputType="phone"
-                    android:textAlignment="center"
-                    android:textColorHint="@color/gray" />
+                    android:layout_gravity="center"
+                    android:cursorVisible="true"
+                    android:inputType="number"
+                    android:itemBackground="#65EAEAEA"
+                    app:cursorColor="@color/orange"
+                    app:hideLineWhenFilled="true"
+                    app:itemCount="5"
+                    app:itemHeight="50dp"
+                    app:itemRadius="10dp"
+                    app:itemWidth="50dp"
+                    app:lineColor="@color/white"
+                     />
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"

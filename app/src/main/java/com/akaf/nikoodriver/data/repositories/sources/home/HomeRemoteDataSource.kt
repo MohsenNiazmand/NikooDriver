@@ -10,12 +10,12 @@ import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferRespo
 import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
 import com.akaf.nikoodriver.data.responses.updateResponse.UpdateResponse
-import com.akaf.nikoodriver.services.ApiService
+import com.akaf.nikoodriver.services.http.ApiService
 import com.google.gson.JsonObject
 import io.reactivex.Single
 import retrofit2.Response
 
-class HomeRemoteDataSource(val apiService: ApiService,val sharedPreferences: SharedPreferences):HomeDataSource {
+class HomeRemoteDataSource(val apiService: ApiService, val sharedPreferences: SharedPreferences):HomeDataSource {
     override fun onlineStatus(isOnline: Boolean) {
         TODO("Not yet implemented")
     }
@@ -24,21 +24,9 @@ class HomeRemoteDataSource(val apiService: ApiService,val sharedPreferences: Sha
        return apiService.sendLocation(sendLocation)
     }
 
-    override fun saveToken(token: String, refreshToken: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun refreshToken(token: String, refreshToken: String):Single<Response<RefreshTokenResponse>> {
-        return apiService.refreshToken(JsonObject().apply {
-            addProperty("token",token)
-            addProperty("refreshToken",refreshToken)
-        })
-    }
-
     override fun clearSharedPreference() {
         TODO("Not yet implemented")
     }
-
 
     override fun setEmptySeats(emptySeats: Int,isReady:Boolean): Single<Response<EmptySeatsResponse>> {
         return apiService.setEmptySeats(emptySeats,isReady)
@@ -60,9 +48,18 @@ class HomeRemoteDataSource(val apiService: ApiService,val sharedPreferences: Sha
         return apiService.getProfile()
         }
 
-    override fun saveUsername(userName: String) {
+    override fun saveUserInformation(
+        userName: String,
+        credit: String,
+        rate: String,
+        emptySeats: String,
+        currentTrips: String,
+        unAcceptedPassengers: String,
+        maxCapacity:String
+    ) {
         TODO("Not yet implemented")
     }
+
 
     override fun update(
         type: String,
@@ -70,6 +67,10 @@ class HomeRemoteDataSource(val apiService: ApiService,val sharedPreferences: Sha
         version: String
     ): Single<Response<UpdateResponse>> {
         return apiService.update(type,platform,version)
+    }
+
+    override fun loadToken() {
+        TODO("Not yet implemented")
     }
 
 

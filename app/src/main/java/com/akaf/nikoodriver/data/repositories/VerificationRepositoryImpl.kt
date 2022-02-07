@@ -1,5 +1,6 @@
 package com.akaf.nikoodriver.data.repositories
 
+import com.akaf.nikoodriver.data.TokenContainer
 import com.akaf.nikoodriver.data.responses.fcmResponse.FcmResponse
 import com.akaf.nikoodriver.data.repositories.sources.verification.VerificationDataSource
 import com.akaf.nikoodriver.data.responses.verificationResponse.VerificationData
@@ -37,7 +38,7 @@ class VerificationRepositoryImpl(
     }
 
     fun onSuccessfulVerification(driverId:String,tokenResponse: VerificationData) {
-
+        TokenContainer.update(tokenResponse.token, tokenResponse.refreshToken)
         verificationLocalDataSource.saveToken(tokenResponse.token, tokenResponse.refreshToken)
         verificationLocalDataSource.saveDriverId(driverId)
     }

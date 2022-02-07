@@ -4,6 +4,6 @@ data class Source(
     val count: Int,
     val description: Any,
     val id: Int,
-    val location: LocationX,
+    val location: Location,
     val status: String
 )
