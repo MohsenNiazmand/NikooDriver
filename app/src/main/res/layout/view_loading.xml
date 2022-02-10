@@ -10,34 +10,6 @@
     android:layoutDirection="rtl"
     android:id="@+id/loadingView">
 
-
-
-<!--        <com.google.android.material.card.MaterialCardView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:gravity="center"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:padding="30dp"-->
-<!--            app:cardCornerRadius="20dp"-->
-<!--            android:background="@color/white"-->
-<!--            app:cardElevation="3dp"-->
-<!--            >-->
-<!--            <com.airbnb.lottie.LottieAnimationView-->
-<!--                android:layout_width="100dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                app:lottie_rawRes="@raw/progress_dots_blue"-->
-<!--                android:scaleType="centerCrop"-->
-<!--                android:layout_gravity="center"-->
-<!--                app:lottie_loop="true"-->
-<!--                app:lottie_autoPlay="true"/>-->
-
-<!--        </com.google.android.material.card.MaterialCardView>-->
-
-
-
-
-
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

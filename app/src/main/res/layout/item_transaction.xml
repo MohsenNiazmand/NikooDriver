@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:layoutDirection="ltr"
     android:layout_margin="5dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="2dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="3dp"
 >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/amount"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
             android:text="@string/tooman"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
             app:layout_constraintBottom_toBottomOf="@+id/transactionAmountTv"
             app:layout_constraintEnd_toStartOf="@+id/transactionAmountTv"
             app:layout_constraintTop_toTopOf="@+id/transactionAmountTv" />
@@ -53,7 +53,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="3dp"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/transactionCode"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
             app:layout_constraintBottom_toBottomOf="@+id/transactionCodeTv"
             app:layout_constraintStart_toEndOf="@+id/transactionCodeTv"
             app:layout_constraintTop_toTopOf="@+id/transactionCodeTv" />
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/transactionReason"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/transactionAmountTv" />
 
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
             app:layout_constraintBottom_toBottomOf="@+id/textView5"
             app:layout_constraintEnd_toStartOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="@+id/textView5" />
@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="3dp"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
             app:layout_constraintBottom_toBottomOf="@+id/textView7"
             app:layout_constraintEnd_toStartOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="@+id/textView7" />
@@ -103,37 +103,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/transactionType"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/TimeOfTransaction"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/transactionDateTv"
-            app:layout_constraintTop_toBottomOf="@+id/transactionTypeTv"
-            android:layout_marginVertical="10dp"
-
-            />
 
         <TextView
             android:id="@+id/transactionDateTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
             android:layout_marginVertical="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView8"
-            app:layout_constraintEnd_toStartOf="@+id/textView8"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView8" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

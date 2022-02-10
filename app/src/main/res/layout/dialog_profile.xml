@@ -20,7 +20,8 @@
             android:layout_height="32dp"
             app:srcCompat="@drawable/ic_close"
             android:background="?selectableItemBackground"
-            android:layout_gravity="start"/>
+            android:layout_gravity="start"
+            android:contentDescription="@string/NikoHamrah" />
 
 
     </LinearLayout>

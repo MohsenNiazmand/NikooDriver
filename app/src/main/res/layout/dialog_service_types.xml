@@ -7,6 +7,16 @@
     android:padding="25dp"
     >
 
+
+    <ProgressBar
+        android:id="@+id/dialogProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/lightBlue"
+        android:indeterminate="true"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

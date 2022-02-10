@@ -88,6 +88,16 @@ class HomeFragment : BaseFragment() {
 
         }
 
+
+        offersHistoryBtn.setOnClickListener {
+            if (CheckInternet()){
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_homeFragment_to_offersHistoryFragment)
+            } else
+                Toast.makeText(requireContext(),"لطفا مکان یاب و اینترنت خود را فعال کنید",Toast.LENGTH_SHORT).show()
+        }
+
+
         transactionsBtn.setOnClickListener {
             if (CheckInternet()){
                 Navigation.findNavController(view)
@@ -142,10 +152,11 @@ class HomeFragment : BaseFragment() {
 
         if (onlineStatus){
             active()
-
-
         }else
             deActive()
+        
+
+
 
         userNameTv.text = homeViewModel.username
         if (homeViewModel.credit.isNotEmpty()){
@@ -163,8 +174,10 @@ class HomeFragment : BaseFragment() {
         unAcceptedPassengersTv.text=homeViewModel.unAcceptedPassengers
 
 
-
-        handler.postDelayed({homeViewModel.getProfile()},1500)
+        handler.postDelayed({
+            homeViewModel.getProfile()
+            homeProgressBar.visibility=View.VISIBLE
+        },1500)
 
 
         if (getView()!=null)
@@ -218,25 +231,11 @@ class HomeFragment : BaseFragment() {
                             creditTv.text=credit.toString()+" "+resources.getString(R.string.tooman)
                         }
                     }
+                    homeProgressBar.visibility=View.GONE
+
                 }
-//                else {
-//                    val snackbar = activity?.let { it1 ->
-//                        Snackbar
-//                            .make(
-//                                it1.findViewById(R.id.loginRoot),
-//                                "خطای اتصال به سرور",
-//                                Snackbar.LENGTH_INDEFINITE
-//                            )
-//                            .setAction("تلاش مجدد") { view: View? ->
-//                                homeViewModel.getProfile()
-//                            }
-//                    }
-//
-//                        snackbar?.show()
-//
-//                }
-
-
+                else if (!it.isSuccessful)
+                    homeProgressBar.visibility=View.GONE
 
 
 
@@ -323,7 +322,9 @@ class HomeFragment : BaseFragment() {
                 homeViewModel.setEmptySeats(emptySeatsEt.text.toString().toInt(),true)
                 emptySeatsTv.text=emptySeatsEt.text
                 emptySeatsDialog.dismiss()
-                handler.postDelayed({ homeViewModel.getProfile()},1500)
+                handler.postDelayed({
+                    homeViewModel.getProfile()
+                    homeProgressBar.visibility=View.VISIBLE },1500)
                 active()
             }else
                 Toast.makeText(activity,resources.getString(R.string.pleaseEnterTheRightCount),Toast.LENGTH_SHORT).show()

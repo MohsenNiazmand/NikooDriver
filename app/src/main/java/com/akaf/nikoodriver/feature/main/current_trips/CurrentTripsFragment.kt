@@ -44,7 +44,7 @@ class CurrentTripsFragment : BaseFragment(),CurrentTripsAdapter.CurrentTripCallb
 
 
         checkPermStartLocationUpdate()
-        rvCurrentTrips.layoutManager= LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,true)
+        rvCurrentTrips.layoutManager= LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
         rvCurrentTrips.adapter=currentTripsAdapter
         currentTripsViewModel.currentTripsLiveData.observe(viewLifecycleOwner){
         currentTripsAdapter.currentTripCallback=this

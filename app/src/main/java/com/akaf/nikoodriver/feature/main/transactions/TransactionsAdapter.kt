@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.akaf.nikoodriver.App
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.data.responses.transactionsResponse.TransactionsData
 import com.github.eloyzone.jalalicalendar.DateConverter
@@ -50,7 +51,19 @@ class TransactionsAdapter : RecyclerView.Adapter<TransactionsAdapter.Transaction
             transactionAmountTv.text= (transaction.amount.toDouble().toInt()/10).toString()
             transactionCodeTv.text=transaction.id.toString()
             transactionReasonTv.text=transaction.reason
-            transactionTypeTv.text=transaction.type
+
+            when (transaction.type){
+                "inapp.CancelDriver"->{
+                    transactionTypeTv.text= App.context.resources.getText(R.string.driverCanceledTrip)
+
+                }
+                 "inapp.PayTrip"->{
+                     transactionTypeTv.text=App.context.resources.getText(R.string.inAppPay)
+
+                 }
+
+            }
+
             val date=transaction.createdAt
             val dateConverter =  DateConverter();
             val readDate = SimpleDateFormat(UTC_TIME_FORMATT)

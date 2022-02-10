@@ -48,10 +48,22 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_offersHistoryFragment"
+            app:destination="@id/offersHistoryFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
         android:name="com.akaf.nikoodriver.feature.main.transactions.TransactionsFragment"
         android:label="fragment_transactions"
         tools:layout="@layout/fragment_transactions" />
+    <fragment
+        android:id="@+id/offersHistoryFragment"
+        android:name="com.akaf.nikoodriver.feature.main.offersHistory.OffersHistoryFragment"
+        tools:layout="@layout/fragment_offers_history"
+        android:label="OffersHistoryFragment" />
 </navigation>

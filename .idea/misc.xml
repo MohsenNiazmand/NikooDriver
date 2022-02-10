@@ -87,9 +87,11 @@
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable/ic_bus.xml" value="0.2703125" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable/ic_close.xml" value="0.26205128205128203" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable/ic_exit.xml" value="0.2564814814814815" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable/ic_history.xml" value="0.2703125" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable/ic_payments.xml" value="0.2703125" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable/mini_bus.xml" value="0.2611111111111111" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable/other_vehicles.xml" value="0.2611111111111111" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable/shape_background_blue.xml" value="0.2074074074074074" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/drawable/van.xml" value="0.2611111111111111" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/activity_auth.xml" value="0.2459016393442623" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/activity_fill_info.xml" value="0.25" />
@@ -98,25 +100,33 @@
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/activity_upload_docs.xml" value="0.20878623188405798" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/activity_verification.xml" value="0.2" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/bottom_sheet_choose_picture.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_back.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_back_fill_info.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_cancel_trip.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_credit.xml" value="0.264" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_empty_seats.xml" value="0.536" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_force_update.xml" value="0.264" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_logout.xml" value="0.20878623188405798" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_service_types.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/dialog_update.xml" value="0.4542124542124542" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/fragment_current_travel.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/fragment_declined_passengers.xml" value="0.25" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/fragment_fill_info.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/fragment_finish_register.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/fragment_offers_history.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/fragment_transactions.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/fragment_travel_registration.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/fragment_upload_docs.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/item_choose_picture.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/item_current_trips.xml" value="0.3495297805642633" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/item_declined_passenger.xml" value="0.264" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/item_offers_history.xml" value="0.264" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/item_service_type.xml" value="0.264" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/item_transaction.xml" value="0.264" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/item_trip.xml" value="0.25" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/plaque_spinner_item.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/spinner_item.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/view_loading.xml" value="0.2" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26205128205128203" />

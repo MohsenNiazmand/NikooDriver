@@ -62,6 +62,7 @@
     <string name="beActiveForGetTravels">برای دریافت سفر فعال شوید</string>
     <string name="yourIncome">درآمد شما</string>
     <string name="tooman">تومان</string>
+    <string name="offerCode">شماره سرویس</string>
     <string name="travelsCount">تعداد سفرها: </string>
     <string name="travelsDistance">مسافت سفرها: </string>
     <string name="kilometers">کیلومتر</string>
@@ -144,6 +145,14 @@
     <string name="transactionReason">شرح تراکنش : </string>
     <string name="tripCode">کد سفر : </string>
     <string name="retry">مجددا تلاش کنید</string>
+    <string name="uploadDocsInfo">توضیحات لازم برای آپلود عکس از گالری یا دوربین در صورت نیاز</string>
+    <string name="passengersCount">تعداد مسافرها</string>
+    <string name="serviceStatus">وضعیت سرویس</string>
+    <string name="servicesHistory">تاریخچه سرویس ها</string>
+    <string name="driverCanceledTrip">سفر توسط راننده لغو شد</string>
+    <string name="userCanceledTrip">سفر توسط مسافر لغو شد</string>
+    <string name="inAppPay">پرداخت درون برنامه ای</string>
+    <string name="tripEnded">سفر انحام شد</string>
 
 
     <string-array name="Alphabet">

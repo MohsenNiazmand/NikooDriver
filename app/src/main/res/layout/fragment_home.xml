@@ -21,7 +21,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             tools:text="@string/userName"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline1" />
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+            tools:ignore="RelativeOverlap" />
 
         <ImageView
             android:id="@+id/logoutBtn"
@@ -33,20 +34,22 @@
             android:layout_marginEnd="20dp"
             android:background="?selectableItemBackground"
             android:rotation="180"
-            app:srcCompat="@drawable/ic_exit" />
+            app:srcCompat="@drawable/ic_exit"
+            android:contentDescription="@string/doYouWantToExitRegistration" />
 
 
-        <ImageView
-            android:id="@+id/transactionsBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/homeProgressBar"
+            android:visibility="invisible"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:background="?selectableItemBackground"
-            android:rotation="180"
-            app:srcCompat="@drawable/ic_payments" />
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
 
 
         <RelativeLayout
@@ -94,7 +97,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tvConnection"
                             android:layout_centerHorizontal="true"
-                            app:srcCompat="@drawable/ic_check" />
+                            app:srcCompat="@drawable/ic_check"
+                            android:contentDescription="@string/connection" />
 
                         <ImageView
                             android:id="@+id/disconnectSign"
@@ -103,7 +107,8 @@
                             android:layout_below="@id/tvConnection"
                             android:layout_centerHorizontal="true"
                             android:visibility="gone"
-                            app:srcCompat="@drawable/ic_close_red" />
+                            app:srcCompat="@drawable/ic_close_red"
+                            android:contentDescription="@string/connection" />
 
 
                     </RelativeLayout>
@@ -220,7 +225,8 @@
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/add" />
+                            android:src="@drawable/add"
+                            android:contentDescription="@string/registration" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -260,8 +266,8 @@
                                 android:id="@+id/imgSeat"
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:layout_centerHorizontal="true"
-                                android:src="@drawable/seat" />
+                                android:src="@drawable/seat"
+                                android:contentDescription="@string/seatsCount" />
 
 
                             <TextView
@@ -326,7 +332,8 @@
                                 android:id="@+id/imgCurrentTravel"
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/traveling" />
+                                android:src="@drawable/traveling"
+                                android:contentDescription="@string/currentTravel" />
 
                             <TextView
                                 android:id="@+id/currentTripsCountTv"
@@ -379,7 +386,8 @@
                                 android:id="@+id/imgSad"
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/sad" />
+                                android:src="@drawable/sad"
+                                android:contentDescription="@string/declinedPassengers" />
 
                             <TextView
                                 android:id="@+id/unAcceptedPassengersTv"
@@ -408,6 +416,83 @@
 
 
                     </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:baselineAligned="false">
+
+
+                    <RelativeLayout
+                        android:id="@+id/offersHistoryBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="?selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        >
+
+                        <ImageView
+                            android:id="@+id/ttvv"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            app:srcCompat="@drawable/ic_history"
+                            android:contentDescription="@string/servicesHistory" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ttvv"
+                            android:layout_centerHorizontal="true"
+                            android:text="@string/servicesHistory"
+                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                            android:textColor="@color/blue"/>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/transactionsBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="?selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        >
+
+                        <ImageView
+                            android:id="@+id/ttvvv"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            app:srcCompat="@drawable/ic_payments"
+                            android:contentDescription="@string/transactions" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ttvvv"
+                            android:layout_centerHorizontal="true"
+                            android:text="@string/transactions"
+                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                            android:textColor="@color/blue" />
+
+
+                    </RelativeLayout>
+
+
+
 
 
                 </LinearLayout>

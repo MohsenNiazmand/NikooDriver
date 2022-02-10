@@ -22,6 +22,7 @@ import com.akaf.nikoodriver.feature.auth.registering.chooseDialog.ChoosePictureD
 import com.akaf.nikoodriver.feature.auth.registering.fillInfo.FillInfoFragment
 import com.akaf.nikoodriver.feature.auth.registering.finishReg.FinishRegisterFragment
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.theartofdev.edmodo.cropper.CropImage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -69,6 +70,10 @@ class UploadDocsFragment() : BaseFragment(), ChoosePictureDialog.ChooseOpinionsC
                 showBackDialog()
             }
         })
+
+        infoBtn.setOnClickListener {
+            Snackbar.make(it,resources.getString(R.string.uploadDocsInfo),Snackbar.LENGTH_LONG).show()
+        }
 
         uploadNationalCardGalleryBtn.setOnClickListener {
             ChoosePictureFromGallery()

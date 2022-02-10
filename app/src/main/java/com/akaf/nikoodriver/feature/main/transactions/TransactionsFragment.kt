@@ -30,6 +30,7 @@ class TransactionsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvTransactions.layoutManager= LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
+
         rvTransactions.adapter=transactionsAdapter
         transactionsViewModel.transactionsLiveData.observe(viewLifecycleOwner){
             transactionsAdapter.transactions = it.body()?.data as ArrayList<TransactionsData>

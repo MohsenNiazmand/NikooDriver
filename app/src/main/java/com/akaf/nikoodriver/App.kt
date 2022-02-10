@@ -21,6 +21,8 @@ import com.akaf.nikoodriver.data.repositories.sources.home.HomeLocalDataSource
 import com.akaf.nikoodriver.data.repositories.sources.home.HomeRemoteDataSource
 import com.akaf.nikoodriver.data.repositories.sources.login.LoginLocalDataSource
 import com.akaf.nikoodriver.data.repositories.sources.login.LoginRemoteDataSource
+import com.akaf.nikoodriver.data.repositories.sources.offersHistory.OffersHistoryLocalDataSource
+import com.akaf.nikoodriver.data.repositories.sources.offersHistory.OffersHistoryRemoteDataSource
 import com.akaf.nikoodriver.data.repositories.sources.transactions.TransactionsLocalDataSource
 import com.akaf.nikoodriver.data.repositories.sources.transactions.TransactionsRemoteDataSource
 import com.akaf.nikoodriver.data.repositories.sources.uploadDocs.UploadDocsLocalDataSource
@@ -35,6 +37,7 @@ import com.akaf.nikoodriver.feature.auth.verification.VerificationViewModel
 import com.akaf.nikoodriver.feature.main.current_trips.CurrentTripsViewModel
 import com.akaf.nikoodriver.feature.main.unAccepted_passengers.UnAcceptedPassengersViewModel
 import com.akaf.nikoodriver.feature.main.home.HomeViewModel
+import com.akaf.nikoodriver.feature.main.offersHistory.OffersHistoryViewModel
 import com.akaf.nikoodriver.feature.main.transactions.TransactionsViewModel
 import com.akaf.nikoodriver.services.http.NikooAuthenticator
 import com.akaf.nikoodriver.services.http.createApiServiceInstance
@@ -145,6 +148,14 @@ class App : MultiDexApplication() {
                     TransactionsLocalDataSource()
                 )
             }
+
+            single<OffersHistoryRepository> {
+                OffersHistoryRepositoryImpl(
+                    OffersHistoryRemoteDataSource(get()),
+                    OffersHistoryLocalDataSource()
+                )
+            }
+
             single { NikooAuthenticator() }
 
 
@@ -157,6 +168,7 @@ class App : MultiDexApplication() {
             viewModel { CurrentTripsViewModel(get()) }
             viewModel { AuthViewModel() }
             viewModel { TransactionsViewModel(get()) }
+            viewModel { OffersHistoryViewModel(get()) }
 
         }
 

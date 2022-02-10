@@ -16,6 +16,7 @@ import com.akaf.nikoodriver.data.responses.location.SendLocation
 import com.akaf.nikoodriver.data.responses.loginResponse.LoginResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.accept.AcceptOfferResponse
 import com.akaf.nikoodriver.data.responses.offerResponse.reject.RejectOfferResponse
+import com.akaf.nikoodriver.data.responses.offersHistoryResponse.OffersHistoryResponse
 import com.akaf.nikoodriver.data.responses.pickUpResponse.PickUpResponse
 import com.akaf.nikoodriver.data.responses.profileResponse.ProfileResponse
 import com.akaf.nikoodriver.data.responses.refreshTokenResponse.RefreshTokenResponse
@@ -55,7 +56,6 @@ interface ApiService {
     @POST("auth/driver/photo")
     fun uploadDriverPhoto(@Part("title") title: String,
                           @Part driverPhoto:MultipartBody.Part ) : Single<Response<UploadPhotoDriverResponse>>
-
 
 
     @POST("auth/refresh")
@@ -129,6 +129,10 @@ interface ApiService {
 
     @GET("driver/transactions")
     fun transactions():Single<Response<TransactionsResponse>>
+
+
+    @GET("driver/trips")
+    fun offersHistory(@Query("page") page:Int):Single<Response<OffersHistoryResponse>>
 
 }
 
