@@ -138,7 +138,7 @@ class DriverForegroundService : Service() {
         startLocationUpdates()
 
 //        hiveMqtt.connect()
-        return START_NOT_STICKY
+        return START_STICKY
     }
 
 

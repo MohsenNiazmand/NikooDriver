@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
+import com.akaf.nikoodriver.App
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseFragment
 import com.akaf.nikoodriver.data.responses.location.SendLocation
@@ -140,6 +141,10 @@ class HomeFragment : BaseFragment() {
             setProgressIndicator(it)
         }
 
+        homeViewModel.homeProgressBarLiveData.observe(viewLifecycleOwner){
+            setProgressHome(it)
+        }
+
 
 
 
@@ -173,17 +178,15 @@ class HomeFragment : BaseFragment() {
         currentTripsCountTv.text=homeViewModel.currentTrips
         unAcceptedPassengersTv.text=homeViewModel.unAcceptedPassengers
 
-
         handler.postDelayed({
             homeViewModel.getProfile()
-            homeProgressBar.visibility=View.VISIBLE
         },1500)
 
 
         if (getView()!=null)
             homeViewModel.profileLiveData.observe(viewLifecycleOwner){
-
                 if (it.isSuccessful){
+
                     if (it?.body()?.data?.capacity==0)
                         deActive()
 
@@ -231,11 +234,11 @@ class HomeFragment : BaseFragment() {
                             creditTv.text=credit.toString()+" "+resources.getString(R.string.tooman)
                         }
                     }
-                    homeProgressBar.visibility=View.GONE
 
-                }
-                else if (!it.isSuccessful)
-                    homeProgressBar.visibility=View.GONE
+
+                }else
+                    Toast.makeText(activity?.applicationContext,"خطای ارتباط با سرور",Toast.LENGTH_SHORT).show()
+
 
 
 
@@ -323,8 +326,7 @@ class HomeFragment : BaseFragment() {
                 emptySeatsTv.text=emptySeatsEt.text
                 emptySeatsDialog.dismiss()
                 handler.postDelayed({
-                    homeViewModel.getProfile()
-                    homeProgressBar.visibility=View.VISIBLE },1500)
+                    homeViewModel.getProfile() },1500)
                 active()
             }else
                 Toast.makeText(activity,resources.getString(R.string.pleaseEnterTheRightCount),Toast.LENGTH_SHORT).show()
@@ -356,6 +358,5 @@ class HomeFragment : BaseFragment() {
         }
 
     }
-
 
 }

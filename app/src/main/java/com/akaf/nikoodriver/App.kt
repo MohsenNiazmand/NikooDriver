@@ -39,11 +39,13 @@ import com.akaf.nikoodriver.feature.main.unAccepted_passengers.UnAcceptedPasseng
 import com.akaf.nikoodriver.feature.main.home.HomeViewModel
 import com.akaf.nikoodriver.feature.main.offersHistory.OffersHistoryViewModel
 import com.akaf.nikoodriver.feature.main.transactions.TransactionsViewModel
+import com.akaf.nikoodriver.services.DriverForegroundService
 import com.akaf.nikoodriver.services.http.NikooAuthenticator
 import com.akaf.nikoodriver.services.http.createApiServiceInstance
 import com.akaf.nikoodriver.services.mqtt.HiveMqttManager
 import com.facebook.drawee.backends.pipeline.Fresco
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
@@ -181,6 +183,13 @@ class App : MultiDexApplication() {
 
         val homeRepository: HomeRepository = get()
         homeRepository.loadToken()
+
+
+        val homeViewModel: HomeViewModel by inject()
+        if (DriverForegroundService.instance==null)
+        homeViewModel.update()
+
+
     }
 
 

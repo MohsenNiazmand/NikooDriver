@@ -336,6 +336,10 @@ abstract class BaseFragment:Fragment(),NikoView{
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        stopLocationUpdates()
+    }
 
 
 }
@@ -361,12 +365,30 @@ interface NikoView{
 
         }
     }
+    fun setProgressHome(mustShow: Boolean) {
+        rootView?.let {
+            viewContext?.let { context ->
+                var loadingView = it.findViewById<View>(R.id.homeLoading)
+                if (loadingView == null && mustShow) {
+                    loadingView =
+                        LayoutInflater.from(context).inflate(R.layout.view_loading_home, it, false)
+                    it.addView(loadingView)
+
+                }
+
+                loadingView?.visibility = if (mustShow) View.VISIBLE else View.GONE
+
+            }
+
+        }
+    }
 }
 
 
 abstract class NikoViewModel : ViewModel(){
     val compositeDisposable = CompositeDisposable()
     val progressBarLiveData = MutableLiveData<Boolean>()
+    val homeProgressBarLiveData = MutableLiveData<Boolean>()
 
     override fun onCleared() {
         compositeDisposable.clear()

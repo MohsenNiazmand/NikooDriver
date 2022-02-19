@@ -129,6 +129,7 @@
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/plaque_spinner_item.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/spinner_item.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/view_loading.xml" value="0.2" />
+        <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/layout/view_loading_home.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26205128205128203" />
         <entry key="..\:/projects/my_projects/NikoDriver/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.26205128205128203" />
         <entry key="..\:/sdk/sdk/platforms/android-31/data/res/layout/simple_spinner_dropdown_item.xml" value="0.20416666666666666" />
@@ -141,5 +142,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.25416666666666665" />
+      </ProjectState>
+    </option>
   </component>
 </project>

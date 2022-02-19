@@ -26,6 +26,7 @@ import org.koin.core.component.KoinApiExtension
 import retrofit2.Response
 import timber.log.Timber
 import android.content.pm.PackageInfo
+import android.widget.Toast
 import com.akaf.nikoodriver.App
 
 
@@ -51,8 +52,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager, private val homeRepository
     get() =sharedPreferences.getString("maxCapacity","")?:""
     val credit:String
     get() =sharedPreferences.getString("credit","")?:""
-//    val rate:String
-//    get() =sharedPreferences.getString("rate","")?:""
     val emptySeats:String
     get() =sharedPreferences.getString("emptySeats","")?:""
     val currentTrips:String
@@ -71,7 +70,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager, private val homeRepository
     get()=sharedPreferences.getString("income","")?:""
 
     init {
-        update()
         retrieveOnlineStatus()
         subscribeMqttState()
         subscribeToNewOffers()
@@ -167,53 +165,55 @@ class HomeViewModel(var mqttManager: HiveMqttManager, private val homeRepository
     }
 
     fun setEmptySeats(emptySeats:Int,isReady:Boolean){
-        progressBarLiveData.value=true
+        homeProgressBarLiveData.value=true
         homeRepository.setEmptySeats(emptySeats,isReady)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : NikoSingleObserver<Response<EmptySeatsResponse>>(compositeDisposable){
                 override fun onSuccess(t: Response<EmptySeatsResponse>) {
-                    progressBarLiveData.postValue(false)
+                    homeProgressBarLiveData.postValue(false)
                 }
                 override fun onError(e: Throwable) {
                     Timber.e(e)
-                    progressBarLiveData.postValue(false)
+                    homeProgressBarLiveData.postValue(false)
+                    Toast.makeText(App.context,"خطای ارتباط با سرور",Toast.LENGTH_SHORT).show()
+
                 }
 
             })
     }
 
     fun acceptTrip(tripId:Int,cost:Int){
-        progressBarLiveData.value=true
+        homeProgressBarLiveData.value=true
         homeRepository.acceptTrip(tripId,cost)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : NikoSingleObserver<Response<AcceptOfferResponse>>(compositeDisposable){
                 override fun onSuccess(t: Response<AcceptOfferResponse>) {
-                    progressBarLiveData.postValue(false)
+                    homeProgressBarLiveData.postValue(false)
                     acceptTripLiveData.value=t
                 }
                 override fun onError(e: Throwable) {
                     Timber.e(e)
-                    progressBarLiveData.postValue(false)
+                    homeProgressBarLiveData.postValue(false)
                 }
 
             })
     }
 
     fun rejectTrip(tripId:Int){
-        progressBarLiveData.value=true
+        homeProgressBarLiveData.value=true
         homeRepository.rejectTrip(tripId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : NikoSingleObserver<Response<RejectOfferResponse>>(compositeDisposable){
                 override fun onSuccess(t: Response<RejectOfferResponse>) {
-                    progressBarLiveData.postValue(false)
+                    homeProgressBarLiveData.postValue(false)
                     rejectTripLiveData.value=t
                 }
                 override fun onError(e: Throwable) {
                     Timber.e(e)
-                    progressBarLiveData.postValue(false)
+                    homeProgressBarLiveData.postValue(false)
                 }
 
             })
@@ -244,6 +244,8 @@ class HomeViewModel(var mqttManager: HiveMqttManager, private val homeRepository
 
                 override fun onError(e: Throwable) {
                     Timber.e(e)
+                    Toast.makeText(App.context,"خطای ارتباط با سرور",Toast.LENGTH_SHORT).show()
+
                 }
 
 
@@ -264,13 +266,15 @@ class HomeViewModel(var mqttManager: HiveMqttManager, private val homeRepository
 
     @KoinApiExtension
     fun getProfile(){
-
+        homeProgressBarLiveData.value=true
         homeRepository.getProfile()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object :NikoSingleObserver<Response<ProfileResponse>>(compositeDisposable){
                 @SuppressLint("BinaryOperationInTimber")
                 override fun onSuccess(t: Response<ProfileResponse>) {
+                    homeProgressBarLiveData.postValue(false)
+
                     profileLiveData.value=t
 
 
@@ -293,6 +297,8 @@ class HomeViewModel(var mqttManager: HiveMqttManager, private val homeRepository
                 }
 
                 override fun onError(e: Throwable) {
+                    homeProgressBarLiveData.postValue(false)
+                    Toast.makeText(App.context,"خطای ارتباط با سرور",Toast.LENGTH_SHORT).show()
                     Timber.e(e)
                 }
 

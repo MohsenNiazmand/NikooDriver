@@ -43,7 +43,7 @@ class OffersHistoryFragment : BaseFragment() {
                 it.body()?.data.let {newResponse ->
                     offersHistoryAdapter.differ.submitList(it.body()?.data?.docs?.toList())
                     val totalPages=
-                        (it.body()?.data?.total?.div(20))?.plus(2) //query page size = 20
+                        (it.body()?.data?.total?.div(10))?.plus(2) //query page size = 20
                     isLastPage=offersHistoryViewModel.page==totalPages
                 }
 
@@ -86,7 +86,7 @@ class OffersHistoryFragment : BaseFragment() {
             val isNotLoadingAndNotLastPage=!isLoading && !isLastPage
             val isAtLastItem=firstVisibleItemPosition+visibleItemCount >= totalItemCount
             val isNotAtBeginning=firstVisibleItemPosition >= 0
-            val isTotalMoreThanVisible=totalItemCount >= 20 //page size
+            val isTotalMoreThanVisible=totalItemCount >= 10 //page size
             val shouldPaginate=isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
                     isTotalMoreThanVisible && isScrolling
 
