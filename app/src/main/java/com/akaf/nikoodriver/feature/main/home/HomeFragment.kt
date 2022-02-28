@@ -53,12 +53,16 @@ class HomeFragment : BaseFragment() {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        getProfile()
+
+    }
 
     @KoinApiExtension
     @SuppressLint("SetTextI18n", "BinaryOperationInTimber")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getProfile()
         checkMqtt()
 
 

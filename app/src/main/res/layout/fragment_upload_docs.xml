@@ -98,8 +98,8 @@
                             <ProgressBar
                                 android:id="@+id/pbNationalCard"
                                 android:visibility="gone"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:layout_gravity="center"
                                 android:indeterminateTint="@color/lightBlue"/>
 
@@ -222,8 +222,8 @@
                             <ProgressBar
                                 android:id="@+id/pbCarCard"
                                 android:visibility="gone"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:layout_gravity="center"
                                 android:indeterminateTint="@color/lightBlue"/>
 
@@ -342,8 +342,8 @@
                             <ProgressBar
                                 android:id="@+id/pbCertificate"
                                 android:visibility="gone"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:layout_gravity="center"
                                 android:indeterminateTint="@color/lightBlue"/>
 
@@ -463,8 +463,8 @@
                             <ProgressBar
                                 android:id="@+id/pbTechnicalDiagnosis"
                                 android:visibility="gone"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:layout_gravity="center"
                                 android:indeterminateTint="@color/lightBlue"/>
 
@@ -584,8 +584,8 @@
                             <ProgressBar
                                 android:id="@+id/pbBadRecords"
                                 android:visibility="gone"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:layout_gravity="center"
                                 android:indeterminateTint="@color/lightBlue"/>
 
@@ -704,8 +704,8 @@
                             <ProgressBar
                                 android:id="@+id/pbWorkBook"
                                 android:visibility="gone"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:layout_gravity="center"
                                 android:indeterminateTint="@color/lightBlue"/>
 
