@@ -244,8 +244,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager, private val homeRepository
 
                 override fun onError(e: Throwable) {
                     Timber.e(e)
-                    Toast.makeText(App.context,"خطای ارتباط با سرور",Toast.LENGTH_SHORT).show()
-
                 }
 
 
@@ -298,7 +296,6 @@ class HomeViewModel(var mqttManager: HiveMqttManager, private val homeRepository
 
                 override fun onError(e: Throwable) {
                     homeProgressBarLiveData.postValue(false)
-                    Toast.makeText(App.context,"خطای ارتباط با سرور",Toast.LENGTH_SHORT).show()
                     Timber.e(e)
                 }
 

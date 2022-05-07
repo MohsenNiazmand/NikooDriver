@@ -1,6 +1,9 @@
 package com.akaf.nikoodriver.feature.main.home
 
 import android.annotation.SuppressLint
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -11,6 +14,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.Navigation
 import com.akaf.nikoodriver.App
 import com.akaf.nikoodriver.R
@@ -35,7 +41,6 @@ class HomeFragment : BaseFragment() {
     private val hiveMqttManager: HiveMqttManager by inject()
     val homeViewModel: HomeViewModel by viewModel()
     val sharedPreferences:SharedPreferences by inject()
-    var mqttState:Boolean=true
     val compositeDisposable = CompositeDisposable()
     val handler = Handler()
     private val onlineStatus:Boolean
@@ -66,9 +71,6 @@ class HomeFragment : BaseFragment() {
         checkMqtt()
 
 
-
-
-
         logoutBtn.setOnClickListener {
             showLogoutDialog()
 
@@ -91,6 +93,31 @@ class HomeFragment : BaseFragment() {
             val creditDialog = CreditDialog()
            creditDialog.show(childFragmentManager, null)
 
+//            val intent = Intent(context, HomeActivity::class.java).apply {
+//                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//            }
+//            val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+//
+//
+//            var builder = context?.let { it1 ->
+//                NotificationCompat.Builder(it1, "NikooDriver")
+//                    .setSmallIcon(R.mipmap.ic_launcher)
+//                    .setContentTitle("سرویس جدید")
+//                    .setContentText("برای دریافت سرویس اینجا را لمس نمایید")
+//                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+//                    .setContentIntent(pendingIntent)
+//                    .build()
+//            }
+//
+//
+//            val notificationManager =
+//                context?.getSystemService(Service.NOTIFICATION_SERVICE) as NotificationManager
+//            context?.let { it1 ->
+//                NotificationManagerCompat.from(it1).apply {
+//                    notificationManager.notify(100, builder)
+//                }
+//            }
+
         }
 
 
@@ -111,15 +138,15 @@ class HomeFragment : BaseFragment() {
           Toast.makeText(requireContext(),"لطفا مکان یاب و اینترنت خود را فعال کنید",Toast.LENGTH_SHORT).show()
         }
 
-        searchTravelBtn.setOnClickListener {
-            if(CheckInternet() && CheckGps()){
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
-            }else
-                Toast.makeText(requireContext(),"لطفا مکان یاب و اینترنت خود را فعال کنید",Toast.LENGTH_SHORT).show()
-
-
-        }
+//        searchTravelBtn.setOnClickListener {
+//            if(CheckInternet() && CheckGps()){
+//                Navigation.findNavController(view)
+//                    .navigate(R.id.action_homeFragment_to_travelRegistrationFragment)
+//            }else
+//                Toast.makeText(requireContext(),"لطفا مکان یاب و اینترنت خود را فعال کنید",Toast.LENGTH_SHORT).show()
+//
+//
+//        }
 
         unAcceptedPassengersBtn.setOnClickListener {
             if(CheckInternet() && CheckGps()){
@@ -159,11 +186,11 @@ class HomeFragment : BaseFragment() {
     @KoinApiExtension
     private fun getProfile(){
 
-        if (onlineStatus){
-            active()
-        }else
-            deActive()
-        
+        when(onlineStatus){
+            true->active()
+            false->deActive()
+        }
+
 
 
 
@@ -255,17 +282,22 @@ class HomeFragment : BaseFragment() {
     private fun checkMqtt(){
         if (getView()!=null)
             homeViewModel.mqttState.observe(viewLifecycleOwner) {
-                if (it) {
-                    checkPermStartLocationUpdate()
-                    mqttState=it
-                    connectedSign.visibility=View.VISIBLE
-                    disconnectSign.visibility=View.GONE
+                when(it){
+
+                    true->{
+                        checkPermStartLocationUpdate()
+                        connectedSign.visibility=View.VISIBLE
+                        disconnectSign.visibility=View.GONE
+                    }
+
+                    false->{
+                        connectedSign.visibility=View.GONE
+                        disconnectSign.visibility=View.VISIBLE
+
+                    }
+
                 }
-                else {
-                    mqttState=it
-                    connectedSign.visibility=View.GONE
-                    disconnectSign.visibility=View.VISIBLE
-                }
+
             }
     }
 

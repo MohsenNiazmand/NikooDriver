@@ -1,27 +1,18 @@
 package com.akaf.nikoodriver.feature.main.transactions
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.akaf.nikoodriver.App
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.data.responses.transactionsResponse.TransactionsData
 import com.github.eloyzone.jalalicalendar.DateConverter
-import com.github.eloyzone.jalalicalendar.JalaliDate
 import com.github.eloyzone.jalalicalendar.JalaliDateFormatter
-import com.github.eloyzone.jalalicalendar.MonthPersian
-import timber.log.Timber
-import java.math.RoundingMode
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 const val PATTERN_JALALI_DATE = "yyyy/MM/dd"

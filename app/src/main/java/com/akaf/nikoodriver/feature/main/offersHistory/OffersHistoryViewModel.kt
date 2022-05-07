@@ -10,6 +10,7 @@ import com.akaf.nikoodriver.data.responses.offersHistoryResponse.OffersHistoryRe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
+import timber.log.Timber
 
 class OffersHistoryViewModel(val offersHistoryRepository: OffersHistoryRepository) : NikoViewModel() {
 

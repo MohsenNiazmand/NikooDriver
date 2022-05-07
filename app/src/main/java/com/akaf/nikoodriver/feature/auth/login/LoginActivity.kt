@@ -1,34 +1,39 @@
 package com.akaf.nikoodriver.feature.auth.login
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.akaf.nikoodriver.R
 import com.akaf.nikoodriver.common.BaseActivity
 import com.akaf.nikoodriver.common.NikoCompletableObserver
 import com.akaf.nikoodriver.feature.auth.verification.VerificationActivity
+import com.google.android.material.snackbar.Snackbar
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-import android.view.View
-import com.google.android.material.snackbar.Snackbar
-
 
 class LoginActivity : BaseActivity() {
     val viewModel: LoginViewModel by viewModel()
     val compositeDisposable = CompositeDisposable()
-
+    lateinit var dexter: Dexter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        catchingPermissions()
 
         if (!CheckInternet()){
 
@@ -109,6 +114,46 @@ class LoginActivity : BaseActivity() {
         compositeDisposable.clear()
 
     }
+
+
+    private fun catchingPermissions() {
+       val dexter = Dexter.withContext(this)
+            .withPermissions(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.VIBRATE,
+                Manifest.permission.WAKE_LOCK,
+                Manifest.permission.CALL_PHONE,
+                Manifest.permission.INTERNET
+            ).withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                    if (report.areAllPermissionsGranted()) {
+                        loginBtn.isClickable = true
+                    } else {
+                        loginBtn.isClickable = false
+                        val snackbar = Snackbar
+                            .make(
+                                findViewById(R.id.loginRoot),
+                                "برای استفاده از نرم افزار نیاز است اجازه دسترسی به امکانات مورد نظر داده شود",
+                                Snackbar.LENGTH_INDEFINITE
+                            )
+                            .setAction("بررسی مجدد") { view: View? -> dexter.check() }
+                        snackbar.show()
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: List<PermissionRequest>,
+                    token: PermissionToken
+                ) {
+                    token.continuePermissionRequest()
+                }
+            }) as Dexter
+        dexter.check()
+    }
+
 
     override fun onBackPressed() {
     }

@@ -148,7 +148,6 @@ abstract class BaseFragment:Fragment(),NikoView{
         viewContext?.let {
             CropImage.activity(uri)
                 .setOutputCompressQuality(70)
-                .setFixAspectRatio(false)
                 .setAllowRotation(true)
                 .setAllowFlipping(true)
                 .setOutputCompressFormat(Bitmap.CompressFormat.JPEG)

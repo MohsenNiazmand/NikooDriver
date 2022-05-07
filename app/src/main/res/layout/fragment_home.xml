@@ -13,16 +13,19 @@
         android:layout_height="wrap_content"
         >
 
-        <TextView
-            android:id="@+id/userNameTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <ImageView
+            android:id="@+id/transactionsBtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            tools:text="@string/userName"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
-            tools:ignore="RelativeOverlap" />
+            android:contentDescription="@string/transactions"
+            app:srcCompat="@drawable/ic_payments" />
+
 
         <ImageView
             android:id="@+id/logoutBtn"
@@ -41,7 +44,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/userNameTv"
+            android:layout_below="@id/logoutBtn"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="20dp"
@@ -49,7 +52,21 @@
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp">
 
+            <TextView
+                android:id="@+id/userNameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginVertical="5dp"
+
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                tools:ignore="RelativeOverlap"
+                tools:text="@string/userName" />
             <LinearLayout
+                android:layout_below="@id/userNameTv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/buttons"
@@ -193,39 +210,75 @@
                     android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
+
+
                     <RelativeLayout
-                        android:id="@+id/searchTravelBtn"
+                        android:id="@+id/offersHistoryBtn"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="?selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
                         android:padding="10dp"
-
                         >
 
-
                         <ImageView
-                            android:id="@+id/imgAdd"
+                            android:id="@+id/ttvv"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:layout_centerHorizontal="true"
-                            android:src="@drawable/add"
-                            android:contentDescription="@string/registration" />
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:contentDescription="@string/servicesHistory"
+                            app:srcCompat="@drawable/ic_history" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/imgAdd"
+                            android:layout_below="@id/ttvv"
                             android:layout_centerHorizontal="true"
+                            android:text="@string/servicesHistory"
                             android:layout_marginTop="10dp"
-                            android:text="@string/addingTravel"
                             android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
-                            android:textColor="@color/blue" />
+                            android:textColor="@color/blue"/>
 
 
                     </RelativeLayout>
+
+
+                    <!--                    <RelativeLayout-->
+<!--                        android:id="@+id/searchTravelBtn"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="?selectableItemBackground"-->
+<!--                        android:clickable="true"-->
+<!--                        android:focusable="true"-->
+<!--                        android:padding="10dp"-->
+
+<!--                        >-->
+
+
+<!--                        <ImageView-->
+<!--                            android:id="@+id/imgAdd"-->
+<!--                            android:layout_width="60dp"-->
+<!--                            android:layout_height="60dp"-->
+<!--                            android:layout_centerHorizontal="true"-->
+<!--                            android:src="@drawable/add"-->
+<!--                            android:contentDescription="@string/registration" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_below="@id/imgAdd"-->
+<!--                            android:layout_centerHorizontal="true"-->
+<!--                            android:layout_marginTop="10dp"-->
+<!--                            android:text="@string/addingTravel"-->
+<!--                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"-->
+<!--                            android:textColor="@color/blue" />-->
+
+
+<!--                    </RelativeLayout>-->
 
                     <View
                         android:layout_width="1dp"
@@ -415,73 +468,45 @@
                     android:baselineAligned="false">
 
 
-                    <RelativeLayout
-                        android:id="@+id/offersHistoryBtn"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="7.5dp"
-                        android:layout_weight="1"
-                        android:background="?selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        >
-
-                        <ImageView
-                            android:id="@+id/ttvv"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerInParent="true"
-                            app:srcCompat="@drawable/ic_history"
-                            android:contentDescription="@string/servicesHistory" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/ttvv"
-                            android:layout_centerHorizontal="true"
-                            android:text="@string/servicesHistory"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
-                            android:textColor="@color/blue"/>
 
 
-                    </RelativeLayout>
+<!--                    <RelativeLayout-->
+<!--                        android:id="@+id/transactionsBtn"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="?selectableItemBackground"-->
+
+<!--                        android:padding="10dp"-->
+<!--                        android:clickable="true"-->
+<!--                        android:focusable="true"-->
+<!--                        >-->
+
+<!--                        <ImageView-->
+<!--                            android:id="@+id/ttvvv"-->
+<!--                            android:layout_width="50dp"-->
+<!--                            android:layout_height="50dp"-->
+<!--                            android:layout_alignParentTop="true"-->
+<!--                            android:layout_centerInParent="true"-->
+<!--                            android:contentDescription="@string/transactions"-->
+<!--                            app:srcCompat="@drawable/ic_payments" />-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_below="@id/ttvvv"-->
+<!--                            android:layout_centerHorizontal="true"-->
+<!--                            android:text="@string/transactions"-->
+<!--                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"-->
+<!--                            android:textColor="@color/blue" />-->
 
 
-                    <RelativeLayout
-                        android:id="@+id/transactionsBtn"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="?selectableItemBackground"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginStart="7.5dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        >
+<!--                    </RelativeLayout>-->
 
-                        <ImageView
-                            android:id="@+id/ttvvv"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerInParent="true"
-                            app:srcCompat="@drawable/ic_payments"
-                            android:contentDescription="@string/transactions" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/ttvvv"
-                            android:layout_centerHorizontal="true"
-                            android:text="@string/transactions"
-                            android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
-                            android:textColor="@color/blue" />
-
-
-                    </RelativeLayout>
-
+<!--                    <View-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"/>-->
 
 
 

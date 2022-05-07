@@ -77,7 +77,6 @@ class HomeActivity : BaseActivity(), TripsAdapter.CartItemViewCallBacks {
         wakeLockSetup()
         mediaPlayer=MediaPlayer.create(this,R.raw.service_alarm)
 
-        Timber.i("TOOKEN Main: "+token.toString())
 
 
         if (!CheckInternet()){
@@ -159,6 +158,7 @@ class HomeActivity : BaseActivity(), TripsAdapter.CartItemViewCallBacks {
         super.onDestroy()
         vibrator!!.cancel()
         mediaPlayer.stop()
+        mediaPlayer=MediaPlayer.create(this,R.raw.service_alarm)
         destroyWakeLock()
     }
 
@@ -189,6 +189,7 @@ class HomeActivity : BaseActivity(), TripsAdapter.CartItemViewCallBacks {
             tripsList.remove(tripData)
             vibrator!!.cancel()
             mediaPlayer.stop()
+            mediaPlayer=MediaPlayer.create(this,R.raw.service_alarm)
             val navController = findNavController(R.id.fragmentContainerView)
             navController.navigate(R.id.homeFragment)
         }else if (tripsList.size>0){

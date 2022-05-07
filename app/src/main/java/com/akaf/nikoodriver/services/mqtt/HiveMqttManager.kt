@@ -1,5 +1,6 @@
 package com.akaf.nikoodriver.services.mqtt
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.location.Location
@@ -9,6 +10,7 @@ import com.akaf.nikoodriver.data.responses.mqttTripResponse.TripData
 import com.google.gson.Gson
 import com.hivemq.client.mqtt.MqttGlobalPublishFilter
 import com.hivemq.client.mqtt.datatypes.MqttQos
+import com.hivemq.client.mqtt.lifecycle.MqttClientDisconnectedContext
 import com.hivemq.client.mqtt.mqtt3.Mqtt3Client
 import com.hivemq.client.mqtt.mqtt3.Mqtt3RxClient
 import com.hivemq.client.mqtt.mqtt3.message.publish.Mqtt3Publish
@@ -58,6 +60,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
     }
 
 
+    @SuppressLint("CheckResult")
     fun initMqtt() {
         try {
 //            this.token =sharedPreferences.getString("token",null).toString()
@@ -76,25 +79,27 @@ class HiveMqttManager(val context: Context) : KoinComponent {
                     .password(token.toByteArray())
                     .applySimpleAuth()
                     .automaticReconnect()
-                    .initialDelay(500L, TimeUnit.MILLISECONDS)
+                    .initialDelay(5000L, TimeUnit.MILLISECONDS)
                     .applyAutomaticReconnect()
                     .addConnectedListener {
                         mqttConnectionState.onNext(CONNECTED)
                         subscribeToTopics()
+
                     }
-                    .addDisconnectedListener {
+                    .addDisconnectedListener {context->
                         try {
 
                             mqttConnectionState.onNext(CONNECTION_FAILURE)
-                            Log.e(TAG,"Connection Disconnected -> ${it.cause.message ?: ""}")
+                            Log.e(TAG,"Connection Disconnected -> ${context.cause.message ?: ""}")
 
                         } catch (e: Exception) {
+                            Log.e(TAG,"Connection Disconnected 2 -> ${e.toString()}")
 
                         }
 
                     }
                     .buildRx()
-                val publishes = mqttClient?.publishes(MqttGlobalPublishFilter.ALL)
+                mqttClient?.publishes(MqttGlobalPublishFilter.ALL)
                     ?.subscribeOn(Schedulers.io())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.doOnError {
@@ -116,6 +121,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
         }
     }
 
+    @SuppressLint("CheckResult")
     fun connect() {
 //        this.token =sharedPreferences.getString("token",null).toString()
         if (TokenContainer.token!=null)
@@ -135,7 +141,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
             }
             if (mqttClient?.state?.isConnectedOrReconnect == true) {
                 Log.i(TAG, "connect: client is reconnecting  maybe ,re initiate client")
-                initMqtt()
+//                initMqtt()
             }
             if (token.isBlank()) {
                 Log.i(TAG, "connect: token is null  , return from connect ")
@@ -145,7 +151,7 @@ class HiveMqttManager(val context: Context) : KoinComponent {
 
             mqttConnectionState.onNext(CONNECTING)
 
-            var connectAck = mqttClient?.connectWith()
+            mqttClient?.connectWith()
                 ?.cleanSession(false)
                 ?.keepAlive(10)
                 ?.simpleAuth()
@@ -165,8 +171,9 @@ class HiveMqttManager(val context: Context) : KoinComponent {
         }
     }
 
+    @SuppressLint("CheckResult")
     fun disconnect() {
-        val disconnectCompletable = mqttClient?.disconnect()?.doOnComplete {
+        mqttClient?.disconnect()?.doOnComplete {
         }?.subscribe({
             mqttConnectionState.onNext(CONNECTION_FAILURE)
             Log.i(TAG, "Connection Connected ")
@@ -254,31 +261,6 @@ class HiveMqttManager(val context: Context) : KoinComponent {
         }
     }
 
-    fun chatDriver(id: Int, strJson: String) {
-        if (mqttConnectionState.value ?: "" == CONNECTED)
-            try {
-                val byteLocation = strJson.toByteArray()
-                val mqttPublish = Mqtt3Publish.builder()
-                    .topic("/trip/$id/messages")
-                    .qos(MqttQos.EXACTLY_ONCE)
-                    .retain(false)
-                    .payload(byteLocation)
-                    .build()
-                val followable = Flowable.just(mqttPublish)
-                mqttClient?.publish(followable)
-                    ?.doOnComplete {
-                        Log.i(TAG, "publishDriverLocation: Done")
-                    }?.subscribe({}, {
-                        Log.e(TAG, "publishDriverLocation: Error -> ${it.localizedMessage ?: ""}")
-
-                    })
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        else {
-            Log.e(TAG, "publishDriverLocation: Socket Not Connected")
-        }
-    }
 
     fun subscribeToTopics() {
         subscribeToNewOffers()
@@ -371,31 +353,5 @@ class HiveMqttManager(val context: Context) : KoinComponent {
         }
     }
 
-    fun subscribeToChatDriver(id: Int) {
-
-        val topic = "/trip/$id/messages"
-        try {
-            val mqttSubscribe = Mqtt3Subscribe.builder()
-                .topicFilter(topic)
-                .qos(MqttQos.EXACTLY_ONCE)
-                .build()
-
-            val subToken = mqttClient?.subscribePublishes(mqttSubscribe)
-                ?.doOnSingle {
-                    Log.i(TAG, "subscribeToNewOffer Sucess -> ${topic}")
-                }
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe({
-                     handleNewMessage(it)
-                }, {
-                    Log.e(TAG, "subscribeToNewOffer Error -> ${it.localizedMessage ?: ""}")
-
-                })
-
-        } catch (e: Exception) {
-            Log.e(TAG, "Offer.Recieved: ${e.localizedMessage ?: ""}")
-        }
-    }
 
 }
